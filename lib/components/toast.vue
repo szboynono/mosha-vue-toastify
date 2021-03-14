@@ -42,7 +42,7 @@
 
 <script lang="ts">
 import { PropType, computed, defineComponent, onMounted, ref, onUnmounted } from 'vue'
-import { Position, TransitionType } from './useToast'
+import { Position, TransitionType } from './createToast'
 
 type TransitionMap = {[pos in Position]: {[type in TransitionType]: string}}
 

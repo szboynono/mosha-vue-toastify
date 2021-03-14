@@ -35,7 +35,7 @@ const toasts: Record<Position, ToastObject[]> = {
 
 let toastId = 0;
 
-export const useToast = (options: ToastOptions) => {
+export const createToast = (options: ToastOptions) => {
   let verticalOffset = 0
   const id = toastId++;
   const position = options.position || 'top-right'

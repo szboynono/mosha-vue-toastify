@@ -11,14 +11,12 @@
 
 <script lang="ts">
 import { defineComponent, inject } from 'vue'
-import { MoshaToastFn } from 'mosha-vue-toastify'
+import { createToast } from 'mosha-vue-toastify';
 export default defineComponent({
   name: 'HelloWorld',
   setup: () => {
-    const moshaToast = inject<MoshaToastFn>('moshaToast')
     const tr = () => {
-      if(moshaToast) {
-        moshaToast({
+        createToast({
           title: 'title',
           description: 'desc',
           transition: 'flip',
@@ -27,12 +25,10 @@ export default defineComponent({
             console.log('log')
           }
         })
-      }
     }
 
     const tl = () => {
-      if(moshaToast) {
-        moshaToast({
+        createToast({
           title: 'title',
           description: 'desc',
           transition: 'slide',
@@ -42,12 +38,10 @@ export default defineComponent({
             console.log('log')
           }
         })
-      }
     }
 
     const br = () => {
-      if(moshaToast) {
-        moshaToast({
+        createToast({
           title: 'title',
           description: 'desc',
           transition: 'bounce',
@@ -57,12 +51,10 @@ export default defineComponent({
             console.log('log')
           }
         })
-      }
     }
 
     const bl = () => {
-      if(moshaToast) {
-        moshaToast({
+        createToast({
           title: 'title',
           description: 'desc',
           position: 'bottom-left',
@@ -72,12 +64,10 @@ export default defineComponent({
             console.log('log')
           }
         })
-      }
     }
 
     const tc = () => {
-      if(moshaToast) {
-        moshaToast({
+        createToast({
           title: 'title',
           description: 'desc',
           position: 'top-center',
@@ -87,12 +77,10 @@ export default defineComponent({
             console.log('log')
           }
         })
-      }
     }
 
     const bc = () => {
-      if(moshaToast) {
-        moshaToast({
+        createToast({
           title: 'title',
           description: 'desc',
           position: 'bottom-center',
@@ -102,7 +90,6 @@ export default defineComponent({
             console.log('log')
           }
         })
-      }
     }
     return { tr, tl, br, bl, tc, bc }
   }
