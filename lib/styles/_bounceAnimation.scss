@@ -1,0 +1,98 @@
+.mosha {
+  &__bounceInRight-enter-active {
+    animation: bounceInRight .7s;
+  }
+  &__bounceInRight-leave-active {
+    animation: bounceOutLeft .7s;
+  }
+  &__bounceInLeft-enter-active {
+    animation: bounceInLeft .7ss;
+  }
+  &__bounceInLeft-leave-active {
+    animation: bounceOutRight .7ss;
+  }
+}
+
+@mixin timing-function {
+  animation-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+}
+
+@keyframes bounceInRight {
+  from,
+  60%,
+  75%,
+  90%,
+  to {
+      @include timing-function;
+  }
+  from {
+      opacity: 0;
+      transform: translate3d(2000px, 0, 0);
+  }
+  60% {
+      opacity: .6;
+      transform: translate3d(-25px, 0, 0);
+  }
+  75% {
+      opacity: .75;
+      transform: translate3d(10px, 0, 0);
+  }
+  90% {
+      opacity: .9;
+      transform: translate3d(-5px, 0, 0);
+  }
+  to {
+      transform: none;
+  }
+}
+
+@keyframes bounceOutLeft {
+  20% {
+      opacity: 1;
+      transform: translate3d(-20px, 0, 0);
+  }
+  to {
+      opacity: 0;
+      transform: translate3d(2000px, 0, 0);
+  }
+}
+
+@keyframes bounceInLeft {
+  from,
+  60%,
+  75%,
+  90%,
+  to {
+      @include timing-function;
+  }
+  from {
+      opacity: 0;
+      transform: translate3d(-2000px, 0, 0);
+  }
+  60% {
+      opacity: .6;
+      transform: translate3d(25px, 0, 0);
+  }
+  75% {
+      opacity: .75;
+      transform: translate3d(-10px, 0, 0);
+  }
+  90% {
+      opacity: .9;
+      transform: translate3d(5px, 0, 0);
+  }
+  to {
+      transform: none;
+  }
+}
+
+@keyframes bounceOutRight {
+  20% {
+      opacity: 1;
+      transform: translate3d(20px, 0, 0);
+  }
+  to {
+      opacity: 0;
+      transform: translate3d(-2000px, 0, 0);
+  }
+}

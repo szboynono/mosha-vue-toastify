@@ -1,5 +1,5 @@
 <template>
-  <transition :name="transitionType">
+  <transition :name="transitionType" type="animation">
     <div
       class="mosha__toast"
       :style="customStyle"
@@ -42,7 +42,7 @@
 
 <script lang="ts">
 import { PropType, computed, defineComponent, onMounted, ref, onUnmounted } from 'vue'
-import { Position } from './useToast'
+import { Position, TransitionType } from './useToast'
 
 export default defineComponent({
   name: 'toast',
@@ -88,6 +88,10 @@ export default defineComponent({
       type: Boolean,
       default: false,
     },
+    transition: {
+      type: String as PropType<TransitionType>,
+      default: 'bounce'
+    }
   },
   setup(props) {
     const timer = ref<any | null>(null)
@@ -115,10 +119,16 @@ export default defineComponent({
     }
 
     const transitionType = computed(() => {
-      if (props.position.endsWith('left')) {
-        return 'mosha__slide-right'
-      } else {
-        return 'mosha__slide-left'
+      const pos = props.position.split('-')[1]
+      const formattedPos = pos.charAt(0).toUpperCase() + pos.slice(1)
+      console.log(props.transition)
+      switch(props.transition) {
+        case 'slide':
+          return `mosha__slideIn${formattedPos}`
+        case 'flip':
+          return `mosha__flipIn`
+        default:
+          return `mosha__bounceIn${formattedPos}`
       }
     })
     const customStyle = computed(() => {

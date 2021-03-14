@@ -1,0 +1,59 @@
+.mosha {
+  &__slideInRight-enter-active {
+    animation: slideInRight .5s;
+  }
+  &__slideInRight-leave-active {
+    animation: slideOutRight .5s;
+  }
+
+  &__slideInLeft-enter-active {
+    animation: slideInLeft .5s;
+  }
+  &__slideInLeft-leave-active {
+    animation: slideOutLeft .5s;
+  }
+}
+
+@mixin transform {
+  transform: translate3d(0, 0, 0);
+}
+
+@keyframes slideInRight {
+  from {
+    transform: translate3d(110%, 0, 0);
+    visibility: visible;
+  }
+  to {
+      @include transform;
+  }
+}
+
+@keyframes slideOutLeft {
+  from {
+    @include transform;
+  }
+  to {
+    visibility: hidden;
+    transform: translate3d(-110%, 0, 0);
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    transform: translate3d(-110%, 0, 0);
+    visibility: visible;
+  }
+  to {
+      @include transform;
+  }
+}
+
+@keyframes slideOutRight {
+  from {
+    @include transform;
+  }
+  to {
+    visibility: hidden;
+    transform: translate3d(110%, 0, 0);
+  }
+}

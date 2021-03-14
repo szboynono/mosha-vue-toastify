@@ -5,6 +5,8 @@ export type ToastType = 'info' | 'danger' | 'warning' | 'success' | 'default'
 
 export type Position =  'top-left' | 'top-right' | 'bottom-left' | 'bottom-right'
 
+export type TransitionType = 'bounce' | 'flip' | 'slide'
+
 export interface ToastObject {
   toastVNode: any
   container: HTMLDivElement;
@@ -18,6 +20,7 @@ export interface ToastOptions {
   closable?: Boolean,
   position?: Position,
   showIcon?: Boolean,
+  transition?: TransitionType,
   onClose?: () => void
 }
 
@@ -34,7 +37,7 @@ export const useToast = (options: ToastOptions) => {
   let verticalOffset = 0
   const id = toastId++;
   const position = options.position || 'top-right'
-
+  const transition = options.transition || 'bounce'
   toasts[position].forEach(({ toastVNode }) => {
     const offsetHeight = (toastVNode.el as HTMLElement).offsetHeight
     verticalOffset += (offsetHeight || 0) + 16
@@ -50,6 +53,7 @@ export const useToast = (options: ToastOptions) => {
     id,
     offset: verticalOffset,
     position,
+    transition,
     visible: false,
     onCloseHandler: () => { close(id, position)}
   })
@@ -74,11 +78,6 @@ const close = (id: number, position: Position) => {
   toasts[position].splice(index, 1)
   toastVNode.component.props.visible = false;
 
-  setTimeout(() => {
-    render(null, container)
-    document.body.removeChild(container)
-  }, 300)
-
   for (let i = index; i < toastArr.length; i++) {
     const { toastVNode } = toastArr[i] as ToastObject;
 
@@ -90,4 +89,9 @@ const close = (id: number, position: Position) => {
     if (!toastVNode.component) return;
     toastVNode.component.props.offset = pos
   }
+
+  setTimeout(() => {
+    render(null, container)
+    document.body.removeChild(container)
+  }, 1000)
 }
