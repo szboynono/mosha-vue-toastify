@@ -7,7 +7,6 @@
     "serve": "vite preview"
   },
   "dependencies": {
-    "mosha-vue-toastify": "../../mosha-vue-toastify-v0.0.0.tgz",
     "vue": "^3.0.5"
   },
   "devDependencies": {

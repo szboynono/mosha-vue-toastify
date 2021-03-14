@@ -14,7 +14,9 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build && tsc -P tsconfig.json",
-    "serve": "vite preview"
+    "serve": "vite preview",
+    "example:update": "yarn build && cd examples/vite-sample && yarn link \"mosha-vue-toastify\"",
+    "example:dev": "cd examples/vite-sample && yarn dev"
   },
   "dependencies": {
     "vue": "^3.0.5"

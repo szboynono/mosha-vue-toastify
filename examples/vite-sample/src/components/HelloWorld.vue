@@ -4,12 +4,15 @@
 
 <script lang="ts">
 import { defineComponent, inject } from 'vue'
+import { MoshaToastFn } from 'mosha-vue-toastify'
 export default defineComponent({
   name: 'HelloWorld',
   setup: () => {
-    const moshaToast = inject<any>('moshaToast')
+    const moshaToast = inject<MoshaToastFn>('moshaToast')
     const hit = () => {
-      moshaToast()
+      if(moshaToast) {
+        moshaToast()
+      }
     }
     return { hit }
   }

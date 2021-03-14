@@ -254,12 +254,6 @@ minimist@^1.2.0:
   resolved "https://registry.yarnpkg.com/minimist/-/minimist-1.2.5.tgz#67d66014b66a6a8aaa0c083c5fd58df4e4e97602"
   integrity sha512-FM9nNUYrRBAELZQT3xeZQ7fmMOBg6nWNmJKTcgsJeaLstP/UODVpGsr5OhXhhXg6f+qtJ8uiZ+PUxkDWcgIXLw==
 
-mosha-vue-toastify@../../mosha-vue-toastify-v0.0.0.tgz:
-  version "0.0.0"
-  resolved "../../mosha-vue-toastify-v0.0.0.tgz#f7c5a6fcff0439afcc28f60fed8c89f61e123142"
-  dependencies:
-    vue "^3.0.5"
-
 nanoid@^3.1.20:
   version "3.1.21"
   resolved "https://registry.yarnpkg.com/nanoid/-/nanoid-3.1.21.tgz#25bfee7340ac4185866fbfb2c9006d299da1be7f"
