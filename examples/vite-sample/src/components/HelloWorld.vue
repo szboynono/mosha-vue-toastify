@@ -11,7 +11,11 @@ export default defineComponent({
     const moshaToast = inject<MoshaToastFn>('moshaToast')
     const hit = () => {
       if(moshaToast) {
-        moshaToast()
+        moshaToast({
+          title: 'title',
+          description: 'desc',
+          timeout: -1
+        })
       }
     }
     return { hit }

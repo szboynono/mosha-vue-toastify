@@ -1,0 +1,33 @@
+.mosha {
+  &__slide-up-enter-active, &__slide-up-leave-active {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  &__slide-up-enter, &__slide-up-leave-to /* .fade-leave-active below version 2.1.8 */ {
+    opacity: 0;
+  }
+
+  &__slide-down-enter-active, &__slide-down-leave-active {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  &__slide-down-enter, &__slide-down-leave-to /* .fade-leave-active below version 2.1.8 */ {
+    opacity: 0;
+  }
+
+  &__slide-right-enter-active, &__slide-right-leave-active {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  &__slide-right-enter, &__slide-right-leave-to /* .fade-leave-active below version 2.1.8 */ {
+    opacity: 0;
+  }
+
+  &__slide-left-enter-active, &__slide-left-leave-active {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  &__slide-left-enter, &__slide-left-leave-to /* .fade-leave-active below version 2.1.8 */ {
+    opacity: 0;
+  }
+}
