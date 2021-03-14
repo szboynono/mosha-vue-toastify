@@ -3,7 +3,7 @@ import Toast from './toast.vue'
 
 export type ToastType = 'info' | 'danger' | 'warning' | 'success' | 'default'
 
-export type Position =  'top-left' | 'top-right' | 'bottom-left' | 'bottom-right'
+export type Position =  'top-left' | 'top-right' | 'bottom-left' | 'bottom-right'| 'top-center' | 'bottom-center'
 
 export type TransitionType = 'bounce' | 'flip' | 'slide'
 
@@ -29,6 +29,8 @@ const toasts: Record<Position, ToastObject[]> = {
   'top-right': [],
   'bottom-left': [],
   'bottom-right': [],
+  'top-center': [],
+  'bottom-center': [],
 }
 
 let toastId = 0;

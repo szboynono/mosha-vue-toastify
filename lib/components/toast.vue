@@ -44,6 +44,41 @@
 import { PropType, computed, defineComponent, onMounted, ref, onUnmounted } from 'vue'
 import { Position, TransitionType } from './useToast'
 
+type TransitionMap = {[pos in Position]: {[type in TransitionType]: string}}
+
+const TRANSITION_MAP: TransitionMap = {
+  'top-left': {
+    'bounce': 'mosha__bounceInLeft',
+    'flip': 'mosha__flipIn',
+    'slide': 'mosha__slideInLeft',
+  },
+  'top-right': {
+    'bounce': 'mosha__bounceInRight',
+    'flip': 'mosha__flipIn',
+    'slide': 'mosha__slideInRight',
+  },
+  'top-center': {
+    'bounce': 'mosha__bounceInDown',
+    'flip': 'mosha__flipIn',
+    'slide': 'mosha__slideInDown',
+  },
+  'bottom-center': {
+    'bounce': 'mosha__bounceInUp',
+    'flip': 'mosha__flipIn',
+    'slide': 'mosha__slideInUp',
+  },
+  'bottom-right': {
+    'bounce': 'mosha__bounceInRight',
+    'flip': 'mosha__flipIn',
+    'slide': 'mosha__slideInRight',
+  },
+  'bottom-left': {
+    'bounce': 'mosha__bounceInLeft',
+    'flip': 'mosha__flipIn',
+    'slide': 'mosha__slideInLeft',
+  },
+}
+
 export default defineComponent({
   name: 'toast',
   data() {
@@ -118,19 +153,8 @@ export default defineComponent({
       clearTimeout(timer.value)
     }
 
-    const transitionType = computed(() => {
-      const pos = props.position.split('-')[1]
-      const formattedPos = pos.charAt(0).toUpperCase() + pos.slice(1)
-      console.log(props.transition)
-      switch(props.transition) {
-        case 'slide':
-          return `mosha__slideIn${formattedPos}`
-        case 'flip':
-          return `mosha__flipIn`
-        default:
-          return `mosha__bounceIn${formattedPos}`
-      }
-    })
+    const transitionType = computed(() => TRANSITION_MAP[props.position][props.transition])
+    
     const customStyle = computed(() => {
       switch (props.position) {
         case 'top-left':
@@ -147,6 +171,22 @@ export default defineComponent({
           return {
             right: '16px',
             bottom: `${props.offset}px`,
+          }
+        case 'top-center':
+          return {
+            top: `${props.offset}px`,
+            left: '0',
+            right: '0',
+            marginRight: 'auto',
+            marginLeft: 'auto'
+          }
+        case 'bottom-center':
+          return {
+            bottom: `${props.offset}px`,
+            left: '0',
+            right: '0',
+            marginRight: 'auto',
+            marginLeft: 'auto'
           }
         default:
           return {

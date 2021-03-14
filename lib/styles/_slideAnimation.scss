@@ -5,12 +5,23 @@
   &__slideInRight-leave-active {
     animation: slideOutRight .5s;
   }
-
   &__slideInLeft-enter-active {
     animation: slideInLeft .5s;
   }
   &__slideInLeft-leave-active {
     animation: slideOutLeft .5s;
+  }
+  &__slideInDown-enter-active {
+    animation: slideInDown .5s;
+  }
+  &__slideInDown-leave-active {
+    animation: slideOutUp .5s;
+  }
+  &__slideInUp-enter-active {
+    animation: slideInUp .5s;
+  }
+  &__slideInUp-leave-active {
+    animation: slideOutDown .5s;
   }
 }
 
@@ -55,5 +66,47 @@
   to {
     visibility: hidden;
     transform: translate3d(110%, 0, 0);
+  }
+}
+
+@keyframes slideInUp {
+  from {
+      transform: translate3d(0, 110%, 0);
+      visibility: visible;
+  }
+  to {
+      @include transform;
+  }
+}
+
+@keyframes slideInDown {
+  from {
+    opacity: 0;
+    transform: translate3d(0, -120%, 0);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes slideOutDown {
+  from {
+      @include transform;
+  }
+  to {
+      visibility: hidden;
+      transform: translate3d(0, 500px, 0);
+  }
+}
+
+@keyframes slideOutUp {
+  from {
+      @include transform;
+  }
+  to {
+      visibility: hidden;
+      transform: translate3d(0, -500px, 0);
   }
 }
