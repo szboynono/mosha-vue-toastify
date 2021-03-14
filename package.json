@@ -4,13 +4,8 @@
   "files": ["dist"],
   "main": "./dist/mosha-vue-toastify.umd.js",
   "module": "./dist/mosha-vue-toastify.es.js",
-  "exports": {
-    ".": {
-      "import": "./dist/mosha-vue-toastify.es.js",
-      "require": "./dist/mosha-vue-toastify.umd.js"
-    }
-  },
   "types": "dist/main.d.ts",
+  "style": "./dist/style.css",
   "scripts": {
     "dev": "vite",
     "build": "vite build && tsc -P tsconfig.json",
