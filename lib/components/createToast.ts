@@ -13,8 +13,8 @@ export interface ToastObject {
 }
 
 export interface ToastOptions {
-  title: string,
-  description?: string,
+  title?: string,
+  text?: string,
   type?: ToastType,
   timeout?: number,
   closable?: Boolean,
@@ -35,11 +35,12 @@ const toasts: Record<Position, ToastObject[]> = {
 
 let toastId = 0;
 
-export const createToast = (options: ToastOptions) => {
+export const createToast = (options: ToastOptions | string) => {
   let verticalOffset = 0
   const id = toastId++;
-  const position = options.position || 'top-right'
-  const transition = options.transition || 'bounce'
+  const position = typeof options === 'string' ? 'top-right' :options.position || 'top-right'
+  const transition = typeof options === 'string' ? 'bounce' :options.transition || 'bounce'
+
   toasts[position].forEach(({ toastVNode }) => {
     const offsetHeight = (toastVNode.el as HTMLElement).offsetHeight
     verticalOffset += (offsetHeight || 0) + 16
@@ -50,15 +51,30 @@ export const createToast = (options: ToastOptions) => {
   const container = document.createElement('div')
   document.body.appendChild(container);
 
-  const toastVNode = createVNode(Toast, {
-    ...options,
-    id,
-    offset: verticalOffset,
-    position,
-    transition,
-    visible: false,
-    onCloseHandler: () => { close(id, position)}
-  })
+  let toastVNode = null;
+
+  if(typeof options === 'string') {
+    toastVNode = createVNode(Toast, {
+      text: options,
+      id,
+      offset: verticalOffset,
+      position,
+      transition,
+      visible: false,
+      onCloseHandler: () => { close(id, position)}
+    })
+  } else {
+    toastVNode = createVNode(Toast, {
+      ...options,
+      id,
+      offset: verticalOffset,
+      position,
+      transition,
+      visible: false,
+      onCloseHandler: () => { close(id, position)}
+    })
+  }
+  
   render(toastVNode, container)
   toasts[position].push({ toastVNode, container });
 

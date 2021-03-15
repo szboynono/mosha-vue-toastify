@@ -9,25 +9,11 @@
       @mouseleave="startTimer"
     >
       <div class="mosha__toast__content">
-        <template v-if="type === 'success' && (showIcon || type)">
-          <span class="material-icons-round"> check_circle </span>
-        </template>
-        <template v-else-if="type === 'warning' && (showIcon || type)">
-          <span class="material-icons-round"> info </span>
-        </template>
-        <template v-else-if="type === 'info' && (showIcon || type)">
-          <span class="material-icons-round"> info </span>
-        </template>
-        <template v-else-if="type === 'danger' && (showIcon || type)">
-          <span class="material-icons-round"> highlight_off </span>
-        </template>
-        <template v-else-if="type === 'default' && showIcon">
-          <span class="material-icons-round"> info </span>
-        </template>
+        <img :src="infoIcon" alt="">
         <div>
           <div class="mosha__toast__content__title">{{ title }}</div>
           <div class="mosha__toast__content__description">
-            {{ description }}
+            {{ text }}
           </div>
         </div>
       </div>
@@ -43,6 +29,7 @@
 <script lang="ts">
 import { PropType, computed, defineComponent, onMounted, ref, onUnmounted } from 'vue'
 import { Position, TransitionType } from './createToast'
+import infoIcon from '../../public/info.svg'
 
 type TransitionMap = {[pos in Position]: {[type in TransitionType]: string}}
 
@@ -89,7 +76,7 @@ export default defineComponent({
   props: {
     visible: Boolean,
     title: String,
-    description: String,
+    text: String,
     type: {
       type: String,
       default: 'default',
@@ -130,7 +117,6 @@ export default defineComponent({
   },
   setup(props) {
     const timer = ref<any | null>(null)
-
     onMounted(() => {
       startTimer()
     })
@@ -196,7 +182,7 @@ export default defineComponent({
       }
     })
 
-    return { customStyle, transitionType, startTimer, stopTimer }
+    return { customStyle, transitionType, startTimer, stopTimer, infoIcon }
   }
 })
 </script>

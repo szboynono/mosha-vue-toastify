@@ -16,21 +16,13 @@ export default defineComponent({
   name: 'HelloWorld',
   setup: () => {
     const tr = () => {
-        createToast({
-          title: 'title',
-          description: 'desc',
-          transition: 'flip',
-          timeout: -1,
-          onClose: () => {
-            console.log('log')
-          }
-        })
+        createToast('adsd')
     }
 
     const tl = () => {
         createToast({
           title: 'title',
-          description: 'desc',
+          text: 'desc',
           transition: 'slide',
           position: 'top-left',
           timeout: -1,
@@ -43,7 +35,7 @@ export default defineComponent({
     const br = () => {
         createToast({
           title: 'title',
-          description: 'desc',
+          text: 'desc',
           transition: 'bounce',
           position: 'bottom-right',
           timeout: -1,
@@ -56,7 +48,7 @@ export default defineComponent({
     const bl = () => {
         createToast({
           title: 'title',
-          description: 'desc',
+          text: 'desc',
           position: 'bottom-left',
           transition: 'slide',
           timeout: -1,
@@ -69,7 +61,7 @@ export default defineComponent({
     const tc = () => {
         createToast({
           title: 'title',
-          description: 'desc',
+          text: 'desc',
           position: 'top-center',
           transition: 'slide',
           timeout: -1,
@@ -82,7 +74,7 @@ export default defineComponent({
     const bc = () => {
         createToast({
           title: 'title',
-          description: 'desc',
+          text: 'desc',
           position: 'bottom-center',
           transition: 'flip',
           timeout: -1,
