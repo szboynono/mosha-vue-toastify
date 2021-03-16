@@ -1,21 +1,24 @@
-import { ref } from 'vue'
+import { onUnmounted, ref } from 'vue'
 
 export const useTimer = (callback: Function | string, delay: number) => {
   const timerId = ref<number>()
-  const start = ref<number>()
-  const remaining = ref<number>(delay)
+  const startTime = ref<number>(0)
+  const remainingTime = ref<number>(delay)
 
-  const pause = () => {
+  const stop = () => {
     clearTimeout(timerId.value)
+    remainingTime.value -= Date.now() - startTime.value;
   }
 
-  const resume = () => {
-    start.value = Date.now()
+  const start = () => {
+    startTime.value = Date.now()
     clearTimeout(timerId.value)
-    timerId.value = setTimeout(callback, remaining.value)
+    timerId.value = setTimeout(callback, remainingTime.value)
   }
 
-  resume()
+  onUnmounted(() => {
+    clearTimeout(timerId.value)
+  })
 
-  return { pause, resume}
+  return { start, stop, remainingTime }
 }

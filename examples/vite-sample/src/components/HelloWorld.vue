@@ -10,8 +10,9 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, inject } from 'vue'
-import { createToast } from 'mosha-vue-toastify';
+import { defineComponent } from 'vue'
+import { createToast } from '../../../../lib/main';
+
 export default defineComponent({
   name: 'HelloWorld',
   setup: () => {

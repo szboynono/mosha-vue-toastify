@@ -30,6 +30,7 @@
 import { PropType, computed, defineComponent, onMounted, ref, onUnmounted } from 'vue'
 import { Position, TransitionType } from './createToast'
 import infoIcon from '../../public/info.svg'
+import { useTimer } from '../hooks/useTimer'
 
 type TransitionMap = {[pos in Position]: {[type in TransitionType]: string}}
 
@@ -116,28 +117,25 @@ export default defineComponent({
     }
   },
   setup(props) {
-    const timer = ref<any | null>(null)
+    const {start, stop, remainingTime} = useTimer(() => {
+      if(props.onClose) props.onClose()
+      props.onCloseHandler()
+    }, props.timeout > 0 ? props.timeout : 5000)
 
     onMounted(() => {
-      startTimer()
+      start()
     })
 
     onUnmounted(() => {
-      stopTimer()
-      if(!props.onClose) return
-      props.onClose()
+      stop()
     })
 
     const startTimer = () => {
-      if (props.timeout <= 0) return
-      timer.value = setTimeout(() => {
-        props.onCloseHandler()
-      }, props.timeout)
+      start()
     }
 
     const stopTimer = () => {
-      if (props.timeout <= 0 || !timer.value) return
-      clearTimeout(timer.value)
+      stop()
     }
 
     const transitionType = computed(() => TRANSITION_MAP[props.position][props.transition])
@@ -183,7 +181,7 @@ export default defineComponent({
       }
     })
 
-    return { customStyle, transitionType, startTimer, stopTimer, infoIcon }
+    return { customStyle, transitionType, startTimer, stopTimer, infoIcon, remainingTime }
   }
 })
 </script>
