@@ -2,14 +2,14 @@
   <transition :name="transitionType" type="animation">
     <div
       class="mosha__toast"
-      :style="customStyle"
+      :style="style"
       :class="[type]"
       v-if="visible"
-      @mouseenter="stopTimer"
-      @mouseleave="startTimer"
+      @mouseenter="stop"
+      @mouseleave="start"
     >
       <div class="mosha__toast__content">
-        <img :src="infoIcon" alt="">
+        <img :src="infoIcon" alt="" />
         <div>
           <div class="mosha__toast__content__title">{{ title }}</div>
           <div class="mosha__toast__content__description">
@@ -27,52 +27,27 @@
 </template>
 
 <script lang="ts">
-import { PropType, computed, defineComponent, onMounted, ref, onUnmounted } from 'vue'
-import { Position, TransitionType } from './createToast'
-import infoIcon from '../../public/info.svg'
-import { useTimer } from '../hooks/useTimer'
-
-type TransitionMap = {[pos in Position]: {[type in TransitionType]: string}}
-
-const TRANSITION_MAP: TransitionMap = {
-  'top-left': {
-    'bounce': 'mosha__bounceInLeft',
-    'flip': 'mosha__flipIn',
-    'slide': 'mosha__slideInLeft',
-  },
-  'top-right': {
-    'bounce': 'mosha__bounceInRight',
-    'flip': 'mosha__flipIn',
-    'slide': 'mosha__slideInRight',
-  },
-  'top-center': {
-    'bounce': 'mosha__bounceInDown',
-    'flip': 'mosha__flipIn',
-    'slide': 'mosha__slideInDown',
-  },
-  'bottom-center': {
-    'bounce': 'mosha__bounceInUp',
-    'flip': 'mosha__flipIn',
-    'slide': 'mosha__slideInUp',
-  },
-  'bottom-right': {
-    'bounce': 'mosha__bounceInRight',
-    'flip': 'mosha__flipIn',
-    'slide': 'mosha__slideInRight',
-  },
-  'bottom-left': {
-    'bounce': 'mosha__bounceInLeft',
-    'flip': 'mosha__flipIn',
-    'slide': 'mosha__slideInLeft',
-  },
-}
+import {
+  PropType,
+  defineComponent,
+  onMounted,
+  onUnmounted,
+  ref,
+  watchEffect,
+  CSSProperties,
+} from "vue";
+import { Position, TransitionType } from "./createToast";
+import infoIcon from "../../public/info.svg";
+import useTimer from "../hooks/useTimer";
+import useTransitionType from "../hooks/useTransitionType";
+import useCustomStyle from "../hooks/useCustomStyle";
 
 export default defineComponent({
-  name: 'toast',
+  name: "toast",
   data() {
     return {
       show: false,
-    }
+    };
   },
   props: {
     visible: Boolean,
@@ -80,7 +55,7 @@ export default defineComponent({
     text: String,
     type: {
       type: String,
-      default: 'default',
+      default: "default",
     },
     onCloseHandler: {
       type: Function as PropType<() => void>,
@@ -97,7 +72,7 @@ export default defineComponent({
     },
     timeout: {
       type: Number,
-      default: 5000
+      default: 5000,
     },
     position: {
       type: String as PropType<Position>,
@@ -113,75 +88,46 @@ export default defineComponent({
     },
     transition: {
       type: String as PropType<TransitionType>,
-      default: 'bounce'
-    }
+      default: "bounce",
+    },
   },
   setup(props) {
-    const {start, stop, remainingTime} = useTimer(() => {
-      if(props.onClose) props.onClose()
-      props.onCloseHandler()
-    }, props.timeout > 0 ? props.timeout : 5000)
+    const style = ref<CSSProperties>()
+    const { start, stop, remainingTime } = useTimer(
+      () => {
+        if (props.onClose) props.onClose();
+        props.onCloseHandler();
+      },
+      props.timeout > 0 ? props.timeout : 5000
+    );
+
+    const { transitionType } = useTransitionType(
+      props.position,
+      props.transition
+    );
+
+    watchEffect(() => {
+      const { customStyle } = useCustomStyle(props.position, props.offset)
+      style.value = customStyle.value
+    })
 
     onMounted(() => {
-      start()
-    })
+      start();
+    });
 
     onUnmounted(() => {
-      stop()
-    })
-
-    const startTimer = () => {
-      start()
-    }
-
-    const stopTimer = () => {
-      stop()
-    }
-
-    const transitionType = computed(() => TRANSITION_MAP[props.position][props.transition])
+      stop();
+    });
     
-    const customStyle = computed(() => {
-      switch (props.position) {
-        case 'top-left':
-          return {
-            left: '16px',
-            top: `${props.offset}px`,
-          }
-        case 'bottom-left':
-          return {
-            left: '16px',
-            bottom: `${props.offset}px`,
-          }
-        case 'bottom-right':
-          return {
-            right: '16px',
-            bottom: `${props.offset}px`,
-          }
-        case 'top-center':
-          return {
-            top: `${props.offset}px`,
-            left: '0',
-            right: '0',
-            marginRight: 'auto',
-            marginLeft: 'auto'
-          }
-        case 'bottom-center':
-          return {
-            bottom: `${props.offset}px`,
-            left: '0',
-            right: '0',
-            marginRight: 'auto',
-            marginLeft: 'auto'
-          }
-        default:
-          return {
-            right: '16px',
-            top: `${props.offset}px`,
-          }
-      }
-    })
 
-    return { customStyle, transitionType, startTimer, stopTimer, infoIcon, remainingTime }
-  }
-})
+    return {
+      style,
+      transitionType,
+      start,
+      stop,
+      infoIcon,
+      remainingTime,
+    };
+  },
+});
 </script>
