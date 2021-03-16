@@ -39,7 +39,7 @@ export default defineComponent({
           text: 'desc',
           transition: 'bounce',
           position: 'bottom-right',
-          timeout: -1,
+          timeout: 1000,
           onClose: () => {
             console.log('log')
           }

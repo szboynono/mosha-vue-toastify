@@ -31,7 +31,6 @@ import {
   PropType,
   defineComponent,
   onMounted,
-  onUnmounted,
   ref,
   watchEffect,
   CSSProperties,
@@ -92,14 +91,16 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const style = ref<CSSProperties>()
-    const { start, stop, remainingTime } = useTimer(
-      () => {
-        if (props.onClose) props.onClose();
-        props.onCloseHandler();
-      },
-      props.timeout > 0 ? props.timeout : 5000
-    );
+    const style = ref<CSSProperties>();
+
+    const timout = props.timeout > 0 ? props.timeout : 30000
+    
+    const closeCallback = () => {
+      if (props.onClose) props.onClose();
+      props.onCloseHandler();
+    };
+
+    const { start, stop } = useTimer(closeCallback, timout);
 
     const { transitionType } = useTransitionType(
       props.position,
@@ -107,18 +108,13 @@ export default defineComponent({
     );
 
     watchEffect(() => {
-      const { customStyle } = useCustomStyle(props.position, props.offset)
-      style.value = customStyle.value
-    })
+      const { customStyle } = useCustomStyle(props.position, props.offset);
+      style.value = customStyle.value;
+    });
 
     onMounted(() => {
       start();
     });
-
-    onUnmounted(() => {
-      stop();
-    });
-    
 
     return {
       style,
@@ -126,7 +122,6 @@ export default defineComponent({
       start,
       stop,
       infoIcon,
-      remainingTime,
     };
   },
 });

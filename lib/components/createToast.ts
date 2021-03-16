@@ -38,8 +38,8 @@ let toastId = 0;
 export const createToast = (options: ToastOptions | string) => {
   let verticalOffset = 0
   const id = toastId++;
-  const position = typeof options === 'string' ? 'top-right' :options.position || 'top-right'
-  const transition = typeof options === 'string' ? 'bounce' :options.transition || 'bounce'
+  const position = typeof options === 'string' ? 'top-right' : options.position || 'top-right'
+  const transition = typeof options === 'string' ? 'bounce' : options.transition || 'bounce'
 
   toasts[position].forEach(({ toastVNode }) => {
     const offsetHeight = (toastVNode.el as HTMLElement).offsetHeight

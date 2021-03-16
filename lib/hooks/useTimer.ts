@@ -17,6 +17,7 @@ const useTimer = (callback: Function | string, delay: number) => {
   }
 
   onUnmounted(() => {
+    console.log('clean')
     clearTimeout(timerId.value)
   })
 
