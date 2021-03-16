@@ -17,13 +17,13 @@ export default defineComponent({
   name: 'HelloWorld',
   setup: () => {
     const tr = () => {
-        createToast('adsd')
+        createToast('content here', {
+          timeout: -1
+        })
     }
 
     const tl = () => {
-        createToast({
-          title: 'title',
-          text: 'desc',
+        createToast('content', {
           transition: 'slide',
           position: 'top-left',
           timeout: -1,
@@ -34,9 +34,7 @@ export default defineComponent({
     }
 
     const br = () => {
-        createToast({
-          title: 'title',
-          text: 'desc',
+        createToast('yoasihco', {
           transition: 'bounce',
           position: 'bottom-right',
           timeout: 1000,
@@ -47,9 +45,7 @@ export default defineComponent({
     }
 
     const bl = () => {
-        createToast({
-          title: 'title',
-          text: 'desc',
+        createToast('asdsadf', {
           position: 'bottom-left',
           transition: 'slide',
           timeout: -1,
@@ -60,9 +56,7 @@ export default defineComponent({
     }
 
     const tc = () => {
-        createToast({
-          title: 'title',
-          text: 'desc',
+        createToast('afsasgg', {
           position: 'top-center',
           transition: 'slide',
           timeout: -1,
@@ -73,9 +67,7 @@ export default defineComponent({
     }
 
     const bc = () => {
-        createToast({
-          title: 'title',
-          text: 'desc',
+        createToast('asdfff', {
           position: 'bottom-center',
           transition: 'flip',
           timeout: -1,

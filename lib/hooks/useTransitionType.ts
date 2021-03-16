@@ -1,4 +1,4 @@
-import { Position, TransitionType } from '../components/createToast'
+import { Position, TransitionType } from '../types'
 import { computed } from 'vue'
 
 type TransitionMap = {[pos in Position]: {[type in TransitionType]: string}}

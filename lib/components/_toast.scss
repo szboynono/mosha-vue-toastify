@@ -4,6 +4,9 @@
   align-items: center;
   justify-content: space-between;
   position: fixed;
+  min-height: 64px;
+  max-height: 800px;
+  overflow: hidden;
   padding: 8px 16px;
   color: black;
   z-index: 999;
@@ -30,16 +33,10 @@
     line-height: 24px;
     display: flex;
 
-    &__title {
+    &__text {
       font-size: 16px;
       color: black;
       font-weight: 400;
-    }
-
-    &__description {
-      font-size: 14px;
-      color: black;
-      font-weight: 300;
     }
   }
 

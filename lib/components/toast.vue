@@ -10,12 +10,7 @@
     >
       <div class="mosha__toast__content">
         <img :src="infoIcon" alt="" />
-        <div>
-          <div class="mosha__toast__content__title">{{ title }}</div>
-          <div class="mosha__toast__content__description">
-            {{ text }}
-          </div>
-        </div>
+        <div class="mosha__toast__content__text">{{ text }}</div>
       </div>
       <div
         v-if="closable"
@@ -35,7 +30,7 @@ import {
   watchEffect,
   CSSProperties,
 } from "vue";
-import { Position, TransitionType } from "./createToast";
+import { Position, TransitionType } from "../types";
 import infoIcon from "../../public/info.svg";
 import useTimer from "../hooks/useTimer";
 import useTransitionType from "../hooks/useTransitionType";
@@ -50,7 +45,6 @@ export default defineComponent({
   },
   props: {
     visible: Boolean,
-    title: String,
     text: String,
     type: {
       type: String,
@@ -96,7 +90,6 @@ export default defineComponent({
     const timout = props.timeout > 0 ? props.timeout : 30000
     
     const closeCallback = () => {
-      if (props.onClose) props.onClose();
       props.onCloseHandler();
     };
 
