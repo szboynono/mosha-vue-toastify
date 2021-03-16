@@ -117,6 +117,7 @@ export default defineComponent({
   },
   setup(props) {
     const timer = ref<any | null>(null)
+
     onMounted(() => {
       startTimer()
     })
