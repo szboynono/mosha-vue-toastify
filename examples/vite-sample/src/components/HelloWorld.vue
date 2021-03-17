@@ -11,7 +11,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import { createToast } from '../../../../lib/main';
+import { createToast } from 'mosha-vue-toastify';
 
 export default defineComponent({
   name: 'HelloWorld',

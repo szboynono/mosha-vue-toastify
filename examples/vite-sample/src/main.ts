@@ -1,5 +1,5 @@
 import { createApp } from 'vue'
 import App from './App.vue'
-import moshaToast from '../../../lib/main'
+// import moshaToast from '../../../lib/main'
 import '../../../lib/index.scss'
-createApp(App).use(moshaToast).mount('#app')
+createApp(App).mount('#app')

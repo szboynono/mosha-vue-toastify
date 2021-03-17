@@ -31,7 +31,7 @@ import {
   watchEffect,
   CSSProperties,
 } from "vue";
-import { Position, TransitionType } from "../types";
+import { Position, ToastType, TransitionType } from "../types";
 import useTimer from "../hooks/useTimer";
 import useTransitionType from "../hooks/useTransitionType";
 import useCustomStyle from "../hooks/useCustomStyle";
