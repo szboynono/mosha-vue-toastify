@@ -97,10 +97,6 @@ export default defineComponent({
     const { start, stop, remainingTime } = useTimer(closeCallback, timout);
 
     const startTimer = () => {
-      setInterval(() => {
-        progress.value -= 100;
-        console.log(progress.value)
-      }, 1)
       start()
     }
 

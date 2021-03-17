@@ -18,21 +18,23 @@ let toastId = 0;
 const initializeOptions = (options: ToastOptions): ToastOptions => ({
   type: options.type || defaultOptions.type,
   timeout: options.timeout || defaultOptions.timeout,
-  closable: options
+  closable: options.closable || defaultOptions.closable,
+  position: options.position || defaultOptions.position,
+  showIcon: options.showIcon || defaultOptions.showIcon,
+  transition: options.transition || defaultOptions.transition,
+  onClose: options.onClose
 })
 
 export const createToast = (text: string, options?: ToastOptions) => {
-  let initializedOptions: ToastOptions = {
-    type: options && options.type ? options.type : defaultOptions.type,
-    timeout: options && options.timeout ? options.timeout: defaultOptions.timeout,
-    position: options
-  }
+  let initializedOptions = defaultOptions;
 
-  
+  if(options) initializedOptions = initializeOptions(options);
+
   let verticalOffset = 0
   const id = toastId++;
 
-  toasts[position].forEach(({ toastVNode }) => {
+  if(!initializedOptions.position) return;
+  toasts[initializedOptions.position].forEach(({ toastVNode }) => {
     const offsetHeight = (toastVNode.el as HTMLElement).offsetHeight
     verticalOffset += (offsetHeight || 0) + 16
   })
@@ -45,22 +47,18 @@ export const createToast = (text: string, options?: ToastOptions) => {
   let toastVNode = null;
 
   toastVNode = createVNode(Toast, {
+    ...initializedOptions,
     text,
-    type,
-    timeout,
-    closable,
-    position,
-    showIcon,
-    transition,
-    onClose,
     id,
     offset: verticalOffset,
     visible: false,
-    onCloseHandler: () => { close(id, position) }
+    onCloseHandler: () => { close(id, initializedOptions.position ? initializedOptions.position : 'top-right') }
   })
 
   render(toastVNode, container)
-  toasts[position].push({ toastVNode, container });
+  if(!initializedOptions.position) return;
+
+  toasts[initializedOptions.position].push({ toastVNode, container });
 
   if (toastVNode.component) {
     toastVNode.component.props.visible = true
