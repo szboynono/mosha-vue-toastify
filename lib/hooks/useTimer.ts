@@ -16,11 +16,15 @@ const useTimer = (callback: Function | string, delay: number) => {
     timerId.value = setTimeout(callback, remainingTime.value)
   }
 
-  onUnmounted(() => {
+  const clear = () => {
     clearTimeout(timerId.value)
+  }
+
+  onUnmounted(() => {
+    clear()
   })
 
-  return { start, stop, remainingTime }
+  return { start, stop, clear, remainingTime }
 }
 
 export default useTimer

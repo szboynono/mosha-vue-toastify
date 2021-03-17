@@ -5,8 +5,8 @@
       :style="style"
       :class="[type]"
       v-if="visible"
-      @mouseenter="stop"
-      @mouseleave="start"
+      @mouseenter="stopTimer"
+      @mouseleave="startTimer"
     >
       <div class="mosha__toast__content">
         <img :src="infoIcon" alt="" />
@@ -87,13 +87,26 @@ export default defineComponent({
   setup(props) {
     const style = ref<CSSProperties>();
 
-    const timout = props.timeout > 0 ? props.timeout : 30000
+    const timout = props.timeout > 0 ? props.timeout : 1200000
+    const progress = ref(timout);
     
     const closeCallback = () => {
       props.onCloseHandler();
     };
 
-    const { start, stop } = useTimer(closeCallback, timout);
+    const { start, stop, remainingTime } = useTimer(closeCallback, timout);
+
+    const startTimer = () => {
+      setInterval(() => {
+        progress.value -= 100;
+        console.log(progress.value)
+      }, 1)
+      start()
+    }
+
+    const stopTimer = () => {
+      stop()
+    }
 
     const { transitionType } = useTransitionType(
       props.position,
@@ -106,14 +119,14 @@ export default defineComponent({
     });
 
     onMounted(() => {
-      start();
+      startTimer();
     });
 
     return {
       style,
       transitionType,
-      start,
-      stop,
+      startTimer,
+      stopTimer,
       infoIcon,
     };
   },

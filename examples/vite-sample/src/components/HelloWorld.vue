@@ -17,9 +17,7 @@ export default defineComponent({
   name: 'HelloWorld',
   setup: () => {
     const tr = () => {
-        createToast('content here', {
-          timeout: -1
-        })
+        createToast('content here')
     }
 
     const tl = () => {

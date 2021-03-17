@@ -11,9 +11,24 @@ const toasts: Record<Position, ToastObject[]> = {
   'bottom-center': [],
 }
 
+const defaultOptions: ToastOptions = { type: 'default', timeout: 5000, closable: true, position: 'top-right', showIcon: false, transition: 'bounce' }
+
 let toastId = 0;
 
-export const createToast = (text: string, { type = 'default', timeout = 5000, closable = true, position = 'top-right', showIcon = false, transition = 'bounce', onClose }: ToastOptions) => {
+const initializeOptions = (options: ToastOptions): ToastOptions => ({
+  type: options.type || defaultOptions.type,
+  timeout: options.timeout || defaultOptions.timeout,
+  closable: options
+})
+
+export const createToast = (text: string, options?: ToastOptions) => {
+  let initializedOptions: ToastOptions = {
+    type: options && options.type ? options.type : defaultOptions.type,
+    timeout: options && options.timeout ? options.timeout: defaultOptions.timeout,
+    position: options
+  }
+
+  
   let verticalOffset = 0
   const id = toastId++;
 
@@ -64,7 +79,7 @@ const close = (id: number, position: Position) => {
 
   toasts[position].splice(index, 1)
   toastVNode.component.props.visible = false;
-  
+
   if (toastVNode.component.props.onClose) {
     toastVNode.component.props.onClose()
   }
