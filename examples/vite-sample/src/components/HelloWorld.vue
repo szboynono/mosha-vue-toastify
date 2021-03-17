@@ -46,7 +46,7 @@ export default defineComponent({
         createToast('asdsadf', {
           position: 'bottom-left',
           transition: 'slide',
-          timeout: -1,
+          timeout: 15000,
           onClose: () => {
             console.log('log')
           }

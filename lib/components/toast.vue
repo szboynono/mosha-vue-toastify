@@ -17,6 +17,7 @@
         class="mosha__toast__close-icon"
         @click="onCloseHandler"
       ></div>
+      <div class="mosha__toast__progress" :style="{width: `${progress}%`}"></div>
     </div>
   </transition>
 </template>
@@ -88,13 +89,12 @@ export default defineComponent({
     const style = ref<CSSProperties>();
 
     const timout = props.timeout > 0 ? props.timeout : 1200000
-    const progress = ref(timout);
     
     const closeCallback = () => {
       props.onCloseHandler();
     };
 
-    const { start, stop, remainingTime } = useTimer(closeCallback, timout);
+    const { start, stop, progress } = useTimer(closeCallback, timout);
 
     const startTimer = () => {
       start()
@@ -124,6 +124,7 @@ export default defineComponent({
       startTimer,
       stopTimer,
       infoIcon,
+      progress
     };
   },
 });

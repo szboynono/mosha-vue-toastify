@@ -9,7 +9,7 @@
   overflow: hidden;
   padding: 8px 16px;
   color: black;
-  z-index: 999;
+  z-index: 9999;
   width: max-content;
   transition: all .6s ease-out .3s;
   background: rgb(255, 255, 255);
@@ -52,6 +52,13 @@
     font-size: 20px;
     position: relative;
     top: -1px;
+  }
+
+  &__progress {
+    position: absolute;
+    z-index: 9999;
+    height: 5px;
+    background-color: red;
   }
 
   &.default {
