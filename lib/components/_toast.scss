@@ -55,10 +55,13 @@
   }
 
   &__progress {
+    transition: all linear .2s;
     position: absolute;
     z-index: 9999;
     height: 5px;
     background-color: red;
+    bottom: 0;
+    margin-left: -13px;
   }
 
   &.default {

@@ -19,7 +19,7 @@ const useTimer = (callback: Function | string, delay: number) => {
     clearTimeout(timerId.value)
     intervalId.value = setInterval(() => {
       progress.value--
-    }, delay / 100)
+    }, delay / 100 - 2)
     timerId.value = setTimeout(callback, remainingTime.value)
   }
 
