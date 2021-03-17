@@ -1,6 +1,6 @@
 import { createVNode, render } from 'vue'
 import { Position, ToastObject, ToastOptions } from '../types';
-import Toast from './toast.vue'
+import Toast from './MToast.vue'
 
 const toasts: Record<Position, ToastObject[]> = {
   'top-left': [],

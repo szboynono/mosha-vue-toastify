@@ -8,6 +8,8 @@
   max-height: 800px;
   overflow: hidden;
   padding: 8px 16px;
+  word-break: break-word;
+  max-width: 480px;
   color: black;
   z-index: 9999;
   width: max-content;
@@ -15,8 +17,8 @@
   background: rgb(255, 255, 255);
   background: linear-gradient(
     145deg,
-    rgba(255, 255, 255, 0.4) 0%,
-    rgba(255, 255, 255, 0.1) 100%
+    rgba(240, 240, 240, 0.4) 0%,
+    rgba(240, 240, 240, 0.1) 100%
   );
   border-radius: 10px;
   backdrop-filter: blur(20px);
@@ -44,14 +46,16 @@
     font-size: 20px;
     cursor: pointer;
     content: '\00d7';
-    color: rgba(0, 0, 0, 0.45);
+    color: rgb(146, 145, 145);
     transition: color 0.3s;
-    font-weight: 300;
-    font-size: 20px;
+    font-weight: 600;
     margin-left: 10px;
-    font-size: 20px;
     position: relative;
     top: -1px;
+  }
+
+  &__close-icon:hover::before {
+    color: black
   }
 
   &__progress {
@@ -59,36 +63,8 @@
     position: absolute;
     z-index: 9999;
     height: 5px;
-    background-color: red;
+    background-image: linear-gradient(-225deg, #69EACB 0%, #EACCF8 48%, #6654F1 100%);
     bottom: 0;
     margin-left: -13px;
-  }
-
-  &.default {
-    & .material-icons-round {
-      color: #2c3e50;
-    }
-  }
-
-  &.success {
-    & .material-icons-round {
-      color: #52c41a;
-    }
-  }
-
-  &.info {
-    & .material-icons-round {
-      color: #1890ff;
-    }
-  }
-  &.warning {
-    & .material-icons-round {
-      color: #faad14;
-    }
-  }
-  &.danger {
-    & .material-icons-round {
-      color: #ff4d4f;
-    }
   }
 }

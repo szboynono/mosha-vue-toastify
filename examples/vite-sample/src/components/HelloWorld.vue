@@ -24,6 +24,7 @@ export default defineComponent({
         createToast('content', {
           transition: 'slide',
           position: 'top-left',
+          type: 'info',
           timeout: -1,
           onClose: () => {
             console.log('log')
@@ -35,6 +36,7 @@ export default defineComponent({
         createToast('yoasihco', {
           transition: 'bounce',
           position: 'bottom-right',
+          type: 'warning',
           timeout: 1000,
           onClose: () => {
             console.log('log')
@@ -47,6 +49,7 @@ export default defineComponent({
           position: 'bottom-left',
           transition: 'slide',
           timeout: 15000,
+          type: 'danger',
           onClose: () => {
             console.log('log')
           }
@@ -58,6 +61,7 @@ export default defineComponent({
           position: 'top-center',
           transition: 'slide',
           timeout: -1,
+          type: 'success',
           onClose: () => {
             console.log('log')
           }

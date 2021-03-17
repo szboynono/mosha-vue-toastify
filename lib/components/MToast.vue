@@ -9,7 +9,7 @@
       @mouseleave="startTimer"
     >
       <div class="mosha__toast__content">
-        <img :src="infoIcon" alt="" />
+        <MIcon :type="type"/>
         <div class="mosha__toast__content__text">{{ text }}</div>
       </div>
       <div
@@ -32,23 +32,21 @@ import {
   CSSProperties,
 } from "vue";
 import { Position, TransitionType } from "../types";
-import infoIcon from "../../public/info.svg";
 import useTimer from "../hooks/useTimer";
 import useTransitionType from "../hooks/useTransitionType";
 import useCustomStyle from "../hooks/useCustomStyle";
+import MIcon from './MIcon.vue'
 
 export default defineComponent({
-  name: "toast",
-  data() {
-    return {
-      show: false,
-    };
+  name: "MToast",
+  components: {
+    MIcon
   },
   props: {
     visible: Boolean,
     text: String,
     type: {
-      type: String,
+      type: String as PropType<ToastType>,
       default: "default",
     },
     onCloseHandler: {
@@ -123,7 +121,6 @@ export default defineComponent({
       transitionType,
       startTimer,
       stopTimer,
-      infoIcon,
       progress
     };
   },
