@@ -12,9 +12,10 @@ export interface ToastObject {
 export interface ToastOptions {
   type?: ToastType,
   timeout?: number,
-  closable?: Boolean,
+  closable?: boolean,
   position?: Position,
-  showIcon?: Boolean,
+  showIcon?: boolean,
   transition?: TransitionType,
+  hideProgressBar?: boolean,
   onClose?: () => void
 }

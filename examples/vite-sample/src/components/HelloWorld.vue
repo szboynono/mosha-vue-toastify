@@ -72,7 +72,7 @@ export default defineComponent({
         createToast('asdfff', {
           position: 'bottom-center',
           transition: 'flip',
-          timeout: -1,
+          timeout: 3000,
           onClose: () => {
             console.log('log')
           }

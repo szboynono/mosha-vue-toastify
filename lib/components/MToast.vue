@@ -20,7 +20,7 @@
         class="mosha__toast__close-icon"
         @click="onCloseHandler"
       ></div>
-      <div class="mosha__toast__progress" :style="{width: `${progress}%`}"></div>
+      <div v-if="!hideProgressBar" class="mosha__toast__progress" :style="{width: `${progress}%`}"></div>
     </div>
   </transition>
 </template>
@@ -77,6 +77,10 @@ export default defineComponent({
       type: Boolean,
       default: true,
     },
+    hideProgressBar: {
+      type: Boolean,
+      default: false
+    },
     showIcon: {
       type: Boolean,
       default: false,
@@ -89,20 +93,22 @@ export default defineComponent({
   setup(props) {
     const style = ref<CSSProperties>();
 
-    const timout = props.timeout > 0 ? props.timeout : 1200000
-    
     const closeCallback = () => {
       props.onCloseHandler();
     };
 
-    const { start, stop, progress } = useTimer(closeCallback, timout);
+    const { start, stop, progress } = useTimer(closeCallback, props.timeout);
 
     const startTimer = () => {
-      start()
+      if (props.timeout > 0) {
+        start()
+      }
     }
 
     const stopTimer = () => {
-      stop()
+      if (props.timeout > 0) {
+        stop()
+      }
     }
 
     const { transitionType } = useTransitionType(

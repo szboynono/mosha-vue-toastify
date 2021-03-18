@@ -1,4 +1,4 @@
-import { onUnmounted, ref } from 'vue'
+import { onUnmounted, onMounted, ref } from 'vue'
 
 const useTimer = (callback: Function | string, delay: number) => {
   const timerId = ref<number>()
@@ -28,6 +28,10 @@ const useTimer = (callback: Function | string, delay: number) => {
     clearInterval(intervalId.value)
     clearTimeout(timerId.value)
   }
+
+  onMounted(() => {
+    if (delay <= 0) return
+  })
 
   onUnmounted(() => {
     clear()
