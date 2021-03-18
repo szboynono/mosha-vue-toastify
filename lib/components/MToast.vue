@@ -7,10 +7,13 @@
       v-if="visible"
       @mouseenter="stopTimer"
       @mouseleave="startTimer"
-    >
-      <div class="mosha__toast__content">
+    > 
+      <div class="mosha__toast__content-wrapper">
         <MIcon :type="type"/>
-        <div class="mosha__toast__content__text">{{ text }}</div>
+        <div class="mosha__toast__content">
+          <div class="mosha__toast__content__text">{{ text }}</div>
+          <div class="mosha__toast__content__description">aosidsaoidh sao idhoais aosidh oh oi</div>
+        </div>
       </div>
       <div
         v-if="closable"

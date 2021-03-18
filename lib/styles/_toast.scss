@@ -1,44 +1,46 @@
 .mosha__toast {
-  min-width: 330px;
+  min-width: 320px;
   display: flex;
-  align-items: center;
   justify-content: space-between;
   position: fixed;
   min-height: 64px;
   max-height: 800px;
   overflow: hidden;
-  padding: 8px 16px;
+  padding: 12px 8px;
   word-break: break-word;
   max-width: 480px;
-  color: black;
   z-index: 9999;
   width: max-content;
   transition: all .3s ease-out .5s;
-  background: rgb(255, 255, 255);
-  background: linear-gradient(
-    145deg,
-    rgba(240, 240, 240, 0.4) 0%,
-    rgba(240, 240, 240, 0.1) 100%
-  );
-  border-radius: 10px;
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  box-shadow: 0px 1px 24px -1px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  box-shadow: 0 1px 10px 0 rgba(0,0,0,.1), 0 2px 15px 0 rgba(0,0,0,.05);;
 
   & .material-icons-round {
     margin-right: 8px;
     font-size: 24px;
   }
 
+  &__content-wrapper {
+    display: flex;
+    align-items: center;
+  }
+
   &__content {
     font-family: 'Roboto', sans-serif;
     line-height: 24px;
     display: flex;
+    flex-direction: column;
+    color: white;
 
     &__text {
+      margin-bottom: 4px;
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    &__description {
       font-size: 16px;
-      color: black;
-      font-weight: 400;
+      font-weight: normal;
     }
   }
 
@@ -46,25 +48,62 @@
     font-size: 20px;
     cursor: pointer;
     content: '\00d7';
-    color: rgb(146, 145, 145);
+    color: white;
     transition: color 0.3s;
     font-weight: 600;
     margin-left: 10px;
     position: relative;
-    top: -1px;
+    top: -4px;
   }
 
   &__close-icon:hover::before {
-    color: black
+    color: grey
   }
 
   &__progress {
     transition: all linear .2s;
     position: absolute;
     z-index: 9999;
-    height: 5px;
-    background-image: linear-gradient(-225deg, #69EACB 0%, #EACCF8 48%, #6654F1 100%);
+    height: 8px;
+    background-color: rgba($color: #FFFFFF, $alpha: 0.6);
+    // background-image: linear-gradient(-225deg, #69EACB 0%, #EACCF8 48%, #6654F1 100%);
     bottom: 0;
-    margin-left: -13px;
+    margin-left: -8px;
+  }
+
+  &.success {
+    background-color: #06D6A0;
+  }
+
+  &.warning {
+    background-color: #FFC43D;
+  }
+
+  &.info {
+    background-color: #1B9AAA;
+  }
+
+  &.danger {
+    background-color: #EF476F;
+  }
+
+  &.default {
+    // background-color: #F8FFE5;
+    background-color: white;
+    & .mosha__toast__content {
+      color: #616161;
+    }
+
+    & .mosha__toast__close-icon::before {
+      color: #616161;
+    }
+
+    & .mosha__toast__close-icon:hover::before {
+      color: #d0d4d4;
+    }
+
+    & .mosha__toast__progress {
+      background-image: linear-gradient(-225deg, #69EACB 0%, #EACCF8 48%, #6654F1 100%);
+    }
   }
 }

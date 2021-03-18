@@ -1,5 +1,5 @@
 <template>
-  <div style="margin-top: 500px;">
+  <div class="example">
     <button @click="tr">top-right</button>
     <button @click="tl">top-left</button>
     <button @click="br">bottom-right</button>
@@ -11,7 +11,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import { createToast } from 'mosha-vue-toastify';
+import { createToast } from '../../../../lib/main';
 
 export default defineComponent({
   name: 'HelloWorld',
@@ -37,7 +37,7 @@ export default defineComponent({
           transition: 'bounce',
           position: 'bottom-right',
           type: 'warning',
-          timeout: 1000,
+          timeout: -1,
           onClose: () => {
             console.log('log')
           }
