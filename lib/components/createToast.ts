@@ -35,12 +35,12 @@ const initializeOptions = (options: ToastOptions): ToastOptions => {
 export const createToast = (text: string, options?: ToastOptions) => {
   const initializedOptions = options ? initializeOptions(options) : defaultOptions;
 
-  let verticalOffset = 0
+  let verticalOffset = 12
   const id = toastId++;
 
   if (!initializedOptions.position) return;
   toasts[initializedOptions.position].forEach(({ toastVNode }) => {
-    const offsetHeight = (toastVNode.el as HTMLElement).offsetHeight
+    const offsetHeight = (toastVNode.el as HTMLElement).offsetHeight + 12
     verticalOffset += (offsetHeight || 0)
   })
 
@@ -91,7 +91,7 @@ const close = (id: number, position: Position) => {
     if (!toastVNode.el) return;
 
     const verticalPos: string = position.split('-')[0] || 'top'
-    const pos = parseInt(toastVNode.el.style[verticalPos], 10) - height;
+    const pos = parseInt(toastVNode.el.style[verticalPos], 10) - height - 12;
 
     if (!toastVNode.component) return;
     toastVNode.component.props.offset = pos
