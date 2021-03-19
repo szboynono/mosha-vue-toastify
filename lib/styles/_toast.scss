@@ -1,10 +1,11 @@
 .mosha__toast {
-  min-width: 320px;
+  min-width: 300px;
   display: flex;
   justify-content: space-between;
   position: fixed;
   min-height: 64px;
   max-height: 800px;
+  box-sizing: border-box;
   overflow: hidden;
   padding: 12px 8px;
   word-break: break-word;
@@ -13,7 +14,8 @@
   width: max-content;
   transition: all .3s ease-out .5s;
   border-radius: 8px;
-  box-shadow: 0 1px 10px 0 rgba(0,0,0,.1), 0 2px 15px 0 rgba(0,0,0,.05);;
+  box-shadow: 0 1px 10px 0 rgba(0,0,0,.1), 0 2px 15px 0 rgba(0,0,0,.05);
+  margin: 0 16px;
 
   & .material-icons-round {
     margin-right: 8px;
@@ -105,5 +107,10 @@
     & .mosha__toast__progress {
       background-image: linear-gradient(-225deg, #69EACB 0%, #EACCF8 48%, #6654F1 100%);
     }
+  }
+
+  @media only screen and (max-width: 375px) {
+    width: 100%;
+    margin: 0 auto;
   }
 }

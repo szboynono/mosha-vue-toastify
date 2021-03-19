@@ -41,10 +41,8 @@ export const createToast = (text: string, options?: ToastOptions) => {
   if (!initializedOptions.position) return;
   toasts[initializedOptions.position].forEach(({ toastVNode }) => {
     const offsetHeight = (toastVNode.el as HTMLElement).offsetHeight
-    verticalOffset += (offsetHeight || 0) + 16
+    verticalOffset += (offsetHeight || 0)
   })
-
-  verticalOffset += 16
 
   const container = document.createElement('div')
   document.body.appendChild(container);
@@ -93,7 +91,7 @@ const close = (id: number, position: Position) => {
     if (!toastVNode.el) return;
 
     const verticalPos: string = position.split('-')[0] || 'top'
-    const pos = parseInt(toastVNode.el.style[verticalPos], 10) - height - 16;
+    const pos = parseInt(toastVNode.el.style[verticalPos], 10) - height;
 
     if (!toastVNode.component) return;
     toastVNode.component.props.offset = pos

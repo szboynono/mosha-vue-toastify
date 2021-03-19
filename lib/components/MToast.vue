@@ -38,6 +38,7 @@ import { Position, ToastType, TransitionType } from "../types";
 import useTimer from "../hooks/useTimer";
 import useTransitionType from "../hooks/useTransitionType";
 import useCustomStyle from "../hooks/useCustomStyle";
+import useBreakpoints from "../hooks/useBreakPoints";
 import MIcon from './MIcon.vue'
 
 export default defineComponent({
@@ -110,6 +111,7 @@ export default defineComponent({
         stop()
       }
     }
+    const { type } = useBreakpoints();
 
     const { transitionType } = useTransitionType(
       props.position,

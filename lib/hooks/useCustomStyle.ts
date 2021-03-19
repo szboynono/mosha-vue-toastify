@@ -5,17 +5,17 @@ const useCustomStyle = (position: any, offset: any) => {
     switch (position) {
       case "top-left":
         return {
-          left: "16px",
+          left: "0",
           top: `${offset}px`,
         };
       case "bottom-left":
         return {
-          left: "16px",
+          left: "0",
           bottom: `${offset}px`,
         };
       case "bottom-right":
         return {
-          right: "16px",
+          right: "0",
           bottom: `${offset}px`,
         };
       case "top-center":
@@ -36,7 +36,7 @@ const useCustomStyle = (position: any, offset: any) => {
         };
       default:
         return {
-          right: "16px",
+          right: "0",
           top: `${offset}px`,
         };
     }
