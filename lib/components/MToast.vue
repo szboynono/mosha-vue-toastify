@@ -12,7 +12,7 @@
         <MIcon v-if="showIcon" :type="type"/>
         <div class="mosha__toast__content">
           <div class="mosha__toast__content__text">{{ text }}</div>
-          <div class="mosha__toast__content__description">aosidsaoidh sao idhoais aosidh oh oi</div>
+          <div class="mosha__toast__content__description" v-if="description"> {{ description }} </div>
         </div>
       </div>
       <div
@@ -48,6 +48,7 @@ export default defineComponent({
   props: {
     visible: Boolean,
     text: String,
+    description: String,
     type: {
       type: String as PropType<ToastType>,
       default: "default",
@@ -117,7 +118,7 @@ export default defineComponent({
     );
 
     watchEffect(() => {
-      const { customStyle } = useCustomStyle(props.position, props.offset, props.showIcon);
+      const { customStyle } = useCustomStyle(props.position, props.offset);
       style.value = customStyle.value;
     });
 

@@ -21,13 +21,16 @@ export default defineComponent({
     }
 
     const tl = () => {
-        createToast('content', {
+        createToast({
+          title: 'this is a title',
+          description: 'this is a description'
+        }, {
           transition: 'slide',
           position: 'top-left',
           type: 'info',
-          showIcon: false,
-          hideProgressBar: true,
-          timeout: -1,
+          showIcon: true,
+          hideProgressBar: false,
+          timeout: 10000,
           onClose: () => {
             console.log('log')
           }

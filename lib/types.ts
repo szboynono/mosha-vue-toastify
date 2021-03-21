@@ -4,6 +4,11 @@ export type Position =  'top-left' | 'top-right' | 'bottom-left' | 'bottom-right
 
 export type TransitionType = 'bounce' | 'flip' | 'slide'
 
+export type ToastContent = string | {
+  title: string,
+  description?: string
+}
+
 export interface ToastObject {
   toastVNode: any
   container: HTMLDivElement;

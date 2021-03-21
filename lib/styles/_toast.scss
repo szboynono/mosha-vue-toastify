@@ -1,5 +1,4 @@
 .mosha__toast {
-  min-width: 300px;
   display: flex;
   justify-content: space-between;
   position: fixed;
@@ -9,6 +8,7 @@
   overflow: hidden;
   padding: 12px 8px;
   word-break: break-word;
+  min-width: 312px;
   max-width: 480px;
   z-index: 9999;
   width: max-content;
@@ -17,31 +17,26 @@
   box-shadow: 0 1px 10px 0 rgba(0,0,0,.1), 0 2px 15px 0 rgba(0,0,0,.05);
   margin: 0 16px;
 
-  & .material-icons-round {
-    margin-right: 8px;
-    font-size: 24px;
-  }
-
   &__content-wrapper {
     display: flex;
     align-items: center;
   }
 
   &__content {
-    font-family: 'Roboto', sans-serif;
-    line-height: 24px;
+    font-family: sans-serif;
+    line-height: 20px;
     display: flex;
     flex-direction: column;
     color: white;
 
     &__text {
       margin-bottom: 4px;
-      font-size: 20px;
+      font-size: 16px;
       font-weight: bold;
     }
 
     &__description {
-      font-size: 16px;
+      font-size: 14px;
       font-weight: normal;
     }
   }

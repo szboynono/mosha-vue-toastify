@@ -1,5 +1,5 @@
 import { createVNode, render } from 'vue'
-import { Position, ToastObject, ToastOptions } from '../types';
+import { Position, ToastObject, ToastOptions, ToastContent } from '../types';
 import Toast from './MToast.vue'
 
 const toasts: Record<Position, ToastObject[]> = {
@@ -33,8 +33,11 @@ const initializeOptions = (options: ToastOptions): ToastOptions => {
   return processedOptions
 }
 
-export const createToast = (text: string, options?: ToastOptions) => {
+export const createToast = (content: ToastContent, options?: ToastOptions) => {
+  
   const initializedOptions = options ? initializeOptions(options) : defaultOptions;
+  const text = typeof content === 'string' ? content : content.title;
+  const description = typeof content === 'string' ? undefined : content.description;
 
   let verticalOffset = 12
   const id = toastId++;
@@ -52,6 +55,7 @@ export const createToast = (text: string, options?: ToastOptions) => {
   toastVNode = createVNode(Toast, {
     ...initializedOptions,
     text,
+    description,
     id,
     offset: verticalOffset,
     visible: false,
