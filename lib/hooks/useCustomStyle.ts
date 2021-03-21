@@ -1,6 +1,6 @@
-import { computed } from 'vue';
+import { computed, CSSProperties } from 'vue';
 
-const useCustomStyle = (position: any, offset: any) => {
+const useCustomStyle = (position: any, offset: any, showIcon: boolean) => {
   const customStyle = computed(() => {
     switch (position) {
       case "top-left":
@@ -41,6 +41,9 @@ const useCustomStyle = (position: any, offset: any) => {
         };
     }
   });
+  if (!showIcon) {
+    ((customStyle.value) as CSSProperties).padding = '12px 16px'
+  }
   return {customStyle}
 }
 

@@ -9,7 +9,7 @@
       @mouseleave="startTimer"
     > 
       <div class="mosha__toast__content-wrapper">
-        <MIcon :type="type"/>
+        <MIcon v-if="showIcon" :type="type"/>
         <div class="mosha__toast__content">
           <div class="mosha__toast__content__text">{{ text }}</div>
           <div class="mosha__toast__content__description">aosidsaoidh sao idhoais aosidh oh oi</div>
@@ -83,7 +83,7 @@ export default defineComponent({
     },
     showIcon: {
       type: Boolean,
-      default: false,
+      default: true,
     },
     transition: {
       type: String as PropType<TransitionType>,
@@ -117,7 +117,7 @@ export default defineComponent({
     );
 
     watchEffect(() => {
-      const { customStyle } = useCustomStyle(props.position, props.offset);
+      const { customStyle } = useCustomStyle(props.position, props.offset, props.showIcon);
       style.value = customStyle.value;
     });
 

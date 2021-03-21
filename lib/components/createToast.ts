@@ -11,7 +11,7 @@ const toasts: Record<Position, ToastObject[]> = {
   'bottom-center': [],
 }
 
-const defaultOptions: ToastOptions = { type: 'default', timeout: 5000, closable: true, position: 'top-right', showIcon: false, transition: 'bounce', hideProgressBar: false }
+const defaultOptions: ToastOptions = { type: 'default', timeout: 5000, closable: true, position: 'top-right', transition: 'bounce', hideProgressBar: false }
 
 let toastId = 0;
 
@@ -19,12 +19,13 @@ const initializeOptions = (options: ToastOptions): ToastOptions => {
   const processedOptions: ToastOptions = {
     type: options.type || defaultOptions.type,
     timeout: options.timeout || defaultOptions.timeout,
-    closable: options.closable || defaultOptions.closable,
+    closable: options.closable,
     position: options.position || defaultOptions.position,
-    showIcon: options.showIcon || defaultOptions.showIcon,
+    showIcon: options.showIcon,
     transition: options.transition || defaultOptions.transition,
     onClose: options.onClose
   }
+
   processedOptions.hideProgressBar = processedOptions.timeout !== undefined && processedOptions.timeout <= 0
   if (options.hideProgressBar !== undefined) {
     processedOptions.hideProgressBar = options.hideProgressBar
@@ -48,7 +49,6 @@ export const createToast = (text: string, options?: ToastOptions) => {
   document.body.appendChild(container);
 
   let toastVNode = null;
-
   toastVNode = createVNode(Toast, {
     ...initializedOptions,
     text,

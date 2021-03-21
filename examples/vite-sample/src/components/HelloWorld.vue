@@ -25,6 +25,8 @@ export default defineComponent({
           transition: 'slide',
           position: 'top-left',
           type: 'info',
+          showIcon: false,
+          hideProgressBar: true,
           timeout: -1,
           onClose: () => {
             console.log('log')
