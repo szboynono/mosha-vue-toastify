@@ -11,6 +11,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
+import 'mosha-vue-toastify/dist/style.css'
 import { createToast } from '../../../../lib/main';
 
 export default defineComponent({

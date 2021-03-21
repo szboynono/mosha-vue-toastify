@@ -85,7 +85,7 @@ export default defineComponent({
     },
     showIcon: {
       type: Boolean,
-      default: true,
+      default: false,
     },
     transition: {
       type: String as PropType<TransitionType>,
