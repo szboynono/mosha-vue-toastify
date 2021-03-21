@@ -1,5 +1,5 @@
 <template>
-  <div style="margin-top: 500px;">
+  <div class="example">
     <button @click="tr">top-right</button>
     <button @click="tl">top-left</button>
     <button @click="br">bottom-right</button>
@@ -10,22 +10,27 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, inject } from 'vue'
-import { createToast } from 'mosha-vue-toastify';
+import { defineComponent } from 'vue'
+import { createToast } from '../../../../lib/main';
+
 export default defineComponent({
   name: 'HelloWorld',
   setup: () => {
     const tr = () => {
-        createToast('adsd')
+        createToast('content here')
     }
 
     const tl = () => {
         createToast({
-          title: 'title',
-          text: 'desc',
+          title: 'this is a title',
+          description: 'this is a description'
+        }, {
           transition: 'slide',
           position: 'top-left',
-          timeout: -1,
+          type: 'info',
+          showIcon: true,
+          hideProgressBar: false,
+          timeout: 10000,
           onClose: () => {
             console.log('log')
           }
@@ -33,11 +38,10 @@ export default defineComponent({
     }
 
     const br = () => {
-        createToast({
-          title: 'title',
-          text: 'desc',
+        createToast('yoasihco', {
           transition: 'bounce',
           position: 'bottom-right',
+          type: 'warning',
           timeout: -1,
           onClose: () => {
             console.log('log')
@@ -46,12 +50,11 @@ export default defineComponent({
     }
 
     const bl = () => {
-        createToast({
-          title: 'title',
-          text: 'desc',
+        createToast('asdsadf', {
           position: 'bottom-left',
           transition: 'slide',
-          timeout: -1,
+          timeout: 15000,
+          type: 'danger',
           onClose: () => {
             console.log('log')
           }
@@ -59,12 +62,11 @@ export default defineComponent({
     }
 
     const tc = () => {
-        createToast({
-          title: 'title',
-          text: 'desc',
+        createToast('afsasgg', {
           position: 'top-center',
           transition: 'slide',
           timeout: -1,
+          type: 'success',
           onClose: () => {
             console.log('log')
           }
@@ -72,12 +74,10 @@ export default defineComponent({
     }
 
     const bc = () => {
-        createToast({
-          title: 'title',
-          text: 'desc',
+        createToast('asdfff', {
           position: 'bottom-center',
           transition: 'flip',
-          timeout: -1,
+          timeout: 3000,
           onClose: () => {
             console.log('log')
           }

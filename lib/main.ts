@@ -10,5 +10,3 @@ export default {
     app.provide<MoshaToastFn>('moshaToast', createToast)
   }
 }
-
-

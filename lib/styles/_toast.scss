@@ -1,0 +1,111 @@
+.mosha__toast {
+  display: flex;
+  justify-content: space-between;
+  position: fixed;
+  min-height: 64px;
+  max-height: 800px;
+  box-sizing: border-box;
+  overflow: hidden;
+  padding: 12px 8px;
+  word-break: break-word;
+  min-width: 312px;
+  max-width: 480px;
+  z-index: 9999;
+  width: max-content;
+  transition: all .3s ease-out .5s;
+  border-radius: 8px;
+  box-shadow: 0 1px 10px 0 rgba(0,0,0,.1), 0 2px 15px 0 rgba(0,0,0,.05);
+  margin: 0 16px;
+
+  &__content-wrapper {
+    display: flex;
+    align-items: center;
+  }
+
+  &__content {
+    font-family: sans-serif;
+    line-height: 20px;
+    display: flex;
+    flex-direction: column;
+    color: white;
+
+    &__text {
+      margin-bottom: 4px;
+      font-size: 16px;
+      font-weight: bold;
+    }
+
+    &__description {
+      font-size: 14px;
+      font-weight: normal;
+    }
+  }
+
+  &__close-icon::before {
+    font-size: 20px;
+    cursor: pointer;
+    content: '\00d7';
+    color: white;
+    transition: color 0.3s;
+    font-weight: 600;
+    margin-left: 10px;
+    position: relative;
+    top: -4px;
+  }
+
+  &__close-icon:hover::before {
+    color: grey
+  }
+
+  &__progress {
+    transition: all linear .2s;
+    position: absolute;
+    z-index: 9999;
+    height: 8px;
+    background-color: rgba($color: #FFFFFF, $alpha: 0.6);
+    // background-image: linear-gradient(-225deg, #69EACB 0%, #EACCF8 48%, #6654F1 100%);
+    bottom: 0;
+    margin-left: -8px;
+  }
+
+  &.success {
+    background-color: #06D6A0;
+  }
+
+  &.warning {
+    background-color: #FFC43D;
+  }
+
+  &.info {
+    background-color: #1B9AAA;
+  }
+
+  &.danger {
+    background-color: #EF476F;
+  }
+
+  &.default {
+    // background-color: #F8FFE5;
+    background-color: white;
+    & .mosha__toast__content {
+      color: #616161;
+    }
+
+    & .mosha__toast__close-icon::before {
+      color: #616161;
+    }
+
+    & .mosha__toast__close-icon:hover::before {
+      color: #d0d4d4;
+    }
+
+    & .mosha__toast__progress {
+      background-image: linear-gradient(-225deg, #69EACB 0%, #EACCF8 48%, #6654F1 100%);
+    }
+  }
+
+  @media only screen and (max-width: 475px) {
+    width: 100%;
+    margin: 0 auto;
+  }
+}
