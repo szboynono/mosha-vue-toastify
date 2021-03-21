@@ -3,7 +3,7 @@
     <div
       class="mosha__toast"
       :style="style"
-      :class="[type]"
+      :class="toastBackgroundColor ? null : type"
       v-if="visible"
       @mouseenter="stopTimer"
       @mouseleave="startTimer"
@@ -49,6 +49,7 @@ export default defineComponent({
     visible: Boolean,
     text: String,
     description: String,
+    toastBackgroundColor: String,
     type: {
       type: String as PropType<ToastType>,
       default: "default",
@@ -118,7 +119,7 @@ export default defineComponent({
     );
 
     watchEffect(() => {
-      const { customStyle } = useCustomStyle(props.position, props.offset);
+      const { customStyle } = useCustomStyle(props.position, props.offset, props.toastBackgroundColor);
       style.value = customStyle.value;
     });
 

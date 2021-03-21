@@ -22,5 +22,6 @@ export interface ToastOptions {
   showIcon?: boolean,
   transition?: TransitionType,
   hideProgressBar?: boolean,
+  toastBackgroundColor?: string,
   onClose?: () => void
 }

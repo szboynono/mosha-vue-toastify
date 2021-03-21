@@ -17,13 +17,13 @@ let toastId = 0;
 
 const initializeOptions = (options: ToastOptions): ToastOptions => {
   const processedOptions: ToastOptions = {
+    ...options,
     type: options.type || defaultOptions.type,
     timeout: options.timeout || defaultOptions.timeout,
     closable: options.closable,
     position: options.position || defaultOptions.position,
     showIcon: options.showIcon,
     transition: options.transition || defaultOptions.transition,
-    onClose: options.onClose
   }
 
   processedOptions.hideProgressBar = processedOptions.timeout !== undefined && processedOptions.timeout <= 0
@@ -34,7 +34,6 @@ const initializeOptions = (options: ToastOptions): ToastOptions => {
 }
 
 export const createToast = (content: ToastContent, options?: ToastOptions) => {
-  
   const initializedOptions = options ? initializeOptions(options) : defaultOptions;
   const text = typeof content === 'string' ? content : content.title;
   const description = typeof content === 'string' ? undefined : content.description;

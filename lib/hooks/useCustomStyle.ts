@@ -1,6 +1,6 @@
-import { computed } from 'vue';
+import { computed, CSSProperties } from 'vue';
 
-const useCustomStyle = (position: any, offset: any) => {
+const useCustomStyle = (position: any, offset: any, bgColor: string | undefined) => {
   const customStyle = computed(() => {
     switch (position) {
       case "top-left":
@@ -41,6 +41,9 @@ const useCustomStyle = (position: any, offset: any) => {
         };
     }
   });
+  if (bgColor) {
+    (customStyle.value as CSSProperties).backgroundColor = bgColor
+  }
   return {customStyle}
 }
 
