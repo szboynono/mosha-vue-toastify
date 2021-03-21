@@ -63,7 +63,7 @@ export default defineComponent({
     }
 
     const tc = () => {
-        createToast('afsasgg', {
+        createToast('Please see this notice right here!', {
           position: 'top-center',
           transition: 'slide',
           timeout: -1,
