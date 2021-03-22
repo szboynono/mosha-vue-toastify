@@ -6,7 +6,8 @@
       :class="toastBackgroundColor ? null : type"
       v-if="visible"
       @mouseenter="stopTimer"
-      @mouseleave="startTimer"
+      @mousedown="onMouseDown"
+      @mouseleave="onMouseLeave"
     > 
       <div class="mosha__toast__content-wrapper">
         <MIcon v-if="showIcon" :type="type"/>
@@ -33,6 +34,7 @@ import {
   ref,
   watchEffect,
   CSSProperties,
+  onUnmounted,
 } from "vue";
 import { Position, ToastType, TransitionType } from "../types";
 import useTimer from "../hooks/useTimer";
@@ -57,10 +59,6 @@ export default defineComponent({
     onCloseHandler: {
       type: Function as PropType<() => void>,
       required: true,
-    },
-    // For client
-    onClose: {
-      type: Function as PropType<() => void>,
     },
     offset: Number,
     id: {
@@ -94,6 +92,7 @@ export default defineComponent({
   },
   setup(props) {
     const style = ref<CSSProperties>();
+    const swipeStart = ref(undefined);
 
     const closeCallback = () => {
       props.onCloseHandler();
@@ -113,6 +112,29 @@ export default defineComponent({
       }
     }
 
+    const onMouseLeave = () => {
+      swipeStart.value = undefined;
+      removeEventListener('mousemove', log)
+      startTimer()
+    }
+
+    const log = (event: any) => {
+      const diff = Math.abs((swipeStart.value as any).clientX - event.clientX)
+
+      if ( diff > 200 ) {
+        closeCallback()
+      }
+    }
+    
+    const onMouseDown = (event: any) => {
+      swipeStart.value = event
+      addEventListener('mousemove', log)
+      addEventListener('mouseup', () => { 
+        swipeStart.value = undefined;
+        removeEventListener('mousemove', log) 
+      })
+    }
+
     const { transitionType } = useTransitionType(
       props.position,
       props.transition
@@ -127,12 +149,18 @@ export default defineComponent({
       startTimer();
     });
 
+    onUnmounted(() => {
+      removeEventListener('mousemove', log)
+    })
+
     return {
       style,
       transitionType,
       startTimer,
       stopTimer,
-      progress
+      progress,
+      onMouseDown,
+      onMouseLeave
     };
   },
 });
