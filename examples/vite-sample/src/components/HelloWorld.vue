@@ -31,7 +31,7 @@ export default defineComponent({
           type: 'info',
           showIcon: true,
           hideProgressBar: false,
-          timeout: 10000,
+          timeout: -1,
           onClose: () => {
             console.log('log')
           }

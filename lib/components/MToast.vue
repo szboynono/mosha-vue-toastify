@@ -6,8 +6,8 @@
       :class="toastBackgroundColor ? null : type"
       v-if="visible"
       @mouseenter="stopTimer"
-      @mousedown="onMouseDown"
       @mouseleave="onMouseLeave"
+      @touchstart="onTouchStart"
     > 
       <div class="mosha__toast__content-wrapper">
         <MIcon v-if="showIcon" :type="type"/>
@@ -93,6 +93,7 @@ export default defineComponent({
   setup(props) {
     const style = ref<CSSProperties>();
     const swipeStart = ref(undefined);
+    const swipedDiff = ref<number | undefined>(undefined);
 
     const closeCallback = () => {
       props.onCloseHandler();
@@ -119,25 +120,47 @@ export default defineComponent({
     }
 
     const log = (event: any) => {
-      const diff = Math.abs((swipeStart.value as any).clientX - event.clientX)
+      if (!swipeStart.value) return ;
+      const diff = (swipeStart.value as any).touches[0].clientX - (event.touches[0].clientX);
 
-      if ( diff > 200 ) {
+      if (diff > 0) {
+        if (props.position.endsWith('left')) {
+          (style.value as any).left = `${-diff}px`;
+        } else {
+          (style.value as any).right = `${diff}px`;
+        }
+      } else {
+        if (props.position.endsWith('left')) {
+          (style.value as any).left = `${-diff}px`;
+        } else {
+          (style.value as any).right = `${diff}px`;
+        }
+
+      }
+      if ( Math.abs(diff) > 200 ) {
+        swipedDiff.value = diff;
         closeCallback()
       }
     }
     
-    const onMouseDown = (event: any) => {
+    const onTouchStart = (event: any) => {
       swipeStart.value = event
       addEventListener('mousemove', log)
+      addEventListener('touchmove', log)
       addEventListener('mouseup', () => { 
         swipeStart.value = undefined;
         removeEventListener('mousemove', log) 
+      })
+      addEventListener('touchend', () => { 
+        swipeStart.value = undefined;
+        removeEventListener('touchmove', log) 
       })
     }
 
     const { transitionType } = useTransitionType(
       props.position,
-      props.transition
+      props.transition,
+      swipedDiff
     );
 
     watchEffect(() => {
@@ -159,7 +182,7 @@ export default defineComponent({
       startTimer,
       stopTimer,
       progress,
-      onMouseDown,
+      onTouchStart,
       onMouseLeave
     };
   },

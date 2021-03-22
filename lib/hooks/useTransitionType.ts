@@ -36,8 +36,16 @@ const TRANSITION_MAP: TransitionMap = {
   },
 }
 
-const useTransitionType = (position: Position, transition: TransitionType) => {
-  const transitionType = computed(() => TRANSITION_MAP[position][transition])
+const useTransitionType = (position: Position, transition: TransitionType, swiped: any) => {
+  const transitionType = computed(() => {
+    if (swiped.value > 0) {
+      return 'mosha__fadeOutLeft'
+    } else if (swiped.value < 0) {
+      return 'mosha__fadeOutRight'
+    } else {
+      return TRANSITION_MAP[position][transition]
+    }
+  })
   return { transitionType }
 }
 
