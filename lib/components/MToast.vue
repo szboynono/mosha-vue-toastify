@@ -122,6 +122,7 @@ export default defineComponent({
     const log = (event: any) => {
       if (!swipeStart.value) return ;
       const diff = (swipeStart.value as any).touches[0].clientX - (event.touches[0].clientX);
+      swipedDiff.value = diff;
 
       if (diff > 0) {
         if (props.position.endsWith('left')) {
@@ -135,10 +136,8 @@ export default defineComponent({
         } else {
           (style.value as any).right = `${diff}px`;
         }
-
       }
       if ( Math.abs(diff) > 200 ) {
-        swipedDiff.value = diff;
         closeCallback()
       }
     }
@@ -146,13 +145,21 @@ export default defineComponent({
     const onTouchStart = (event: any) => {
       swipeStart.value = event
       addEventListener('mousemove', log)
-      addEventListener('touchmove', log)
+      addEventListener('touchmove', log);
+      
+      // (style.value as any).transition = 'all .2s ease-out'
+
       addEventListener('mouseup', () => { 
         swipeStart.value = undefined;
         removeEventListener('mousemove', log) 
       })
       addEventListener('touchend', () => { 
         swipeStart.value = undefined;
+        if (props.position.endsWith('left')) {
+          (style.value as any).left = 0
+        } else {
+          (style.value as any).right = 0
+        }
         removeEventListener('touchmove', log) 
       })
     }
