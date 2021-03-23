@@ -2,7 +2,7 @@
   <transition :name="transitionType" type="animation">
     <div
       class="mosha__toast"
-      :style="style"
+      :style="[style, swipeStyle]"
       :class="toastBackgroundColor ? null : type"
       v-if="visible"
       @mouseenter="stopTimer"
@@ -47,6 +47,7 @@ import { Position, ToastType, TransitionType } from "../types";
 import useTimer from "../hooks/useTimer";
 import useTransitionType from "../hooks/useTransitionType";
 import useCustomStyle from "../hooks/useCustomStyle";
+import useSwipe from "../hooks/useSwipe";
 import MIcon from "./MIcon.vue";
 
 export default defineComponent({
@@ -99,14 +100,25 @@ export default defineComponent({
   },
   setup(props) {
     const style = ref<CSSProperties>();
-    const swipeStart = ref<MouseEvent | TouchEvent>();
-    const swipedDiff = ref<number | undefined>(undefined);
 
-    const closeCallback = () => {
+    const {
+      swipeStart,
+      swipedDiff,
+      swipeHandler,
+      startSwipeHandler,
+      swipeStyle,
+      cleanUpMove
+    } = useSwipe(props.position, props.onCloseHandler);
+
+    const { transitionType } = useTransitionType(
+      props.position,
+      props.transition,
+      swipedDiff
+    );
+
+    const { start, stop, progress } = useTimer(() => {
       props.onCloseHandler();
-    };
-
-    const { start, stop, progress } = useTimer(closeCallback, props.timeout);
+    }, props.timeout);
 
     const startTimer = () => {
       if (props.timeout > 0) {
@@ -121,71 +133,17 @@ export default defineComponent({
     };
 
     const onMouseLeave = () => {
-      swipeStart.value = undefined;
-      removeEventListener("mousemove", swipeHandler);
+      cleanUpMove('mousemove');
       startTimer();
     };
 
-    const isMouseEvent = (event: MouseEvent | TouchEvent): boolean =>
-      event instanceof MouseEvent;
-
-    const swipeHandler = (event: MouseEvent | TouchEvent) => {
-      if (!swipeStart.value) return;
-      if (isMouseEvent(event)) {
-        swipedDiff.value =
-          (swipeStart.value as MouseEvent).clientX -
-          (event as MouseEvent).clientX;
-      } else {
-        swipedDiff.value =
-          (swipeStart.value as TouchEvent).touches[0].clientX -
-          (event as TouchEvent).touches[0].clientX;
-      }
-
-      if (props.position.endsWith("left")) {
-        (style.value as CSSProperties).transition = "none";
-        (style.value as CSSProperties).left = `${-swipedDiff.value}px`;
-      } else {
-        (style.value as CSSProperties).transition = "none";
-        (style.value as CSSProperties).right = `${swipedDiff.value}px`;
-      }
-
-      if (Math.abs(swipedDiff.value) > 220) {
-        closeCallback();
-      }
-    };
-
-    const startSwiptHandler = (event: MouseEvent | TouchEvent) => {
-      swipeStart.value = event;
-      const move = isMouseEvent(event) ? "mousemove" : "touchmove";
-      const moveEnd = isMouseEvent(event) ? "mouseup" : "touchend";
-
-      addEventListener(move, swipeHandler);
-      addEventListener(moveEnd, () => {
-        swipeStart.value = undefined;
-        if (props.position.endsWith("left")) {
-          (style.value as CSSProperties).transition = "left .3s ease-out";
-          (style.value as CSSProperties).left = 0;
-        } else {
-          (style.value as CSSProperties).transition = "right .3s ease-out";
-          (style.value as CSSProperties).right = 0;
-        }
-        removeEventListener(move, swipeHandler);
-      });
-    };
-
     const onMouseDown = (event: MouseEvent) => {
-      startSwiptHandler(event);
+      startSwipeHandler(event);
     };
 
     const onTouchStart = (event: TouchEvent) => {
-      startSwiptHandler(event);
+      startSwipeHandler(event);
     };
-
-    const { transitionType } = useTransitionType(
-      props.position,
-      props.transition,
-      swipedDiff
-    );
 
     watchEffect(() => {
       const { customStyle } = useCustomStyle(
@@ -200,11 +158,6 @@ export default defineComponent({
       startTimer();
     });
 
-    onUnmounted(() => {
-      removeEventListener("mousemove", swipeHandler);
-      removeEventListener("touchmove", swipeHandler);
-    });
-
     return {
       style,
       transitionType,
@@ -214,6 +167,7 @@ export default defineComponent({
       onTouchStart,
       onMouseLeave,
       onMouseDown,
+      swipeStyle,
     };
   },
 });
