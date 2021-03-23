@@ -20,7 +20,7 @@
         </div>
       </div>
       <div
-        v-if="closable"
+        v-if="showCloseButton"
         class="mosha__toast__close-icon"
         @click="onCloseHandler"
       ></div>
@@ -81,7 +81,11 @@ export default defineComponent({
       type: String as PropType<Position>,
       required: true,
     },
-    closable: {
+    showCloseButton: {
+      type: Boolean,
+      default: true,
+    },
+    swipeClose: {
       type: Boolean,
       default: true,
     },
@@ -106,7 +110,7 @@ export default defineComponent({
       startSwipeHandler,
       swipeStyle,
       cleanUpMove
-    } = useSwipe(props.position, props.onCloseHandler);
+    } = useSwipe(props.position, props.onCloseHandler, props.swipeClose);
 
     const { transitionType } = useTransitionType(
       props.position,

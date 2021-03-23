@@ -11,7 +11,7 @@ const toasts: Record<Position, ToastObject[]> = {
   'bottom-center': [],
 }
 
-const defaultOptions: ToastOptions = { type: 'default', timeout: 5000, closable: true, position: 'top-right', transition: 'bounce', hideProgressBar: false }
+const defaultOptions: ToastOptions = { type: 'default', timeout: 5000, showCloseButton: true, position: 'top-right', transition: 'bounce', hideProgressBar: false, swipeClose: true }
 
 let toastId = 0;
 
@@ -20,9 +20,10 @@ const initializeOptions = (options: ToastOptions): ToastOptions => {
     ...options,
     type: options.type || defaultOptions.type,
     timeout: options.timeout || defaultOptions.timeout,
-    closable: options.closable,
+    showCloseButton: options.showCloseButton,
     position: options.position || defaultOptions.position,
     showIcon: options.showIcon,
+    swipeClose: options.swipeClose,
     transition: options.transition || defaultOptions.transition,
   }
 

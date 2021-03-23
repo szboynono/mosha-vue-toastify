@@ -1,7 +1,7 @@
 import { CSSProperties, onUnmounted, ref } from 'vue'
 import { Position } from '../types';
 
-const useSwipe = (position: Position, onCloseHandler: () => void) => {
+const useSwipe = (position: Position, onCloseHandler: () => void, swipeClose: boolean) => {
   const swipeStart = ref<MouseEvent | TouchEvent>();
   const swipedDiff = ref<number | undefined>(undefined);
   const swipeStyle = ref<CSSProperties>();
@@ -10,7 +10,8 @@ const useSwipe = (position: Position, onCloseHandler: () => void) => {
     event instanceof MouseEvent;
 
   const swipeHandler = (event: MouseEvent | TouchEvent) => {
-    if (!swipeStart.value) return;
+    if (swipeClose === false || !swipeStart.value) return;
+
     if (isMouseEvent(event)) {
       swipedDiff.value =
         (swipeStart.value as MouseEvent).clientX -
@@ -35,12 +36,13 @@ const useSwipe = (position: Position, onCloseHandler: () => void) => {
       };
     }
 
-    if (Math.abs(swipedDiff.value) > 220) {
+    if (Math.abs(swipedDiff.value) > 200) {
       onCloseHandler();
     }
   };
 
   const startSwipeHandler = (event: MouseEvent | TouchEvent) => {
+    if (swipeClose === false) return;
     swipeStart.value = event;
     const move = isMouseEvent(event) ? "mousemove" : "touchmove";
     const moveEnd = isMouseEvent(event) ? "mouseup" : "touchend";
@@ -66,12 +68,14 @@ const useSwipe = (position: Position, onCloseHandler: () => void) => {
   };
 
   const cleanUpMove = (move: 'mousemove' | 'touchmove') => {
+    if (swipeClose === false) return;
     if (swipeStart.value) swipeStart.value = undefined
     if (swipedDiff.value) swipedDiff.value = undefined
     removeEventListener(move, swipeHandler)
   };
 
   onUnmounted(() => {
+    if (swipeClose === false) return;
     cleanUpMove('mousemove')
     cleanUpMove('touchmove')
   });

@@ -17,11 +17,12 @@ export interface ToastObject {
 export interface ToastOptions {
   type?: ToastType,
   timeout?: number,
-  closable?: boolean,
+  showCloseButton?: boolean,
   position?: Position,
   showIcon?: boolean,
   transition?: TransitionType,
   hideProgressBar?: boolean,
   toastBackgroundColor?: string,
+  swipeClose?: boolean,
   onClose?: () => void
 }

@@ -30,6 +30,7 @@ export default defineComponent({
           position: 'top-left',
           type: 'info',
           showIcon: true,
+          swipeClose: false,
           hideProgressBar: false,
           timeout: -1,
           onClose: () => {
