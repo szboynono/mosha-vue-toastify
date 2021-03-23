@@ -99,7 +99,7 @@ export default defineComponent({
   },
   setup(props) {
     const style = ref<CSSProperties>();
-    const swipeStart = ref(undefined);
+    const swipeStart = ref<MouseEvent | TouchEvent>();
     const swipedDiff = ref<number | undefined>(undefined);
 
     const closeCallback = () => {
@@ -126,68 +126,59 @@ export default defineComponent({
       startTimer();
     };
 
-    const swipeHandler = (event: any) => {
+    const isMouseEvent = (event: MouseEvent | TouchEvent): boolean =>
+      event instanceof MouseEvent;
+
+    const swipeHandler = (event: MouseEvent | TouchEvent) => {
       if (!swipeStart.value) return;
-      if (event instanceof MouseEvent) {
-        swipedDiff.value = (swipeStart.value as any).clientX - event.clientX;
+      if (isMouseEvent(event)) {
+        swipedDiff.value =
+          (swipeStart.value as MouseEvent).clientX -
+          (event as MouseEvent).clientX;
       } else {
         swipedDiff.value =
-          (swipeStart.value as any).touches[0].clientX -
-          event.touches[0].clientX;
+          (swipeStart.value as TouchEvent).touches[0].clientX -
+          (event as TouchEvent).touches[0].clientX;
       }
 
-      if (swipedDiff.value > 0) {
-        if (props.position.endsWith("left")) {
-          (style.value as any).transition = "none";
-          (style.value as any).left = `${-swipedDiff.value}px`;
-        } else {
-          (style.value as any).transition = "none";
-          (style.value as any).right = `${swipedDiff.value}px`;
-        }
+      if (props.position.endsWith("left")) {
+        (style.value as CSSProperties).transition = "none";
+        (style.value as CSSProperties).left = `${-swipedDiff.value}px`;
       } else {
-        if (props.position.endsWith("left")) {
-          (style.value as any).transition = "none";
-          (style.value as any).left = `${-swipedDiff.value}px`;
-        } else {
-          (style.value as any).transition = "none";
-          (style.value as any).right = `${swipedDiff.value}px`;
-        }
+        (style.value as CSSProperties).transition = "none";
+        (style.value as CSSProperties).right = `${swipedDiff.value}px`;
       }
-      if (Math.abs(swipedDiff.value) > 200) {
+
+      if (Math.abs(swipedDiff.value) > 220) {
         closeCallback();
       }
     };
 
-    const onMouseDown = (event: any) => {
+    const startSwiptHandler = (event: MouseEvent | TouchEvent) => {
       swipeStart.value = event;
-      addEventListener("mousemove", swipeHandler);
-      addEventListener("mouseup", () => {
+      const move = isMouseEvent(event) ? "mousemove" : "touchmove";
+      const moveEnd = isMouseEvent(event) ? "mouseup" : "touchend";
+
+      addEventListener(move, swipeHandler);
+      addEventListener(moveEnd, () => {
         swipeStart.value = undefined;
         if (props.position.endsWith("left")) {
-          (style.value as any).transition = "left .3s ease-out";
-          (style.value as any).left = 0;
+          (style.value as CSSProperties).transition = "left .3s ease-out";
+          (style.value as CSSProperties).left = 0;
         } else {
-          (style.value as any).transition = "right .3s ease-out";
-          (style.value as any).right = 0;
+          (style.value as CSSProperties).transition = "right .3s ease-out";
+          (style.value as CSSProperties).right = 0;
         }
-        removeEventListener("mousemove", swipeHandler);
+        removeEventListener(move, swipeHandler);
       });
     };
 
-    const onTouchStart = (event: any) => {
-      swipeStart.value = event;
-      addEventListener("touchmove", swipeHandler);
-      addEventListener("touchend", () => {
-        swipeStart.value = undefined;
-        if (props.position.endsWith("left")) {
-          (style.value as any).transition = "left .3s ease-out";
-          (style.value as any).left = 0;
-        } else {
-          (style.value as any).transition = "right .3s ease-out";
-          (style.value as any).right = 0;
-        }
-        removeEventListener("touchmove", swipeHandler);
-      });
+    const onMouseDown = (event: MouseEvent) => {
+      startSwiptHandler(event);
+    };
+
+    const onTouchStart = (event: TouchEvent) => {
+      startSwiptHandler(event);
     };
 
     const { transitionType } = useTransitionType(
@@ -211,6 +202,7 @@ export default defineComponent({
 
     onUnmounted(() => {
       removeEventListener("mousemove", swipeHandler);
+      removeEventListener("touchmove", swipeHandler);
     });
 
     return {
