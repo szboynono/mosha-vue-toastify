@@ -1,6 +1,7 @@
 # Mosha Vue Toastify
-
 A light weight and fun Vue 3 toast or notification or snack bar or however you wanna call it library.
+
+![alt text](./gif/demo.gif "Logo Title Text 1")
 
 A demo is comming.
 

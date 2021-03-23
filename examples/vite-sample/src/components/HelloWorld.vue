@@ -1,5 +1,6 @@
 <template>
   <div class="example">
+    <button @click="all">all</button>
     <button @click="tr">top-right</button>
     <button @click="tl">top-left</button>
     <button @click="br">bottom-right</button>
@@ -17,6 +18,21 @@ import { createToast } from '../../../../lib/main';
 export default defineComponent({
   name: 'HelloWorld',
   setup: () => {
+    const all = () => {
+      createToast('This is default!', {position: 'top-center', timeout: 12000})
+      setTimeout(() => {
+        createToast('This is success!', {type: 'success', position: 'top-center', showIcon: true, timeout: 15000})
+        setTimeout(() => {
+          createToast('This is warning!', {type: 'warning', position: 'top-center', showIcon: true, timeout: 10000})
+          setTimeout(() => {
+            createToast({title: 'This is danger!', description: 'some description'}, {type: 'danger', showIcon: true, position: 'top-center', timeout: 8000})
+            setTimeout(() => {
+              createToast({title: 'Background color', description: 'choose a bg color'}, {type: 'danger', showIcon: true, position: 'top-center', timeout: 8000, toastBackgroundColor: "black"})
+            }, 1)
+          }, 1)
+        }, 1)
+      }, 1)
+    }
     const tr = () => {
         createToast('content here')
     }
@@ -85,7 +101,7 @@ export default defineComponent({
           }
         })
     }
-    return { tr, tl, br, bl, tc, bc }
+    return { tr, tl, br, bl, tc, bc, all }
   }
 })
 </script>
