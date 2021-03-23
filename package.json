@@ -1,6 +1,6 @@
 {
   "name": "mosha-vue-toastify",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "license": "MIT",
   "files": [
     "dist"
@@ -12,6 +12,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build && tsc -P tsconfig.json",
+    "publish": "yarn build && yarn publish",
     "serve": "vite preview",
     "example:update": "yarn build && cd examples/vite-sample && yarn link \"mosha-vue-toastify\"",
     "example:dev": "cd examples/vite-sample && yarn dev"
