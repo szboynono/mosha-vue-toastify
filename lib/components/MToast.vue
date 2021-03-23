@@ -8,12 +8,15 @@
       @mouseenter="stopTimer"
       @mouseleave="onMouseLeave"
       @touchstart="onTouchStart"
-    > 
+      @mousedown="onMouseDown"
+    >
       <div class="mosha__toast__content-wrapper">
-        <MIcon v-if="showIcon" :type="type"/>
+        <MIcon v-if="showIcon" :type="type" />
         <div class="mosha__toast__content">
           <div class="mosha__toast__content__text">{{ text }}</div>
-          <div class="mosha__toast__content__description" v-if="description"> {{ description }} </div>
+          <div class="mosha__toast__content__description" v-if="description">
+            {{ description }}
+          </div>
         </div>
       </div>
       <div
@@ -21,7 +24,11 @@
         class="mosha__toast__close-icon"
         @click="onCloseHandler"
       ></div>
-      <div v-if="!hideProgressBar" class="mosha__toast__progress" :style="{width: `${progress}%`}"></div>
+      <div
+        v-if="!hideProgressBar"
+        class="mosha__toast__progress"
+        :style="{ width: `${progress}%` }"
+      ></div>
     </div>
   </transition>
 </template>
@@ -40,12 +47,12 @@ import { Position, ToastType, TransitionType } from "../types";
 import useTimer from "../hooks/useTimer";
 import useTransitionType from "../hooks/useTransitionType";
 import useCustomStyle from "../hooks/useCustomStyle";
-import MIcon from './MIcon.vue'
+import MIcon from "./MIcon.vue";
 
 export default defineComponent({
   name: "MToast",
   components: {
-    MIcon
+    MIcon,
   },
   props: {
     visible: Boolean,
@@ -79,7 +86,7 @@ export default defineComponent({
     },
     hideProgressBar: {
       type: Boolean,
-      default: false
+      default: false,
     },
     showIcon: {
       type: Boolean,
@@ -103,66 +110,85 @@ export default defineComponent({
 
     const startTimer = () => {
       if (props.timeout > 0) {
-        start()
+        start();
       }
-    }
+    };
 
     const stopTimer = () => {
       if (props.timeout > 0) {
-        stop()
+        stop();
       }
-    }
+    };
 
     const onMouseLeave = () => {
       swipeStart.value = undefined;
-      removeEventListener('mousemove', log)
-      startTimer()
-    }
+      removeEventListener("mousemove", swipeHandler);
+      startTimer();
+    };
 
-    const log = (event: any) => {
-      if (!swipeStart.value) return ;
-      const diff = (swipeStart.value as any).touches[0].clientX - (event.touches[0].clientX);
-      swipedDiff.value = diff;
+    const swipeHandler = (event: any) => {
+      if (!swipeStart.value) return;
+      if (event instanceof MouseEvent) {
+        swipedDiff.value = (swipeStart.value as any).clientX - event.clientX;
+      } else {
+        swipedDiff.value =
+          (swipeStart.value as any).touches[0].clientX -
+          event.touches[0].clientX;
+      }
 
-      if (diff > 0) {
-        if (props.position.endsWith('left')) {
-          (style.value as any).left = `${-diff}px`;
+      if (swipedDiff.value > 0) {
+        if (props.position.endsWith("left")) {
+          (style.value as any).transition = "none";
+          (style.value as any).left = `${-swipedDiff.value}px`;
         } else {
-          (style.value as any).right = `${diff}px`;
+          (style.value as any).transition = "none";
+          (style.value as any).right = `${swipedDiff.value}px`;
         }
       } else {
-        if (props.position.endsWith('left')) {
-          (style.value as any).left = `${-diff}px`;
+        if (props.position.endsWith("left")) {
+          (style.value as any).transition = "none";
+          (style.value as any).left = `${-swipedDiff.value}px`;
         } else {
-          (style.value as any).right = `${diff}px`;
+          (style.value as any).transition = "none";
+          (style.value as any).right = `${swipedDiff.value}px`;
         }
       }
-      if ( Math.abs(diff) > 200 ) {
-        closeCallback()
+      if (Math.abs(swipedDiff.value) > 200) {
+        closeCallback();
       }
-    }
-    
-    const onTouchStart = (event: any) => {
-      swipeStart.value = event
-      addEventListener('mousemove', log)
-      addEventListener('touchmove', log);
-      
-      // (style.value as any).transition = 'all .2s ease-out'
+    };
 
-      addEventListener('mouseup', () => { 
+    const onMouseDown = (event: any) => {
+      swipeStart.value = event;
+      addEventListener("mousemove", swipeHandler);
+      addEventListener("mouseup", () => {
         swipeStart.value = undefined;
-        removeEventListener('mousemove', log) 
-      })
-      addEventListener('touchend', () => { 
-        swipeStart.value = undefined;
-        if (props.position.endsWith('left')) {
-          (style.value as any).left = 0
+        if (props.position.endsWith("left")) {
+          (style.value as any).transition = "left .3s ease-out";
+          (style.value as any).left = 0;
         } else {
-          (style.value as any).right = 0
+          (style.value as any).transition = "right .3s ease-out";
+          (style.value as any).right = 0;
         }
-        removeEventListener('touchmove', log) 
-      })
-    }
+        removeEventListener("mousemove", swipeHandler);
+      });
+    };
+
+    const onTouchStart = (event: any) => {
+      swipeStart.value = event;
+      addEventListener("touchmove", swipeHandler);
+      addEventListener("touchend", () => {
+        swipeStart.value = undefined;
+        if (props.position.endsWith("left")) {
+          (style.value as any).transition = "left .3s ease-out";
+          (style.value as any).left = 0;
+        } else {
+          (style.value as any).transition = "right .3s ease-out";
+          (style.value as any).right = 0;
+        }
+        removeEventListener("touchmove", swipeHandler);
+      });
+    };
 
     const { transitionType } = useTransitionType(
       props.position,
@@ -171,7 +197,11 @@ export default defineComponent({
     );
 
     watchEffect(() => {
-      const { customStyle } = useCustomStyle(props.position, props.offset, props.toastBackgroundColor);
+      const { customStyle } = useCustomStyle(
+        props.position,
+        props.offset,
+        props.toastBackgroundColor
+      );
       style.value = customStyle.value;
     });
 
@@ -180,8 +210,8 @@ export default defineComponent({
     });
 
     onUnmounted(() => {
-      removeEventListener('mousemove', log)
-    })
+      removeEventListener("mousemove", swipeHandler);
+    });
 
     return {
       style,
@@ -190,7 +220,8 @@ export default defineComponent({
       stopTimer,
       progress,
       onTouchStart,
-      onMouseLeave
+      onMouseLeave,
+      onMouseDown,
     };
   },
 });
