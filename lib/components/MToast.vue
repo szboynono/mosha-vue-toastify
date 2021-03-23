@@ -102,9 +102,7 @@ export default defineComponent({
     const style = ref<CSSProperties>();
 
     const {
-      swipeStart,
       swipedDiff,
-      swipeHandler,
       startSwipeHandler,
       swipeStyle,
       cleanUpMove
