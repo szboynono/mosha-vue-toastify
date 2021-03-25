@@ -1,3 +1,4 @@
+import './tailwind.postcss'
 import DefaultTheme from 'vitepress/theme'
 import './custom.css'
 import Code from './components/Code.vue'

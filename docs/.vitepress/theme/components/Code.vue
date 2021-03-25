@@ -1,18 +1,50 @@
 <template>
-  <div class="code">
-    <div><span class="func-name">createToast</span>( <span class="text">'some text'</span>,  {</div>
-    <div class="indent"><span class="property">timeout</span>: 2000,</div>
-    <div>})</div>
+  <div>
+    <div class="code">
+      <template v-if="options">
+        <div><span class="func-name">createToast</span>(<span class="text">'some text'</span>,  {</div>
+        <div class="indent"><span class="property">timeout</span>: 2000,</div>
+        <div>})</div>
+      </template>
+      <template v-else>
+        <div><span class="func-name">createToast</span>(<span v-html="textArg"></span>)</div>
+      </template>
+    </div>
+    <div>
+      <div class="input-group">
+        <label for="title">Text:</label>
+        <input id="title" type="text">
+      </div>
+    </div>
   </div>
 </template>
 
-<script>
-import { defineComponent } from 'vue'
+<script lang="ts">
+import { computed, defineComponent, onMounted, PropType, ref } from 'vue'
+
+interface ToastOptions {
+  type?: string,
+  timeout?: number,
+  showCloseButton?: boolean,
+  position?: string,
+  showIcon?: boolean,
+  transition?: string,
+  hideProgressBar?: boolean,
+  toastBackgroundColor?: string,
+  swipeClose?: boolean,
+  onClose?: () => void
+}
 
 export default defineComponent({
   name: 'Code',
   setup() {
-    
+    const text = ref<any>('');
+    const options = ref<ToastOptions>();
+
+    const textArg = computed(() => {
+      return `<span class="text">'${text.value}'</span>`
+    })
+    return { textArg, options }
   },
 })
 </script>
@@ -46,5 +78,7 @@ export default defineComponent({
 .property {
   color: #A6E22E;
 }
+
+
 
 </style>

@@ -4,3 +4,8 @@
   background-position: center;
   background-attachment: fixed;
 }
+
+.nav-bar-title {
+  display: flex;
+  align-items: center;
+}
