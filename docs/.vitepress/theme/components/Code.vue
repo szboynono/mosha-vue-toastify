@@ -3,12 +3,12 @@
     <div class="code">
       <template v-if="options">
         <div>
-          <span class="text-pink-500">createToast</span>(<span class="text"
-            >'some text'</span
-          >, {
+          <span class="text-pink-500">createToast</span>(<span
+            v-html="textArg"
+          ></span
+          >)
         </div>
-        <div class="indent"><span class="property">timeout</span>: 2000,</div>
-        <div>})</div>
+        dasdas
       </template>
       <template v-else>
         <div>
@@ -22,6 +22,7 @@
     <div>
       <InputGroup type="text" v-model:text="text" />
       <InputGroup v-if="text.length > 0" type="description" v-model:description="description" />
+      <RadioGroup :items="['top-left', 'top-right', 'top-center', 'bottom-left', 'bottom-right', 'bottom-center']"/>
       <button
         @click="showToast"
         class="mt-3 bg-indigo-500 text-white px-2 py-1 rounded hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:ring-opacity-50"
@@ -37,6 +38,7 @@ import { computed, defineComponent, ref } from "vue";
 import { createToast } from '../../../../lib/main';
 import '../../../../lib/index.scss'
 import InputGroup from "./InputGroup.vue";
+import RadioGroup from "./RadioGroup.vue";
 
 interface ToastOptions {
   type?: string;
@@ -55,6 +57,7 @@ export default defineComponent({
   name: "Code",
   components: {
     InputGroup,
+    RadioGroup,
   },
   setup() {
     const text = ref("Some text");
