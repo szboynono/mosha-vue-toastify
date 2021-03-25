@@ -8,15 +8,20 @@
 </template>
 
 <script>
-import { defineComponent, ref } from 'vue'
+import { defineComponent, ref, watchEffect } from 'vue'
 
 export default defineComponent({
   props: {
-    items: Array
+    items: Array,
+    selected: String
   },
-  setup() {
-    const picked = ref()
-
+  setup(props, { emit }) {
+    const picked = ref('')
+    watchEffect(() => {
+      if (picked.value.length > 0) {
+        emit(`update:position`, picked.value)
+      }
+    })
     return { picked }
   },
 })

@@ -3,7 +3,7 @@
     <label for="title" class="mr-2">{{ type }}:</label>
     <input 
       :id="type" 
-      type="text" 
+      :type="type === 'timeout' ? 'number' : 'text'" 
       @input="onInput" 
       :value="getValue" 
       class="p-1 text-xs rounded-md focus:outline-none focus:ring-2 focus:border-transparent">
@@ -17,14 +17,20 @@ export default defineComponent({
   props: {
     type: String,
     text: String,
-    description: String
+    description: String,
+    timeout: Number
   },
   setup(props, { emit }) {
     const onInput = (event: any) => {
-      emit(`update:${props.type}`, event.target.value)
+      if (props.type === 'timeout') {
+        emit(`update:${props.type}`, +event.target.value)
+      } else {
+        emit(`update:${props.type}`, event.target.value)
+      }
     }
     const getValue = computed(() => {
-      return props.type === 'text' ? props.text : props.description
+      if (!props.type) return ;
+      return (props as any)[props.type]
     })
     return { onInput, getValue }
   }
