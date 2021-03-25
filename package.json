@@ -17,7 +17,8 @@
     "example:dev": "cd examples/vite-sample && yarn dev",
     "docs:dev": "vitepress dev docs",
     "docs:build": "vitepress build docs",
-    "docs:serve": "vitepress serve docs"
+    "docs:serve": "vitepress serve docs",
+    "deploy": "sh deploy.sh"
   },
   "devDependencies": {
     "@types/node": "^14.14.32",

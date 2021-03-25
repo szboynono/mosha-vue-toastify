@@ -1,8 +1,5 @@
 .theme {
-  background-image: url('./assets/bg.jpg');
-  background-size: cover;
-  background-position: center;
-  background-attachment: fixed;
+  background-image: linear-gradient(to top, #fddb92 0%, #d1fdff 100%);
 }
 
 .nav-bar-title {
