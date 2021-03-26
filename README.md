@@ -3,7 +3,8 @@ A light weight and fun Vue 3 toast or notification or snack bar or however you w
 
 ![alt text](./gif/demo.gif "Logo Title Text 1")
 
-A demo is comming.
+## Talk is cheap, show me the demo
+Try it out in the [playground](https://szboynono.github.io/mosha-vue-toastify/)
 
 ## Installation
 
