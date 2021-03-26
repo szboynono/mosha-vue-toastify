@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="code">
+    <div class="code mx-auto">
       <template v-if="options">
         <div>
           <span class="text-pink-500">createToast</span>(<span
@@ -22,77 +22,80 @@
       </template>
     </div>
     <div>
-      <InputGroup type="text" v-model:text="text" />
-      <InputGroup
-        v-if="text.length > 0"
-        type="description"
-        v-model:description="description"
-      />
-      <InputGroup type="timeout" v-model:timeout="timeout" />
-      <InputGroup type="toastBackgroundColor" v-model:toastBackgroundColor="toastBackgroundColor" />
-      <RadioGroup
-        v-if="text.length > 0"
-        type="position"
-        :items="[
-          'top-left',
-          'top-right',
-          'top-center',
-          'bottom-left',
-          'bottom-right',
-          'bottom-center',
-        ]"
-        v-model:position="position"
-      />
-      <RadioGroup
-        v-if="text.length > 0"
-        type="toastType"
-        :items="[
-          'default',
-          'info',
-          'warning',
-          'success',
-          'danger'
-        ]"
-        v-model:toastType="toastType"
-      />
-      <RadioGroup
-        v-if="text.length > 0"
-        type="transition"
-        :items="[
-          'bounce',
-          'flip',
-          'slide',
-        ]"
-        v-model:transition="transition"
-      />
-      <CheckBox 
-        v-if="text.length > 0"
-        type="hideProgessBar"
-        :hideProgessBar="hideProgessBar"
-        v-model:hideProgessBar="hideProgessBar" />
-      <CheckBox 
-        v-if="text.length > 0"
-        type="showIcon"
-        :showIcon="showIcon"
-        v-model:showIcon="showIcon" />
-      <CheckBox 
-        v-if="text.length > 0"
-        type="showCloseButton"
-        :showCloseButton="showCloseButton"
-        v-model:showCloseButton="showCloseButton" />
-      <CheckBox 
-        v-if="text.length > 0"
-        type="showCloseButton"
-        :showCloseButton="showCloseButton"
-        v-model:showCloseButton="showCloseButton" />
-      <CheckBox 
-        v-if="text.length > 0"
-        type="swipeClose"
-        :swipeClose="swipeClose"
-        v-model:swipeClose="swipeClose" />
+      <div class="flex justify-center items-center flex-wrap">
+        <div class="mx-10">
+          <InputGroup type="text" v-model:text="text" />
+          <InputGroup
+            v-if="text.length > 0"
+            type="description"
+            v-model:description="description"
+          />
+          <InputGroup type="timeout" v-model:timeout="timeout" />
+          <InputGroup
+            type="toastBackgroundColor"
+            v-model:toastBackgroundColor="toastBackgroundColor"
+          />
+        </div>
+        <div v-if="text.length > 0" class="mx-10">
+          <CheckBox
+            type="hideProgessBar"
+            :hideProgessBar="hideProgessBar"
+            v-model:hideProgessBar="hideProgessBar"
+          />
+          <CheckBox
+            type="showIcon"
+            :showIcon="showIcon"
+            v-model:showIcon="showIcon"
+          />
+          <CheckBox
+            type="showCloseButton"
+            :showCloseButton="showCloseButton"
+            v-model:showCloseButton="showCloseButton"
+          />
+          <CheckBox
+            type="showCloseButton"
+            :showCloseButton="showCloseButton"
+            v-model:showCloseButton="showCloseButton"
+          />
+          <CheckBox
+            type="swipeClose"
+            :swipeClose="swipeClose"
+            v-model:swipeClose="swipeClose"
+          />
+        </div>
+      </div>
+
+      <div>
+        <RadioGroup
+          v-if="text.length > 0"
+          type="position"
+          :items="[
+            'top-left',
+            'top-right',
+            'top-center',
+            'bottom-left',
+            'bottom-right',
+            'bottom-center',
+          ]"
+          v-model:position="position"
+        />
+        <RadioGroup
+          v-if="text.length > 0"
+          type="toastType"
+          :items="['default', 'info', 'warning', 'success', 'danger']"
+          v-model:toastType="toastType"
+        />
+        <RadioGroup
+          v-if="text.length > 0"
+          type="transition"
+          :items="['bounce', 'flip', 'slide']"
+          v-model:transition="transition"
+        />
+      </div>
+      
       <button
         @click="showToast"
-        class="mt-3 bg-indigo-500 text-white px-2 py-1 rounded hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:ring-opacity-50"
+        class="w-full antialiased text-lg h-12 mt-5 bg-indigo-500 text-white px-2 py-1 rounded hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:ring-opacity-50"
       >
         Show toast!
       </button>
@@ -114,7 +117,7 @@ export default defineComponent({
   components: {
     InputGroup,
     RadioGroup,
-    CheckBox
+    CheckBox,
   },
   setup() {
     const text = ref("Some text");
@@ -144,7 +147,7 @@ export default defineComponent({
           transition: transition.value as any,
         };
       }
-      
+
       if (toastType.value.length > 0) {
         options.value = {
           ...options.value,
@@ -169,29 +172,29 @@ export default defineComponent({
       if (hideProgessBar.value !== undefined) {
         options.value = {
           ...options.value,
-          hideProgressBar: hideProgessBar.value
-        }
+          hideProgressBar: hideProgessBar.value,
+        };
       }
 
       if (showIcon.value !== undefined) {
         options.value = {
           ...options.value,
-          showIcon: showIcon.value
-        }
+          showIcon: showIcon.value,
+        };
       }
 
       if (showCloseButton.value !== undefined) {
         options.value = {
           ...options.value,
-          showCloseButton: showCloseButton.value
-        }
+          showCloseButton: showCloseButton.value,
+        };
       }
 
       if (swipeClose.value !== undefined) {
         options.value = {
           ...options.value,
-          swipeClose: swipeClose.value
-        }
+          swipeClose: swipeClose.value,
+        };
       }
     });
 
@@ -247,7 +250,7 @@ export default defineComponent({
       showCloseButton,
       showIcon,
       swipeClose,
-      toastBackgroundColor
+      toastBackgroundColor,
     };
   },
 });

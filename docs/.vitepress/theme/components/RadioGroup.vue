@@ -1,6 +1,6 @@
 <template>
   <div class="mt-3">
-    <div class="mb-2">{{ type === 'toastType' ? 'type' : type }}</div>
+    <div class="mb-2 font-semibold">{{ type === 'toastType' ? 'type' : type }}</div>
     <div v-for="item of items" :key="item" class="inline-block mr-3">
       <input class="mr-2" type="radio" :id="item" name="same" :value="item" @change="onChange">
       <label :for="item">{{ item }}</label>

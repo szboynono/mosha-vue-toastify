@@ -1,12 +1,12 @@
 <template>
   <div class="mt-3">
-    <label for="title" class="block mb-1"> {{ type }} </label>
+    <label for="title" class="block mb-1 font-semibold"> {{ type }} </label>
     <input 
       :id="type" 
       :type="type === 'timeout' ? 'number' : 'text'" 
       @input="onInput" 
       :value="getValue" 
-      class="p-1 text-xs rounded-md focus:outline-none focus:ring-2 focus:border-transparent">
+      class="p-1 w-48 text-xs rounded-md focus:outline-none focus:ring-2 focus:border-transparent">
   </div>
 </template>
 <script lang="ts">
