@@ -1,7 +1,7 @@
 module.exports = {
   base: '/mosha-vue-toastify/',
   title: 'Mosha Vue Toastify',
-  description: 'A glassmorphism inspired Vue 3 UI library',
+  description: 'A light weight and fun Vue 3 toast or notification or snack bar or however you wanna call it library.',
 
   themeConfig: {
     repo: 'szboynono/mosha-vue-toastify',
@@ -13,13 +13,8 @@ module.exports = {
 
     lastUpdated: 'Last Updated',
 
-    nav: [
-      { text: 'Getting Started', link: '/getting-started/introduction' },
-    ],
-
     sidebar: {
-      '/guide/': getGuideSidebar(),
-      '/': getGuideSidebar()
+      '/': getGuideSidebar
     }
   }
 }
@@ -30,16 +25,6 @@ function getGuideSidebar() {
       text: 'Getting Started',
       children: [
         { text: 'Introduction', link: '/getting-started/introduction' },
-      ]
-    },
-    {
-      text: 'Components',
-      children: [
-        { text: 'Alert', link: '/components/alert' },
-        { text: 'Button', link: '/components/button' },
-        { text: 'Container', link: '/components/container' },
-        { text: 'Message', link: '/components/message' },
-        { text: 'Notification', link: '/components/notification' },
       ]
     },
   ]
