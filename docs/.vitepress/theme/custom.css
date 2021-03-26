@@ -1,0 +1,60 @@
+.home-hero .image {
+  max-height: 400px !important;
+  width: 400px;
+  height: 400px;
+  opacity: .8;
+}
+
+.home-hero #main-title {
+  color: white !important;
+}
+
+.nav-bar .logo {
+  height: 30px;
+  margin-right: 10px;
+}
+
+.nav-bar,.sidebar {
+  backdrop-filter: blur(30px);
+  -webkit-backdrop-filter: blur( 30px );
+  border: solid 2px transparent;
+  background: rgba(255,255,255, 0.2) !important;
+  background-clip: padding-box;
+  box-shadow: 10px 10px 10px  rgba(46, 54, 68, 0.03);
+}
+
+.content img {
+  border-radius: 10px;
+}
+
+.nav-dropdown-link-item .icon {
+  display: none;
+}
+
+:root {
+  --c-brand: #646cff;
+  --c-brand-light: #747bff;
+}
+
+.custom-block.tip {
+  border-color: var(--c-brand-light);
+}
+
+
+main > .container {
+  backdrop-filter: blur(30px);
+  -webkit-backdrop-filter: blur( 30px );
+  border: solid 2px transparent;
+  background: rgba(255,255,255, 0.2) !important;
+  background-clip: padding-box;
+  box-shadow: 10px 10px 10px  rgba(46, 54, 68, 0.03);
+}
+
+.theme {
+  background-image: linear-gradient(to top, #fddb92 0%, #d1fdff 100%);
+}
+
+.nav-bar-title {
+  display: flex;
+  align-items: center;
+}
