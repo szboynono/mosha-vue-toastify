@@ -1,6 +1,6 @@
 <template>
   <div class="mt-3">
-    <label for="title" class="mr-2">{{ type }}:</label>
+    <label for="title" class="block mb-1"> {{ type }} </label>
     <input 
       :id="type" 
       :type="type === 'timeout' ? 'number' : 'text'" 
@@ -18,7 +18,10 @@ export default defineComponent({
     type: String,
     text: String,
     description: String,
-    timeout: Number
+    toastBackgroundColor: String,
+    timeout: {
+      type: Number,
+    }
   },
   setup(props, { emit }) {
     const onInput = (event: any) => {

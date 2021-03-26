@@ -28,8 +28,11 @@
         type="description"
         v-model:description="description"
       />
+      <InputGroup type="timeout" v-model:timeout="timeout" />
+      <InputGroup type="toastBackgroundColor" v-model:toastBackgroundColor="toastBackgroundColor" />
       <RadioGroup
         v-if="text.length > 0"
+        type="position"
         :items="[
           'top-left',
           'top-right',
@@ -40,7 +43,53 @@
         ]"
         v-model:position="position"
       />
-      <InputGroup type="timeout" v-model:timeout="timeout" />
+      <RadioGroup
+        v-if="text.length > 0"
+        type="toastType"
+        :items="[
+          'default',
+          'info',
+          'warning',
+          'success',
+          'danger'
+        ]"
+        v-model:toastType="toastType"
+      />
+      <RadioGroup
+        v-if="text.length > 0"
+        type="transition"
+        :items="[
+          'bounce',
+          'flip',
+          'slide',
+        ]"
+        v-model:transition="transition"
+      />
+      <CheckBox 
+        v-if="text.length > 0"
+        type="hideProgessBar"
+        :hideProgessBar="hideProgessBar"
+        v-model:hideProgessBar="hideProgessBar" />
+      <CheckBox 
+        v-if="text.length > 0"
+        type="showIcon"
+        :showIcon="showIcon"
+        v-model:showIcon="showIcon" />
+      <CheckBox 
+        v-if="text.length > 0"
+        type="showCloseButton"
+        :showCloseButton="showCloseButton"
+        v-model:showCloseButton="showCloseButton" />
+      <CheckBox 
+        v-if="text.length > 0"
+        type="showCloseButton"
+        :showCloseButton="showCloseButton"
+        v-model:showCloseButton="showCloseButton" />
+      <CheckBox 
+        v-if="text.length > 0"
+        type="swipeClose"
+        :swipeClose="swipeClose"
+        v-model:swipeClose="swipeClose" />
       <button
         @click="showToast"
         class="mt-3 bg-indigo-500 text-white px-2 py-1 rounded hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:ring-opacity-50"
@@ -57,6 +106,7 @@ import { createToast } from "../../../../lib/main";
 import "../../../../lib/index.scss";
 import InputGroup from "./InputGroup.vue";
 import RadioGroup from "./RadioGroup.vue";
+import CheckBox from "./CheckBox.vue";
 import { ToastOptions } from "../../../../lib/types";
 
 export default defineComponent({
@@ -64,12 +114,20 @@ export default defineComponent({
   components: {
     InputGroup,
     RadioGroup,
+    CheckBox
   },
   setup() {
     const text = ref("Some text");
     const description = ref("");
     const position = ref("");
+    const toastType = ref("");
+    const transition = ref("");
+    const hideProgessBar = ref();
+    const showIcon = ref();
+    const swipeClose = ref();
+    const showCloseButton = ref();
     const timeout = ref<number | undefined>();
+    const toastBackgroundColor = ref<string | undefined>();
     const options = ref<ToastOptions>();
 
     watchEffect(() => {
@@ -80,11 +138,60 @@ export default defineComponent({
         };
       }
 
+      if (transition.value.length > 0) {
+        options.value = {
+          ...options.value,
+          transition: transition.value as any,
+        };
+      }
+      
+      if (toastType.value.length > 0) {
+        options.value = {
+          ...options.value,
+          type: toastType.value as any,
+        };
+      }
+
       if (timeout.value) {
         options.value = {
           ...options.value,
           timeout: timeout.value as any,
         };
+      }
+
+      if (toastBackgroundColor.value) {
+        options.value = {
+          ...options.value,
+          toastBackgroundColor: toastBackgroundColor.value as any,
+        };
+      }
+
+      if (hideProgessBar.value !== undefined) {
+        options.value = {
+          ...options.value,
+          hideProgressBar: hideProgessBar.value
+        }
+      }
+
+      if (showIcon.value !== undefined) {
+        options.value = {
+          ...options.value,
+          showIcon: showIcon.value
+        }
+      }
+
+      if (showCloseButton.value !== undefined) {
+        options.value = {
+          ...options.value,
+          showCloseButton: showCloseButton.value
+        }
+      }
+
+      if (swipeClose.value !== undefined) {
+        options.value = {
+          ...options.value,
+          swipeClose: swipeClose.value
+        }
       }
     });
 
@@ -96,6 +203,7 @@ export default defineComponent({
           description: description.value,
         };
       }
+      console.log(options.value);
       createToast(arg1, options.value);
     };
 
@@ -115,7 +223,11 @@ export default defineComponent({
       if (!options.value) return;
 
       Object.keys(options.value).forEach((key) => {
-          output += `<div>${key}: <span class="text-indigo-500">${(options.value as any)[key]}</span></div>`;
+        const value = (options.value as any)[key];
+
+        output += `<div>${key}: <span class="text-indigo-500">${
+          key === "timeout" ? "" : "'"
+        }${value}${key === "timeout" ? "" : "'"}</span></div>`;
       });
       output += "</div>";
       return output;
@@ -129,6 +241,13 @@ export default defineComponent({
       position,
       optionsArg,
       timeout,
+      toastType,
+      transition,
+      hideProgessBar,
+      showCloseButton,
+      showIcon,
+      swipeClose,
+      toastBackgroundColor
     };
   },
 });

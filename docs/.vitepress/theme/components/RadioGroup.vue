@@ -1,28 +1,26 @@
 <template>
   <div class="mt-3">
+    <div class="mb-2">{{ type === 'toastType' ? 'type' : type }}</div>
     <div v-for="item of items" :key="item" class="inline-block mr-3">
-      <input class="mr-2" type="radio" :id="item" name="same" :value="item" v-model="picked">
+      <input class="mr-2" type="radio" :id="item" name="same" :value="item" @change="onChange">
       <label :for="item">{{ item }}</label>
     </div>
   </div>
 </template>
 
-<script>
-import { defineComponent, ref, watchEffect } from 'vue'
+<script lang="ts">
+import { defineComponent } from 'vue'
 
 export default defineComponent({
   props: {
     items: Array,
-    selected: String
+    type: String
   },
   setup(props, { emit }) {
-    const picked = ref('')
-    watchEffect(() => {
-      if (picked.value.length > 0) {
-        emit(`update:position`, picked.value)
-      }
-    })
-    return { picked }
+    const onChange = (event: any) => {
+      emit(`update:${props.type}`, event.target.value)
+    }
+    return { onChange }
   },
 })
 </script>
