@@ -1,6 +1,6 @@
 {
   "name": "mosha-vue-toastify",
-  "version": "0.0.6",
+  "version": "1.0.0",
   "license": "MIT",
   "files": [
     "dist"
@@ -44,7 +44,8 @@
     "notification",
     "toast",
     "snackbar",
-    "message"
+    "message",
+    "mosha-vue-toastify"
   ],
   "repository": {
     "type": "git",
