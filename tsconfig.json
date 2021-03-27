@@ -13,7 +13,7 @@
     "declarationDir": "dist",
     "emitDeclarationOnly": true,
     "lib": ["esnext", "dom"],
-    "types": ["vite/client"]
+    "types": ["vite/client", "jest"]
   },
-  "include": ["lib/**/*.ts", "lib/**/*.d.ts", "lib/**/*.vue"]
+  "include": ["lib/**/*.ts", "lib/**/*.d.ts", "lib/**/*.vue"],
 }
