@@ -1,6 +1,6 @@
 # Mosha Vue Toastify
 
-[![Generic badge](https://img.shields.io/badge/version-1.0.0-<COLOR>.svg)](https://shields.io/)
+[![Build Status](https://travis-ci.com/szboynono/mosha-vue-toastify.svg?branch=main)](https://travis-ci.com/szboynono/mosha-vue-toastify)
 
 A light weight and fun Vue 3 toast or notification or snack bar or however you wanna call it library.
 
