@@ -1,4 +1,5 @@
 import { CSSProperties, onUnmounted, ref } from 'vue'
+import { SWIPE_ACTIVE_DIFF } from '../config';
 import { Position } from '../types';
 
 const useSwipe = (position: Position, onCloseHandler: () => void, swipeClose: boolean) => {
@@ -22,21 +23,18 @@ const useSwipe = (position: Position, onCloseHandler: () => void, swipeClose: bo
         (event as TouchEvent).touches[0].clientX;
     }
 
+    swipeStyle.value = {
+      ...swipeStyle.value,
+      transition: 'none',
+    };
+
     if (position.endsWith("left")) {
-      swipeStyle.value = {
-        ...swipeStyle.value,
-        transition: 'none',
-        left: `${-swipedDiff.value}px`
-      };
+      swipeStyle.value.left = `${-swipedDiff.value}px`
     } else {
-      swipeStyle.value = {
-        ...swipeStyle.value,
-        transition: 'none',
-        right: `${swipedDiff.value}px`
-      };
+      swipeStyle.value.right =  `${swipedDiff.value}px`
     }
 
-    if (Math.abs(swipedDiff.value) > 200) {
+    if (Math.abs(swipedDiff.value) > SWIPE_ACTIVE_DIFF) {
       onCloseHandler();
     }
   };

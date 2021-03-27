@@ -1,11 +1,26 @@
 .mosha {
   &__fadeOutRight-leave-active {
-    animation: fadeOutRight .5s;
+    -webkit-animation: fadeOutRight .5s;
+            animation: fadeOutRight .5s;
   }
   &__fadeOutLeft-leave-active {
-    animation: fadeOutLeft .5s;
+    -webkit-animation: fadeOutLeft .5s;
+            animation: fadeOutLeft .5s;
   }
 }
+
+@-webkit-keyframes fadeOutLeft {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+    -webkit-transform: translate3d(-100%, 0, 0);
+            transform: translate3d(-100%, 0, 0);
+  }
+}
+
 
 @keyframes fadeOutLeft {
   from {
@@ -14,7 +29,21 @@
 
   to {
     opacity: 0;
-    transform: translate3d(-100%, 0, 0);
+    -webkit-transform: translate3d(-100%, 0, 0);
+            transform: translate3d(-100%, 0, 0);
+  }
+}
+
+
+@-webkit-keyframes fadeOutRight {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+    -webkit-transform: translate3d(100%, 0, 0);
+            transform: translate3d(100%, 0, 0);
   }
 }
 
@@ -26,6 +55,7 @@
 
   to {
     opacity: 0;
-    transform: translate3d(100%, 0, 0);
+    -webkit-transform: translate3d(100%, 0, 0);
+            transform: translate3d(100%, 0, 0);
   }
 }

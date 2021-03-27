@@ -1,37 +1,55 @@
 .mosha__toast {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  justify-content: space-between;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+          justify-content: space-between;
   position: fixed;
   min-height: 64px;
   max-height: 800px;
-  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
   overflow: hidden;
   padding: 12px 8px;
   word-break: break-word;
   min-width: 312px;
   max-width: 480px;
   z-index: 9999;
+  width: -webkit-max-content;
+  width: -moz-max-content;
   width: max-content;
+  -webkit-transition: top .3s ease-out .5s, bottom .3s ease-out .5s;
+  -o-transition: top .3s ease-out .5s, bottom .3s ease-out .5s;
   transition: top .3s ease-out .5s, bottom .3s ease-out .5s;
   border-radius: 8px;
-  box-shadow: 0 1px 10px 0 rgba(0,0,0,.1), 0 2px 15px 0 rgba(0,0,0,.05);
+  -webkit-box-shadow: 0 1px 10px 0 rgba(0,0,0,.1), 0 2px 15px 0 rgba(0,0,0,.05);
+          box-shadow: 0 1px 10px 0 rgba(0,0,0,.1), 0 2px 15px 0 rgba(0,0,0,.05);
   margin: 0 16px;
   -webkit-touch-callout: none; /* iOS Safari */
-  -webkit-user-select: none; /* Safari */
-  -khtml-user-select: none; /* Konqueror HTML */
+  -webkit-user-select: none; /* Safari */ /* Konqueror HTML */
   -moz-user-select: none; /* Old versions of Firefox */
   -ms-user-select: none; /* Internet Explorer/Edge */
   user-select: none;
 
   &__content-wrapper {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
     align-items: center;
   }
 
   &__content {
     font-family: sans-serif;
     line-height: 20px;
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
     flex-direction: column;
     color: white;
 
@@ -52,6 +70,8 @@
     cursor: pointer;
     content: '\00d7';
     color: white;
+    -webkit-transition: color 0.3s;
+    -o-transition: color 0.3s;
     transition: color 0.3s;
     font-weight: 600;
     margin-left: 10px;
@@ -64,12 +84,13 @@
   }
 
   &__progress {
+    -webkit-transition: all linear .2s;
+    -o-transition: all linear .2s;
     transition: all linear .2s;
     position: absolute;
     z-index: 9999;
     height: 8px;
     background-color: rgba($color: #FFFFFF, $alpha: 0.6);
-    // background-image: linear-gradient(-225deg, #69EACB 0%, #EACCF8 48%, #6654F1 100%);
     bottom: 0;
     margin-left: -8px;
   }
@@ -106,6 +127,7 @@
     }
 
     & .mosha__toast__progress {
+      background-image: -o-linear-gradient(315deg, #69EACB 0%, #EACCF8 48%, #6654F1 100%);
       background-image: linear-gradient(-225deg, #69EACB 0%, #EACCF8 48%, #6654F1 100%);
     }
   }

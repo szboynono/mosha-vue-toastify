@@ -41,7 +41,7 @@ import {
   ref,
   watchEffect,
   CSSProperties,
-  onUnmounted,
+  Ref,
 } from "vue";
 import { Position, ToastType, TransitionType } from "../types";
 import useTimer from "../hooks/useTimer";
@@ -115,7 +115,7 @@ export default defineComponent({
     const { transitionType } = useTransitionType(
       props.position,
       props.transition,
-      swipedDiff
+      swipedDiff as Ref<number>
     );
 
     const { start, stop, progress } = useTimer(() => {

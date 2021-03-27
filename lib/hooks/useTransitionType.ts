@@ -1,5 +1,6 @@
 import { Position, TransitionType } from '../types'
-import { computed } from 'vue'
+import { computed, Ref } from 'vue'
+import { SWIPE_ACTIVE_DIFF } from '../config'
 
 type TransitionMap = {[pos in Position]: {[type in TransitionType]: string}}
 
@@ -36,11 +37,11 @@ const TRANSITION_MAP: TransitionMap = {
   },
 }
 
-const useTransitionType = (position: Position, transition: TransitionType, swiped: any) => {
+const useTransitionType = (position: Position, transition: TransitionType, swiped: Ref<number>) => {
   const transitionType = computed(() => {
-    if (swiped.value > 0) {
+    if (swiped.value > SWIPE_ACTIVE_DIFF) {
       return 'mosha__fadeOutLeft'
-    } else if (swiped.value < 0) {
+    } else if (swiped.value < -SWIPE_ACTIVE_DIFF) {
       return 'mosha__fadeOutRight'
     } else {
       return TRANSITION_MAP[position][transition]

@@ -1,4 +1,5 @@
 import { createVNode, render } from 'vue'
+import { DEFAULT_OPTIONS, TOAST_GAP } from '../config';
 import { Position, ToastObject, ToastOptions, ToastContent } from '../types';
 import Toast from './MToast.vue'
 
@@ -11,20 +12,19 @@ const toasts: Record<Position, ToastObject[]> = {
   'bottom-center': [],
 }
 
-const defaultOptions: ToastOptions = { type: 'default', timeout: 5000, showCloseButton: true, position: 'top-right', transition: 'bounce', hideProgressBar: false, swipeClose: true }
 
 let toastId = 0;
 
-const initializeOptions = (options: ToastOptions): ToastOptions => {
+export const initializeOptions = (options: ToastOptions): ToastOptions => {
   const processedOptions: ToastOptions = {
     ...options,
-    type: options.type || defaultOptions.type,
-    timeout: options.timeout || defaultOptions.timeout,
+    type: options.type || DEFAULT_OPTIONS.type,
+    timeout: options.timeout || DEFAULT_OPTIONS.timeout,
     showCloseButton: options.showCloseButton,
-    position: options.position || defaultOptions.position,
+    position: options.position || DEFAULT_OPTIONS.position,
     showIcon: options.showIcon,
     swipeClose: options.swipeClose,
-    transition: options.transition || defaultOptions.transition,
+    transition: options.transition || DEFAULT_OPTIONS.transition,
   }
 
   processedOptions.hideProgressBar = processedOptions.timeout !== undefined && processedOptions.timeout <= 0
@@ -35,16 +35,16 @@ const initializeOptions = (options: ToastOptions): ToastOptions => {
 }
 
 export const createToast = (content: ToastContent, options?: ToastOptions) => {
-  const initializedOptions = options ? initializeOptions(options) : defaultOptions;
+  const initializedOptions = options ? initializeOptions(options) : DEFAULT_OPTIONS;
   const text = typeof content === 'string' ? content : content.title;
   const description = typeof content === 'string' ? undefined : content.description;
 
-  let verticalOffset = 12
   const id = toastId++;
+  let verticalOffset = TOAST_GAP
 
   if (!initializedOptions.position) return;
   toasts[initializedOptions.position].forEach(({ toastVNode }) => {
-    const offsetHeight = (toastVNode.el as HTMLElement).offsetHeight + 12
+    const offsetHeight = (toastVNode.el as HTMLElement).offsetHeight + TOAST_GAP
     verticalOffset += (offsetHeight || 0)
   })
 
@@ -95,7 +95,7 @@ const close = (id: number, position: Position) => {
     if (!toastVNode.el) return;
 
     const verticalPos: string = position.split('-')[0] || 'top'
-    const pos = parseInt(toastVNode.el.style[verticalPos], 10) - height - 12;
+    const pos = parseInt(toastVNode.el.style[verticalPos], 10) - height - TOAST_GAP;
 
     if (!toastVNode.component) return;
     toastVNode.component.props.offset = pos
