@@ -4,4 +4,4 @@ dist
 dist-ssr
 *.local
 tgz
-/coverage
+coverage
