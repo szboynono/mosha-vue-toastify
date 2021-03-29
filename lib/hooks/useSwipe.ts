@@ -45,6 +45,45 @@ const useSwipe = (position: Position, onCloseHandler: () => void, swipeClose: bo
     }
   };
 
+  const moveEndHandler = (move: "mousemove" | "touchmove") => {
+    const resetLeft: CSSProperties = {
+      transition: "left .3s ease-out",
+      left: 0
+    }
+
+    const resetRight: CSSProperties = {
+      transition: "right .3s ease-out",
+      right: 0
+    }
+
+    if (position.endsWith("left")) {
+      swipeStyle.value = {
+        ...swipeStyle.value,
+        ...resetLeft
+      }
+    } else if (position.endsWith("right")) {
+      swipeStyle.value = {
+        ...swipeStyle.value,
+        ...resetRight
+      }
+    } else {
+      if (swipedDiff.value as number > 0) {
+        swipeStyle.value = {
+          ...swipeStyle.value,
+          ...resetLeft
+        }
+      } else if (swipedDiff.value && swipedDiff.value < 0)  {
+        swipeStyle.value = {
+          ...swipeStyle.value,
+          ...resetRight
+        }
+      }
+    }
+    swipeStart.value = undefined;
+    swipedDiff.value = undefined;
+    removeEventListener(move, swipeHandler);
+  }
+
   const startSwipeHandler = (event: MouseEvent | TouchEvent) => {
     if (swipeClose === false) return;
     swipeStart.value = event;
@@ -52,39 +91,7 @@ const useSwipe = (position: Position, onCloseHandler: () => void, swipeClose: bo
     const moveEnd = isMouseEvent(event) ? "mouseup" : "touchend";
 
     addEventListener(move, swipeHandler);
-    addEventListener(moveEnd, () => {
-      if (position.endsWith("left")) {
-        swipeStyle.value = {
-          ...swipeStyle.value,
-          transition: "left .3s ease-out",
-          left: 0
-        }
-      } else if (position.endsWith("right")) {
-        swipeStyle.value = {
-          ...swipeStyle.value,
-          transition: "right .3s ease-out",
-          right: 0
-        }
-      } else {
-        if (swipedDiff.value as number > 0) {
-          swipeStyle.value = {
-            ...swipeStyle.value,
-            transition: "left .3s ease-out",
-            left: 0
-          }
-        } else if (swipedDiff.value && swipedDiff.value < 0)  {
-          swipeStyle.value = {
-            ...swipeStyle.value,
-            transition: "right .3s ease-out",
-            right: 0
-          }
-        }
-        
-      }
-      swipeStart.value = undefined;
-      swipedDiff.value = undefined;
-      removeEventListener(move, swipeHandler);
-    });
+    addEventListener(moveEnd, () => moveEndHandler(move));
   };
 
   const cleanUpMove = (move: 'mousemove' | 'touchmove') => {
