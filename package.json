@@ -27,6 +27,7 @@
     "@types/node": "^14.14.32",
     "@vitejs/plugin-vue": "^1.1.5",
     "@vue/compiler-sfc": "^3.0.5",
+    "@vue/test-utils": "^2.0.0-rc.4",
     "autoprefixer": "^10.2.5",
     "jest": "^26.6.3",
     "path": "^0.12.7",
@@ -51,5 +52,8 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/szboynono/mosha-vue-toastify.git"
+  },
+  "dependencies": {
+    "vue-jest": "^5.0.0-alpha.7"
   }
 }
