@@ -34,10 +34,17 @@ export const initializeOptions = (options: ToastOptions): ToastOptions => {
   return processedOptions
 }
 
-export const createToast = (content: ToastContent, options?: ToastOptions) => {
-  const initializedOptions = options ? initializeOptions(options) : DEFAULT_OPTIONS;
+export const initializeContent = (content: ToastContent) => {
   const text = typeof content === 'string' ? content : content.title;
   const description = typeof content === 'string' ? undefined : content.description;
+
+  return { text, description }
+}
+
+export const createToast = (content: ToastContent, options?: ToastOptions) => {
+  if (!content) return;
+
+  const initializedOptions = options ? initializeOptions(options) : DEFAULT_OPTIONS;
 
   const id = toastId++;
   let verticalOffset = TOAST_GAP
@@ -54,8 +61,7 @@ export const createToast = (content: ToastContent, options?: ToastOptions) => {
   let toastVNode = null;
   toastVNode = createVNode(Toast, {
     ...initializedOptions,
-    text,
-    description,
+    ...initializeContent(content),
     id,
     offset: verticalOffset,
     visible: false,

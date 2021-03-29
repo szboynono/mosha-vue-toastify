@@ -22,16 +22,22 @@ const useSwipe = (position: Position, onCloseHandler: () => void, swipeClose: bo
         (swipeStart.value as TouchEvent).touches[0].clientX -
         (event as TouchEvent).touches[0].clientX;
     }
-
+    
     swipeStyle.value = {
       ...swipeStyle.value,
       transition: 'none',
     };
 
     if (position.endsWith("left")) {
-      swipeStyle.value.left = `${-swipedDiff.value}px`
+      swipeStyle.value.left = `${-swipedDiff.value}px !important`
+    } else if (position.endsWith("right")) {
+      swipeStyle.value.right =  `${swipedDiff.value}px !important`
     } else {
-      swipeStyle.value.right =  `${swipedDiff.value}px`
+      if (swipedDiff.value > 0) {
+        swipeStyle.value.left = `${-swipedDiff.value}px !important`
+      } else {
+        swipeStyle.value.right =  `${swipedDiff.value}px !important`
+      }
     }
 
     if (Math.abs(swipedDiff.value) > SWIPE_ACTIVE_DIFF) {
@@ -47,20 +53,36 @@ const useSwipe = (position: Position, onCloseHandler: () => void, swipeClose: bo
 
     addEventListener(move, swipeHandler);
     addEventListener(moveEnd, () => {
-      swipeStart.value = undefined;
       if (position.endsWith("left")) {
         swipeStyle.value = {
           ...swipeStyle.value,
           transition: "left .3s ease-out",
           left: 0
         }
-      } else {
+      } else if (position.endsWith("right")) {
         swipeStyle.value = {
           ...swipeStyle.value,
           transition: "right .3s ease-out",
           right: 0
         }
+      } else {
+        if (swipedDiff.value as number > 0) {
+          swipeStyle.value = {
+            ...swipeStyle.value,
+            transition: "left .3s ease-out",
+            left: 0
+          }
+        } else if (swipedDiff.value && swipedDiff.value < 0)  {
+          swipeStyle.value = {
+            ...swipeStyle.value,
+            transition: "right .3s ease-out",
+            right: 0
+          }
+        }
+        
       }
+      swipeStart.value = undefined;
+      swipedDiff.value = undefined;
       removeEventListener(move, swipeHandler);
     });
   };
