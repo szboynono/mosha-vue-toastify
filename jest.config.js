@@ -17,5 +17,5 @@ module.exports = {
     "!lib/shims-vue.d.ts",
     "!**/node_modules/**",
   ],
-  coverageReporters: ['html', 'json']
+  coverageReporters: ["json", "lcov", "text", 'html']
 }
