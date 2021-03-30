@@ -88,7 +88,7 @@
         <RadioGroup
           v-if="text.length > 0"
           type="transition"
-          :items="['bounce', 'flip', 'slide']"
+          :items="['bounce', 'zoom', 'slide']"
           v-model:transition="transition"
         />
       </div>
@@ -206,7 +206,6 @@ export default defineComponent({
           description: description.value,
         };
       }
-      console.log(options.value);
       createToast(arg1, options.value);
     };
 

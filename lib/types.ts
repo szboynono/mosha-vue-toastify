@@ -2,7 +2,7 @@ export type ToastType = 'info' | 'danger' | 'warning' | 'success' | 'default'
 
 export type Position =  'top-left' | 'top-right' | 'bottom-left' | 'bottom-right'| 'top-center' | 'bottom-center'
 
-export type TransitionType = 'bounce' | 'flip' | 'slide'
+export type TransitionType = 'bounce' | 'zoom' | 'slide'
 
 export type ToastContent = string | {
   title: string,

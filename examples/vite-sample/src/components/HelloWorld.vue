@@ -94,7 +94,7 @@ export default defineComponent({
     const bc = () => {
         createToast('asdfff', {
           position: 'bottom-center',
-          transition: 'flip',
+          transition: 'zoom',
           timeout: 3000,
           onClose: () => {
             console.log('log')
