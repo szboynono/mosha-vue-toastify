@@ -10,6 +10,7 @@ A light weight and fun Vue 3 toast or notification or snack bar.
 - Super easy to setup! try follow [this](getting-started/installation.html#the-gist)
 - Swipe to close
 - Support for Composition API
+- Written in typescript, full typescript support
 - Super light weight
 - Define behavior per toast
 - Fun progress bar to display remaining time
