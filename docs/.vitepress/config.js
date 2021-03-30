@@ -14,7 +14,8 @@ module.exports = {
     lastUpdated: 'Last Updated',
 
     sidebar: {
-      '/': getGuideSidebar
+      '/guide/': getGuideSidebar(),
+      '/': getGuideSidebar()
     }
   }
 }
@@ -24,7 +25,9 @@ function getGuideSidebar() {
     {
       text: 'Getting Started',
       children: [
-        { text: 'Introduction', link: '/getting-started/introduction' },
+        { text: 'Introduction', link: '/' },
+        { text: 'Installation', link: '/getting-started/installation' },
+        { text: 'Configuration', link: '/getting-started/configuration' },
       ]
     },
   ]

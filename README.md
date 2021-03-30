@@ -66,3 +66,7 @@ Options:
 | swipeClose | boolean      |    true | Allows the user swipe close the toast |
 | toastBackgroundColor | string      | default color | Customize the background color of the toast. |
 | onClose | function      | N/A | This function will be called at the end of the toast's lifecycle|
+
+## Support
+
+Give this [project](https://github.com/szboynono/mosha-vue-toastify) a ⭐ if you like it. Any suggestions are welcome!
