@@ -53,11 +53,6 @@
             v-model:showCloseButton="showCloseButton"
           />
           <CheckBox
-            type="showCloseButton"
-            :showCloseButton="showCloseButton"
-            v-model:showCloseButton="showCloseButton"
-          />
-          <CheckBox
             type="swipeClose"
             :swipeClose="swipeClose"
             v-model:swipeClose="swipeClose"
