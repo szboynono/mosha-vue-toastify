@@ -38,7 +38,8 @@
     "typescript": "^4.1.3",
     "vite": "^2.0.5",
     "vitepress": "^0.12.2",
-    "vue": "^3.0.5"
+    "vue": "^3.0.5",
+    "vue-jest": "^5.0.0-alpha.7"
   },
   "keywords": [
     "vue",
@@ -52,8 +53,5 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/szboynono/mosha-vue-toastify.git"
-  },
-  "dependencies": {
-    "vue-jest": "^5.0.0-alpha.7"
   }
 }
