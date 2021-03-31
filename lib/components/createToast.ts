@@ -44,50 +44,91 @@ export const initializeContent = (
   return { text, description }
 }
 
+export const moveToastsOnAdd = (options: ToastOptions): number => {
+  let verticalOffset = TOAST_GAP
+
+  if (!options.position) throw new Error('no position')
+  toasts[options.position].forEach(({ toastVNode }) => {
+    const offsetHeight = (toastVNode.el as HTMLElement).offsetHeight + TOAST_GAP
+    verticalOffset += offsetHeight || 0
+  })
+  return verticalOffset
+}
+
+// eslint-disable-next-line
+export const setupVNodeProps = (
+  options: ToastOptions,
+  content: { text: string; description: string | undefined },
+  id: number,
+  offset: number
+) => {
+  return {
+    ...options,
+    ...content,
+    id,
+    offset,
+    visible: false,
+    onCloseHandler: () => {
+      close(id, options.position ? options.position : 'top-right')
+    }
+  }
+}
+
+export const setupVNode = (
+  options: ToastOptions,
+  content: { text: string; description: string | undefined }
+): void => {
+  const verticalOffset = moveToastsOnAdd(options)
+  const id = toastId++
+
+  const container = document.createElement('div')
+  document.body.appendChild(container)
+
+  const toastVNode = createVNode(
+    Toast,
+    setupVNodeProps(options, content, id, verticalOffset)
+  )
+
+  render(toastVNode, container)
+
+  if (!options.position) return
+  toasts[options.position].push({ toastVNode, container })
+
+  if (toastVNode.component) {
+    toastVNode.component.props.visible = true
+  }
+}
+
 export const createToast = (
   content: ToastContent,
   options?: ToastOptions
 ): void => {
   if (!content) return
-
+  const initializedContent = initializeContent(content)
   const initializedOptions = options
     ? initializeOptions(options)
     : DEFAULT_OPTIONS
 
-  const id = toastId++
-  let verticalOffset = TOAST_GAP
+  setupVNode(initializedOptions, initializedContent)
+}
 
-  if (!initializedOptions.position) return
-  toasts[initializedOptions.position].forEach(({ toastVNode }) => {
-    const offsetHeight = (toastVNode.el as HTMLElement).offsetHeight + TOAST_GAP
-    verticalOffset += offsetHeight || 0
-  })
+const moveToastsOnClose = (
+  index: number,
+  toastArr: ToastObject[],
+  position: Position,
+  toastHeight: number
+) => {
+  for (let i = index; i < toastArr.length; i++) {
+    const { toastVNode } = toastArr[i] as ToastObject
 
-  const container = document.createElement('div')
-  document.body.appendChild(container)
+    if (!toastVNode.el) return
 
-  let toastVNode = null
-  toastVNode = createVNode(Toast, {
-    ...initializedOptions,
-    ...initializeContent(content),
-    id,
-    offset: verticalOffset,
-    visible: false,
-    onCloseHandler: () => {
-      close(
-        id,
-        initializedOptions.position ? initializedOptions.position : 'top-right'
-      )
-    }
-  })
+    const verticalPos: string = position.split('-')[0] || 'top'
+    const pos =
+      parseInt(toastVNode.el.style[verticalPos], 10) - toastHeight - TOAST_GAP
 
-  render(toastVNode, container)
-  if (!initializedOptions.position) return
-
-  toasts[initializedOptions.position].push({ toastVNode, container })
-
-  if (toastVNode.component) {
-    toastVNode.component.props.visible = true
+    if (!toastVNode.component) return
+    toastVNode.component.props.offset = pos
   }
 }
 
@@ -102,10 +143,10 @@ const close = (id: number, position: Position) => {
   const { container, toastVNode } = toastArr[index] as ToastObject
 
   if (!toastVNode.el) return
-
   const height = toastVNode.el.offsetHeight
 
   toasts[position].splice(index, 1)
+  moveToastsOnClose(index, toastArr, position, height)
 
   if (!toastVNode.component) return
   toastVNode.component.props.visible = false
@@ -113,19 +154,6 @@ const close = (id: number, position: Position) => {
   if (toastVNode.component.props.onClose) {
     // eslint-disable-next-line
     ;(toastVNode.component.props as any).onClose()
-  }
-
-  for (let i = index; i < toastArr.length; i++) {
-    const { toastVNode } = toastArr[i] as ToastObject
-
-    if (!toastVNode.el) return
-
-    const verticalPos: string = position.split('-')[0] || 'top'
-    const pos =
-      parseInt(toastVNode.el.style[verticalPos], 10) - height - TOAST_GAP
-
-    if (!toastVNode.component) return
-    toastVNode.component.props.offset = pos
   }
 
   setTimeout(() => {

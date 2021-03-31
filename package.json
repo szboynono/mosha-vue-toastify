@@ -12,6 +12,7 @@
   "style": "./dist/style.css",
   "scripts": {
     "test": "jest",
+    "test:watch": "jest --watch",
     "dev": "vite",
     "lint": "eslint 'lib/**/*.{ts,vue}'",
     "format": "prettier --config .prettierrc 'lib/**/*.{ts,vue}' --write",

@@ -1,9 +1,9 @@
-import { ToastOptions } from '../../lib/types';
-import { initializeOptions } from '../../lib/components/createToast'
+import * as testFile from '../../lib/components/createToast'
+import { ToastOptions } from '../../lib/types'
 
-test('initializeOptions should initilize the options', () => {
+test('initializeOptions should initialize the options', () => {
   const options: ToastOptions = {}
-  const result = initializeOptions(options)
+  const result = testFile.initializeOptions(options)
   expect(result).toEqual({
     hideProgressBar: false,
     position: "top-right",
@@ -14,4 +14,8 @@ test('initializeOptions should initilize the options', () => {
     transition: "bounce",
     type: "default",
   })
+})
+
+test('initializeContent should initialize content', () => {
+  expect(testFile.initializeContent('hey')).toEqual({ text: 'hey', description: undefined})
 })

@@ -15,7 +15,7 @@ export default defineComponent ({
     },
     hideProgessBar: {
       type: Boolean,
-      default: true
+      default: false
     },
     showIcon: {
       type: Boolean,

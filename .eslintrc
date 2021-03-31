@@ -22,5 +22,5 @@
     "plugin:vue/vue3-recommended",
     "prettier"
   ],
-  "ignorePatterns": ["shims-vue.d.ts"]
+  "ignorePatterns": ["shims-vue.d.ts", "test"]
 }
