@@ -95,19 +95,24 @@ const close = (id: number, position: Position) => {
   const toastArr = toasts[position]
 
   const index = toastArr.findIndex(
-    ({ toastVNode }) => id === toastVNode.props.id
+    ({ toastVNode }) => toastVNode.props && id === toastVNode.props.id
   )
 
   if (index === -1) return
   const { container, toastVNode } = toastArr[index] as ToastObject
 
+  if (!toastVNode.el) return
+
   const height = toastVNode.el.offsetHeight
 
   toasts[position].splice(index, 1)
+
+  if (!toastVNode.component) return
   toastVNode.component.props.visible = false
 
   if (toastVNode.component.props.onClose) {
-    toastVNode.component.props.onClose()
+    // eslint-disable-next-line
+    ;(toastVNode.component.props as any).onClose()
   }
 
   for (let i = index; i < toastArr.length; i++) {
