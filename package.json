@@ -13,6 +13,7 @@
   "scripts": {
     "test": "jest",
     "dev": "vite",
+    "lint": "eslint 'lib/**/*.{ts,vue}'",
     "build": "vite build && tsc -P tsconfig.json",
     "serve": "vite preview",
     "example:update": "yarn build && cd examples/vite-sample && yarn link \"mosha-vue-toastify\"",
@@ -25,10 +26,14 @@
   "devDependencies": {
     "@types/jest": "^26.0.22",
     "@types/node": "^14.14.32",
+    "@typescript-eslint/eslint-plugin": "^4.20.0",
+    "@typescript-eslint/parser": "^4.20.0",
     "@vitejs/plugin-vue": "^1.1.5",
     "@vue/compiler-sfc": "^3.0.5",
     "@vue/test-utils": "^2.0.0-rc.4",
     "autoprefixer": "^10.2.5",
+    "eslint": "^7.23.0",
+    "eslint-plugin-vue": "^7.8.0",
     "jest": "^26.6.3",
     "path": "^0.12.7",
     "postcss": "^8.2.8",
@@ -39,6 +44,7 @@
     "vite": "^2.0.5",
     "vitepress": "^0.12.2",
     "vue": "^3.0.5",
+    "vue-eslint-parser": "^7.6.0",
     "vue-jest": "^5.0.0-alpha.7"
   },
   "keywords": [
