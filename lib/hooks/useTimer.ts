@@ -1,6 +1,14 @@
 import { onUnmounted, onMounted, ref, Ref } from 'vue'
 
-const useTimer = (callback: () => void | string, delay: number): { start: () => void, stop: () => void, clear: () => void, progress: Ref<number> } => {
+const useTimer = (
+  callback: () => void | string,
+  delay: number
+): {
+  start: () => void
+  stop: () => void
+  clear: () => void
+  progress: Ref<number>
+} => {
   const timerId = ref<number>()
   const startTime = ref<number>(0)
   const remainingTime = ref<number>(delay)
@@ -11,7 +19,7 @@ const useTimer = (callback: () => void | string, delay: number): { start: () => 
   const stop = () => {
     clearInterval(intervalId.value)
     clearTimeout(timerId.value)
-    remainingTime.value -= Date.now() - startTime.value;
+    remainingTime.value -= Date.now() - startTime.value
   }
 
   const start = () => {

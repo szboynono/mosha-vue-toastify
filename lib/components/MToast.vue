@@ -1,10 +1,10 @@
 <template>
   <transition :name="transitionType" type="animation">
     <div
+      v-if="visible"
       class="mosha__toast"
       :style="[style, swipeStyle]"
       :class="toastBackgroundColor ? null : type"
-      v-if="visible"
       @mouseenter="stopTimer"
       @mouseleave="onMouseLeave"
       @touchstart="onTouchStart"
@@ -14,7 +14,7 @@
         <MIcon v-if="showIcon" :type="type" />
         <div class="mosha__toast__content">
           <div class="mosha__toast__content__text">{{ text }}</div>
-          <div class="mosha__toast__content__description" v-if="description">
+          <div v-if="description.length > 0" class="mosha__toast__content__description">
             {{ description }}
           </div>
         </div>
@@ -41,124 +41,133 @@ import {
   ref,
   watchEffect,
   CSSProperties,
-  Ref,
-} from "vue";
-import { Position, ToastType, TransitionType } from "../types";
-import useTimer from "../hooks/useTimer";
-import useTransitionType from "../hooks/useTransitionType";
-import useCustomStyle from "../hooks/useCustomStyle";
-import useSwipe from "../hooks/useSwipe";
-import MIcon from "./MIcon.vue";
+  Ref
+} from 'vue'
+import { Position, ToastType, TransitionType } from '../types'
+import useTimer from '../hooks/useTimer'
+import useTransitionType from '../hooks/useTransitionType'
+import useCustomStyle from '../hooks/useCustomStyle'
+import useSwipe from '../hooks/useSwipe'
+import MIcon from './MIcon.vue'
 
 export default defineComponent({
-  name: "MToast",
+  name: 'MToast',
   components: {
-    MIcon,
+    MIcon
   },
   props: {
     visible: Boolean,
-    text: String,
-    description: String,
-    toastBackgroundColor: String,
+    text: {
+      type: String,
+      default: ''
+    },
+    description: {
+      type: String,
+      default: ''
+    },
+    toastBackgroundColor: {
+      type: String,
+      default: ''
+    },
     type: {
       type: String as PropType<ToastType>,
-      default: "default",
+      default: 'default'
     },
     onCloseHandler: {
       type: Function as PropType<() => void>,
-      required: true,
+      required: true
     },
+    // eslint-disable-next-line
     offset: Number,
     id: {
       type: Number,
-      required: true,
+      required: true
     },
     timeout: {
       type: Number,
-      default: 5000,
+      default: 5000
     },
     position: {
       type: String as PropType<Position>,
-      required: true,
+      required: true
     },
     showCloseButton: {
       type: Boolean,
-      default: true,
+      default: true
     },
     swipeClose: {
       type: Boolean,
-      default: true,
+      default: true
     },
     hideProgressBar: {
       type: Boolean,
-      default: false,
+      default: false
     },
     showIcon: {
       type: Boolean,
-      default: false,
+      default: false
     },
     transition: {
       type: String as PropType<TransitionType>,
-      default: "bounce",
-    },
+      default: 'bounce'
+    }
   },
   setup(props) {
-    const style = ref<CSSProperties>();
+    const style = ref<CSSProperties>()
 
-    const {
-      swipedDiff,
-      startSwipeHandler,
-      swipeStyle,
-      cleanUpMove
-    } = useSwipe(props.position, props.onCloseHandler, props.swipeClose);
+    const { swipedDiff, startSwipeHandler, swipeStyle, cleanUpMove } = useSwipe(
+      props.position,
+      props.onCloseHandler,
+      props.swipeClose
+    )
 
     const { transitionType } = useTransitionType(
       props.position,
       props.transition,
       swipedDiff as Ref<number>
-    );
+    )
 
     const { start, stop, progress } = useTimer(() => {
-      props.onCloseHandler();
-    }, props.timeout);
+      props.onCloseHandler()
+    }, props.timeout)
 
     const startTimer = () => {
       if (props.timeout > 0) {
-        start();
+        start()
       }
-    };
+    }
 
     const stopTimer = () => {
       if (props.timeout > 0) {
-        stop();
+        stop()
       }
-    };
+    }
 
     const onMouseLeave = () => {
-      cleanUpMove('mousemove');
-      startTimer();
-    };
+      cleanUpMove('mousemove')
+      startTimer()
+    }
 
     const onMouseDown = (event: MouseEvent) => {
-      startSwipeHandler(event);
-    };
+      startSwipeHandler(event)
+    }
 
     const onTouchStart = (event: TouchEvent) => {
-      startSwipeHandler(event);
-    };
+      startSwipeHandler(event)
+    }
 
     watchEffect(() => {
       const { customStyle } = useCustomStyle(
         props.position,
         props.offset,
         props.toastBackgroundColor
-      );
-      style.value = customStyle.value;
-    });
+      )
+      style.value = customStyle.value
+    })
 
     onMounted(() => {
-      startTimer();
-    });
+      startTimer()
+    })
 
     return {
       style,
@@ -169,8 +178,8 @@ export default defineComponent({
       onTouchStart,
       onMouseLeave,
       onMouseDown,
-      swipeStyle,
-    };
-  },
-});
+      swipeStyle
+    }
+  }
+})
 </script>

@@ -32,9 +32,7 @@
       width="32px"
       fill="#ffffff"
     >
-      <path 
-        d="M0 0h24v24H0V0z" 
-        fill="none" />
+      <path d="M0 0h24v24H0V0z" fill="none" />
       <path
         d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zM9.29 16.29L5.7 12.7c-.39-.39-.39-1.02 0-1.41.39-.39 1.02-.39 1.41 0L10 14.17l6.88-6.88c.39-.39 1.02-.39 1.41 0 .39.39.39 1.02 0 1.41l-7.59 7.59c-.38.39-1.02.39-1.41 0z"
       />
@@ -47,9 +45,7 @@
       width="32px"
       fill="#616161"
     >
-      <path 
-        d="M0 0h24v24H0z"
-        fill="none" />
+      <path d="M0 0h24v24H0z" fill="none" />
       <path
         d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
       />
@@ -62,9 +58,7 @@
       width="32px"
       fill="#ffffff"
     >
-      <path 
-        d="M0 0h24v24H0z" 
-        fill="none" />
+      <path d="M0 0h24v24H0z" fill="none" />
       <path
         d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
       />
@@ -73,14 +67,14 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from "vue";
-import { ToastType } from "../types";
+import { defineComponent, PropType } from 'vue'
+import { ToastType } from '../types'
 export default defineComponent({
   props: {
     type: {
       type: String as PropType<ToastType>,
-      default: "default",
-    },
-  },
-});
+      default: 'default'
+    }
+  }
+})
 </script>

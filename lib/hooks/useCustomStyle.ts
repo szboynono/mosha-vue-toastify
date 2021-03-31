@@ -1,50 +1,55 @@
-import { computed, CSSProperties } from 'vue';
+import { computed, ComputedRef, CSSProperties } from 'vue'
+import { Position } from '../types'
 
-const useCustomStyle = (position: any, offset: any, bgColor: string | undefined) => {
-  const customStyle = computed(() => {
+const useCustomStyle = (
+  position: Position,
+  offset: string,
+  bgColor: string
+): { customStyle: ComputedRef<CSSProperties> } => {
+  const customStyle = computed<CSSProperties>(() => {
     switch (position) {
-      case "top-left":
+      case 'top-left':
         return {
-          left: "0",
+          left: '0',
+          top: `${offset}px`
+        }
+      case 'bottom-left':
+        return {
+          left: '0',
+          bottom: `${offset}px`
+        }
+      case 'bottom-right':
+        return {
+          right: '0',
+          bottom: `${offset}px`
+        }
+      case 'top-center':
+        return {
           top: `${offset}px`,
-        };
-      case "bottom-left":
-        return {
-          left: "0",
-          bottom: `${offset}px`,
-        };
-      case "bottom-right":
-        return {
-          right: "0",
-          bottom: `${offset}px`,
-        };
-      case "top-center":
-        return {
-          top: `${offset}px`,
-          left: "0",
-          right: "0",
-          marginRight: "auto",
-          marginLeft: "auto",
-        };
-      case "bottom-center":
+          left: '0',
+          right: '0',
+          marginRight: 'auto',
+          marginLeft: 'auto'
+        }
+      case 'bottom-center':
         return {
           bottom: `${offset}px`,
-          left: "0",
-          right: "0",
-          marginRight: "auto",
-          marginLeft: "auto",
-        };
+          left: '0',
+          right: '0',
+          marginRight: 'auto',
+          marginLeft: 'auto'
+        }
       default:
         return {
-          right: "0",
-          top: `${offset}px`,
-        };
+          right: '0',
+          top: `${offset}px`
+        }
     }
-  });
-  if (bgColor) {
+  })
+  if (bgColor.length > 0) {
     (customStyle.value as CSSProperties).backgroundColor = bgColor
   }
-  return {customStyle}
+  return { customStyle }
 }
 
 export default useCustomStyle
