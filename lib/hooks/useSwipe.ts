@@ -7,11 +7,11 @@ const useSwipe = (
   onCloseHandler: () => void,
   swipeClose: boolean
 ): {
-  swipedDiff: Ref<number | undefined>,
-  swipeStart: Ref<MouseEvent | TouchEvent | undefined>,
-  swipeStyle: Ref<CSSProperties | undefined>,
-  swipeHandler: (event: MouseEvent | TouchEvent) => void,
-  startSwipeHandler: (event: MouseEvent | TouchEvent) => void,
+  swipedDiff: Ref<number | undefined>
+  swipeStart: Ref<MouseEvent | TouchEvent | undefined>
+  swipeStyle: Ref<CSSProperties | undefined>
+  swipeHandler: (event: MouseEvent | TouchEvent) => void
+  startSwipeHandler: (event: MouseEvent | TouchEvent) => void
   cleanUpMove: (move: 'mousemove' | 'touchmove') => void
 } => {
   const swipeStart = ref<MouseEvent | TouchEvent>()

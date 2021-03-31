@@ -34,7 +34,9 @@ export const initializeOptions = (options: ToastOptions): ToastOptions => {
   return processedOptions
 }
 
-export const initializeContent = (content: ToastContent): { text: string, description: string | undefined } => {
+export const initializeContent = (
+  content: ToastContent
+): { text: string; description: string | undefined } => {
   const text = typeof content === 'string' ? content : content.title
   const description =
     typeof content === 'string' ? undefined : content.description
@@ -42,7 +44,10 @@ export const initializeContent = (content: ToastContent): { text: string, descri
   return { text, description }
 }
 
-export const createToast = (content: ToastContent, options?: ToastOptions): void => {
+export const createToast = (
+  content: ToastContent,
+  options?: ToastOptions
+): void => {
   if (!content) return
 
   const initializedOptions = options

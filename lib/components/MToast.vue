@@ -14,7 +14,10 @@
         <MIcon v-if="showIcon" :type="type" />
         <div class="mosha__toast__content">
           <div class="mosha__toast__content__text">{{ text }}</div>
-          <div v-if="description.length > 0" class="mosha__toast__content__description">
+          <div
+            v-if="description.length > 0"
+            class="mosha__toast__content__description"
+          >
             {{ description }}
           </div>
         </div>

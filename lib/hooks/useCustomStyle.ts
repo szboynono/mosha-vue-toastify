@@ -47,7 +47,7 @@ const useCustomStyle = (
     }
   })
   if (bgColor.length > 0) {
-    (customStyle.value as CSSProperties).backgroundColor = bgColor
+    ;(customStyle.value as CSSProperties).backgroundColor = bgColor
   }
   return { customStyle }
 }
