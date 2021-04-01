@@ -4,6 +4,8 @@
 
 A lightweight and fun Vue 3 toast or notification or snack bar or however you wanna call it library.
 
+English | [简体中文](./README-zh_CN.md)
+
 ![alt text](./gif/demo.gif "Logo Title Text 1")
 
 ## Talk is cheap, show me the demo
