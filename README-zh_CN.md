@@ -13,7 +13,7 @@
 来文档中的[体验区](https://szboynono.github.io/mosha-vue-toastify/)试一试吧！
 
 ## 功能
-- 简单易用，看看[这里](#the-gist)
+- 简单易用，看看[这里](#精华)
 - 划屏取消提醒
 - 完全支持Composition API
 - 完全支持typescript
