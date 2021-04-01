@@ -29,7 +29,7 @@ import 'mosha-vue-toastify/dist/style.css'
 
 export default defineComponent({
   name: 'HelloWorld',
-  setup: () => {
+  setup () {
     const toast = () => {
         createToast('Wow, easy')
     }

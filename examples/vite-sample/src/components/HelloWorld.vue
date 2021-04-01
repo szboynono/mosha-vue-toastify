@@ -17,7 +17,7 @@ import { createToast } from '../../../../lib/main';
 
 export default defineComponent({
   name: 'HelloWorld',
-  setup: () => {
+  setup () {
     const all = () => {
       createToast('This is default!', {position: 'top-center', timeout: 12000})
       setTimeout(() => {

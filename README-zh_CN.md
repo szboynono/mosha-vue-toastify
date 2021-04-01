@@ -50,7 +50,7 @@ import 'mosha-vue-toastify/dist/style.css'
 
 export default defineComponent({
   name: 'HelloWorld',
-  setup: () => {
+  setup () {
     const toast = () => {
         createToast('就这么简单噢')
     }
