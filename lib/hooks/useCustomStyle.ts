@@ -3,7 +3,7 @@ import { Position } from '../types'
 
 const useCustomStyle = (
   position: Position,
-  offset: string,
+  offset: number,
   bgColor: string
 ): { customStyle: ComputedRef<CSSProperties> } => {
   const customStyle = computed<CSSProperties>(() => {

@@ -80,8 +80,10 @@ export default defineComponent({
       type: Function as PropType<() => void>,
       required: true
     },
-    // eslint-disable-next-line
-    offset: Number,
+    offset: {
+      type: Number,
+      required: true
+    },
     id: {
       type: Number,
       required: true
