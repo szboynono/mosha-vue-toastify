@@ -66,6 +66,12 @@ const useSwipe = (
       right: 0
     }
 
+    const resetCenter: CSSProperties = {
+      transition: 'all .3s ease-out',
+      left: 0,
+      right: 0
+    }
+
     if (position.endsWith('left')) {
       swipeStyle.value = {
         ...swipeStyle.value,
@@ -77,16 +83,9 @@ const useSwipe = (
         ...resetRight
       }
     } else {
-      if ((swipedDiff.value as number) > 0) {
-        swipeStyle.value = {
-          ...swipeStyle.value,
-          ...resetLeft
-        }
-      } else if (swipedDiff.value && swipedDiff.value < 0) {
-        swipeStyle.value = {
-          ...swipeStyle.value,
-          ...resetRight
-        }
+      swipeStyle.value = {
+        ...swipeStyle.value,
+        ...resetCenter
       }
     }
     swipeStart.value = undefined
