@@ -44,12 +44,12 @@ export const initializeContent = (
   return { text, description }
 }
 
-export const moveToastsOnAdd = (options: ToastOptions): number => {
-  let verticalOffset = TOAST_GAP
+export const moveToastsOnAdd = (options: ToastOptions, toasts: Record<Position, ToastObject[]>, toastGap: number): number => {
+  let verticalOffset = toastGap
 
   if (!options.position) throw new Error('no position')
   toasts[options.position].forEach(({ toastVNode }) => {
-    const offsetHeight = (toastVNode.el as HTMLElement).offsetHeight + TOAST_GAP
+    const offsetHeight = (toastVNode.el as HTMLElement).offsetHeight + toastGap
     verticalOffset += offsetHeight || 0
   })
   return verticalOffset
@@ -78,7 +78,7 @@ export const setupVNode = (
   options: ToastOptions,
   content: { text: string; description: string | undefined }
 ): void => {
-  const verticalOffset = moveToastsOnAdd(options)
+  const verticalOffset = moveToastsOnAdd(options, toasts, TOAST_GAP)
   const id = toastId++
 
   const container = document.createElement('div')
