@@ -60,7 +60,8 @@ export const setupVNodeProps = (
   options: ToastOptions,
   content: { text: string; description: string | undefined },
   id: number,
-  offset: number
+  offset: number,
+  closeFn: (id: number, position: Position) => void
 ) => {
   return {
     ...options,
@@ -69,7 +70,7 @@ export const setupVNodeProps = (
     offset,
     visible: false,
     onCloseHandler: () => {
-      close(id, options.position ? options.position : 'top-right')
+      closeFn(id, options.position ? options.position : 'top-right')
     }
   }
 }
@@ -86,7 +87,7 @@ export const setupVNode = (
 
   const toastVNode = createVNode(
     Toast,
-    setupVNodeProps(options, content, id, verticalOffset)
+    setupVNodeProps(options, content, id, verticalOffset, close)
   )
 
   render(toastVNode, container)
@@ -132,7 +133,7 @@ const moveToastsOnClose = (
   }
 }
 
-const close = (id: number, position: Position) => {
+export const close = (id: number, position: Position) => {
   const toastArr = toasts[position]
 
   const index = toastArr.findIndex(

@@ -44,3 +44,19 @@ test('moveToastsOnAdd should move the toasts', () => {
   const result = testFile.moveToastsOnAdd(options, toasts as any, 12);
   expect(result).toEqual(36);
 })
+
+test('setupVNodeProps should setup the props for VNode', () => {
+  const mockClose = jest.fn()
+  const result = testFile.setupVNodeProps({} as any, {} as any, 1, 12, mockClose);
+  const obj = {
+    id: 1,
+    offset: 12,
+    visible: false,
+    onCloseHandler: () => {
+      mockClose(1, 'top-right')
+    }
+  }
+  expect(result.id).toEqual(obj.id)
+  expect(result.offset).toEqual(obj.offset)
+  expect(result.visible).toEqual(obj.visible)
+})
