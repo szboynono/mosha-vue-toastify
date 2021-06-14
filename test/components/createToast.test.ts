@@ -1,4 +1,4 @@
-import * as testFile from '../../lib/components/createToast'
+import * as testFile from '../../lib/createToast'
 import { ToastOptions, ToastObject } from '../../lib/types'
 
 test('initializeOptions should initialize the options', () => {
@@ -47,7 +47,7 @@ test('moveToastsOnAdd should move the toasts', () => {
 
 test('setupVNodeProps should setup the props for VNode', () => {
   const mockClose = jest.fn()
-  const result = testFile.setupVNodeProps({} as any, {} as any, 1, 12, mockClose);
+  const result = testFile.setupVNodeProps({} as any, 1, 12, mockClose, {} as any);
   const obj = {
     id: 1,
     offset: 12,
