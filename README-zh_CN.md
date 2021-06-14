@@ -63,7 +63,23 @@ export default defineComponent({
 ## 自定义
 
 
-`createToast` 方法接受两个参数, 第一个可以是一个字符串也可以是一个像这样的对象 `{ title: 'some title', description: 'some good description'}`, 第二个参数是options，可以自定义提醒框。
+`createToast` 方法接受两个参数:
+- **第一个参数**: 
+  - 可以是一个字符串也可以是一个像这样的对象 `{ title: 'some title', description: 'some good description'}`
+  - 也可使是一个Vue组件, 比如：
+  ```ts
+    import CustomizedContent from "./CustomizedContent.vue";
+
+    export default defineComponent({
+      setup () {
+        const toast = () => {
+            createToast(CustomizedContent)
+        }
+        return { toast }
+      }
+    })
+  ```  
+- **第二个参数**: 第二个参数是options，可以自定义提醒框。
 
 
 Options:

@@ -1,6 +1,9 @@
 <template>
   <div>
     <div class="code mx-auto">
+      <template v-if="useComponentContent">
+        // pass a component into the toast
+      </template>
       <template v-if="options">
         <div>
           <span class="text-pink-500">createToast</span>(<span
