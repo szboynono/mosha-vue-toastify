@@ -1,6 +1,22 @@
 # Configuration
 
-The `createToast` function accepts 2 arguments, the first argument can be just a string or a object like this `{ title: 'some title', description: 'some good description'}`, the second argument is an options object.
+The `createToast` function accepts 2 arguments:
+- **First argument**: 
+  - It can be just a string or a object like this: `{ title: 'some title', description: 'some good description'}`
+  - It can also accept a Vue 3 component if you need more customization, e.g.
+  ```ts
+    import CustomizedContent from "./CustomizedContent.vue";
+
+    export default defineComponent({
+      setup () {
+        const toast = () => {
+            createToast(CustomizedContent)
+        }
+        return { toast }
+      }
+    })
+  ```  
+- **Second argument**: the second argument is an options object.
 
 
 Options:

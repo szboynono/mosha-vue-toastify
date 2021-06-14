@@ -17,6 +17,10 @@ export default defineComponent ({
       type: Boolean,
       default: false
     },
+    useComponentContent: {
+      type: Boolean,
+      default: false
+    },
     showIcon: {
       type: Boolean,
       default: false

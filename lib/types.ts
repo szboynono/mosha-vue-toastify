@@ -41,6 +41,7 @@ export interface ToastOptions {
   showIcon?: boolean
   transition?: TransitionType
   hideProgressBar?: boolean
+  useComponentContent?: boolean
   toastBackgroundColor?: string
   swipeClose?: boolean
   onClose?: () => void

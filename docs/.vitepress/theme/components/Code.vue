@@ -24,12 +24,14 @@
     <div>
       <div class="flex justify-center items-center flex-wrap">
         <div class="mx-10">
-          <InputGroup type="text" v-model:text="text" />
-          <InputGroup
-            v-if="text.length > 0"
-            type="description"
-            v-model:description="description"
-          />
+          <template v-if="!useComponentContent">
+            <InputGroup type="text" v-model:text="text" />
+            <InputGroup
+              v-if="text.length > 0"
+              type="description"
+              v-model:description="description"
+            />
+          </template>
           <InputGroup type="timeout" v-model:timeout="timeout" />
           <InputGroup
             type="toastBackgroundColor"
@@ -37,6 +39,11 @@
           />
         </div>
         <div v-if="text.length > 0" class="mx-10">
+          <CheckBox
+            type="useComponentContent"
+            :useComponentContent="useComponentContent"
+            v-model:useComponentContent="useComponentContent"
+          />
           <CheckBox
             type="hideProgessBar"
             :hideProgessBar="hideProgessBar"
@@ -104,6 +111,7 @@ import { createToast } from "../../../../lib/main";
 import "../../../../lib/index.scss";
 import InputGroup from "./InputGroup.vue";
 import RadioGroup from "./RadioGroup.vue";
+import CustomComponent from "./CustomComponent.vue";
 import CheckBox from "./CheckBox.vue";
 import { ToastOptions } from "../../../../lib/types";
 
@@ -113,6 +121,7 @@ export default defineComponent({
     InputGroup,
     RadioGroup,
     CheckBox,
+    CustomComponent,
   },
   setup() {
     const text = ref("Some text");
@@ -121,6 +130,7 @@ export default defineComponent({
     const toastType = ref("");
     const transition = ref("");
     const hideProgessBar = ref();
+    const useComponentContent = ref();
     const showIcon = ref();
     const swipeClose = ref();
     const showCloseButton = ref();
@@ -194,6 +204,11 @@ export default defineComponent({
     });
 
     const showToast = () => {
+      if (useComponentContent.value) {
+        createToast(CustomComponent, options.value);
+        return;
+      }
+
       let arg1: any = text.value;
       if (description.value.length > 0) {
         arg1 = {
@@ -205,6 +220,9 @@ export default defineComponent({
     };
 
     const textArg = computed(() => {
+      if (useComponentContent.value) {
+        return `<span class="text-indigo-500">CustomComponent</span>`
+      }
       if (description.value.length > 0) {
         return `{ 
                   <div class="ml-5">title: <span class="text-indigo-500">'${text.value}'</span>,</div> 
@@ -241,6 +259,7 @@ export default defineComponent({
       toastType,
       transition,
       hideProgessBar,
+      useComponentContent,
       showCloseButton,
       showIcon,
       swipeClose,
