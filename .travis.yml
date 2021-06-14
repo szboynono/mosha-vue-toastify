@@ -1,12 +1,3 @@
 language: node_js
 node_js:
   - 15
-
-deploy:
-  provider: script
-  script:
-    - yarn build
-    - yarn docs:build
-    - bash deploy.sh
-  on:
-    branch: test
