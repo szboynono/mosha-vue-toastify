@@ -14,9 +14,13 @@
 import { defineComponent } from 'vue'
 import '../../../../lib/index.scss'
 import { createToast } from '../../../../lib/main';
+import Test from "./Test.vue";
 
 export default defineComponent({
   name: 'HelloWorld',
+  components: {
+    Test,
+  },
   setup () {
     const all = () => {
       createToast('This is default!', {position: 'top-center', timeout: 12000})
@@ -38,10 +42,7 @@ export default defineComponent({
     }
 
     const tl = () => {
-        createToast({
-          title: 'this is a title',
-          description: 'this is a description'
-        }, {
+        createToast(Test, {
           transition: 'slide',
           position: 'top-left',
           type: 'info',

@@ -1,6 +1,6 @@
-import { createVNode, render } from 'vue'
+import { createVNode, Component, render } from 'vue'
 import { DEFAULT_OPTIONS, TOAST_GAP } from '../config'
-import { Position, ToastObject, ToastOptions, ToastContent } from '../types'
+import { Position, ToastObject, ToastOptions, ToastContent, ContentObject, DisplayContentObject } from '../types'
 import Toast from './MToast.vue'
 
 const toasts: Record<Position, ToastObject[]> = {
@@ -13,6 +13,82 @@ const toasts: Record<Position, ToastObject[]> = {
 }
 
 let toastId = 0
+
+export const createToast = (
+  content: ToastContent,
+  options?: ToastOptions
+): void => {
+  if (!content) return
+  const initializedOptions = options
+    ? initializeOptions(options)
+    : DEFAULT_OPTIONS
+
+  // eslint-disable-next-line no-prototype-builtins
+  if (content.hasOwnProperty('render')) {
+    setupVNode(initializedOptions, content as Component)
+    return;
+  }
+  const initializedContent = initializeContent(content)
+
+
+  setupVNode(initializedOptions, initializedContent)
+}
+
+export const setupVNode = (
+  options: ToastOptions,
+  content: DisplayContentObject | Component
+): void => {
+  const verticalOffset = moveToastsOnAdd(options, toasts, TOAST_GAP)
+  const id = toastId++
+
+  const container = document.createElement('div')
+  document.body.appendChild(container)
+
+  let toastVNode = undefined;
+  // eslint-disable-next-line no-prototype-builtins
+  if (!content.hasOwnProperty('render')) {
+    toastVNode = createVNode(
+      Toast,
+      setupVNodeProps(options, id, verticalOffset, close, content as DisplayContentObject),
+    )
+  } else {
+    toastVNode = createVNode(
+      Toast,
+      setupVNodeProps(options, id, verticalOffset, close),
+      () => [createVNode(content)]
+    )
+  }
+
+  render(toastVNode, container)
+
+
+  if (!options.position) return
+  toasts[options.position].push({ toastVNode, container })
+
+  if (toastVNode.component) {
+    toastVNode.component.props.visible = true
+  }
+}
+
+// eslint-disable-next-line
+export const setupVNodeProps = (
+  options: ToastOptions,
+  id: number,
+  offset: number,
+  closeFn: (id: number, position: Position) => void,
+  content?: DisplayContentObject,
+) => {
+  return {
+    ...options,
+    ...content,
+    id,
+    offset,
+    visible: false,
+    onCloseHandler: () => {
+      closeFn(id, options.position ? options.position : 'top-right')
+    }
+  }
+}
 
 export const initializeOptions = (options: ToastOptions): ToastOptions => {
   const processedOptions: ToastOptions = {
@@ -36,10 +112,11 @@ export const initializeOptions = (options: ToastOptions): ToastOptions => {
 
 export const initializeContent = (
   content: ToastContent
-): { text: string; description: string | undefined } => {
-  const text = typeof content === 'string' ? content : content.title
+): DisplayContentObject => {
+  const text = typeof content === 'string' ? content : (content as ContentObject).title
+
   const description =
-    typeof content === 'string' ? undefined : content.description
+    typeof content === 'string' ? undefined : (content as ContentObject).description
 
   return { text, description }
 }
@@ -53,64 +130,6 @@ export const moveToastsOnAdd = (options: ToastOptions, toasts: Record<Position, 
     verticalOffset += offsetHeight || 0
   })
   return verticalOffset
-}
-
-// eslint-disable-next-line
-export const setupVNodeProps = (
-  options: ToastOptions,
-  content: { text: string; description: string | undefined },
-  id: number,
-  offset: number,
-  closeFn: (id: number, position: Position) => void
-) => {
-  return {
-    ...options,
-    ...content,
-    id,
-    offset,
-    visible: false,
-    onCloseHandler: () => {
-      closeFn(id, options.position ? options.position : 'top-right')
-    }
-  }
-}
-
-export const setupVNode = (
-  options: ToastOptions,
-  content: { text: string; description: string | undefined }
-): void => {
-  const verticalOffset = moveToastsOnAdd(options, toasts, TOAST_GAP)
-  const id = toastId++
-
-  const container = document.createElement('div')
-  document.body.appendChild(container)
-
-  const toastVNode = createVNode(
-    Toast,
-    setupVNodeProps(options, content, id, verticalOffset, close)
-  )
-
-  render(toastVNode, container)
-
-  if (!options.position) return
-  toasts[options.position].push({ toastVNode, container })
-
-  if (toastVNode.component) {
-    toastVNode.component.props.visible = true
-  }
-}
-
-export const createToast = (
-  content: ToastContent,
-  options?: ToastOptions
-): void => {
-  if (!content) return
-  const initializedContent = initializeContent(content)
-  const initializedOptions = options
-    ? initializeOptions(options)
-    : DEFAULT_OPTIONS
-
-  setupVNode(initializedOptions, initializedContent)
 }
 
 const moveToastsOnClose = (
@@ -133,7 +152,7 @@ const moveToastsOnClose = (
   }
 }
 
-export const close = (id: number, position: Position) => {
+export const close = (id: number, position: Position): void => {
   const toastArr = toasts[position]
 
   const index = toastArr.findIndex(
@@ -154,7 +173,7 @@ export const close = (id: number, position: Position) => {
 
   if (toastVNode.component.props.onClose) {
     // eslint-disable-next-line
-    ;(toastVNode.component.props as any).onClose()
+    ; (toastVNode.component.props as any).onClose()
   }
 
   setTimeout(() => {

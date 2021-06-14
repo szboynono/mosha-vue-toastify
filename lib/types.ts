@@ -1,4 +1,5 @@
 import { VNode } from '@vue/runtime-core'
+import { Component } from 'vue'
 
 export type ToastType = 'info' | 'danger' | 'warning' | 'success' | 'default'
 
@@ -12,12 +13,20 @@ export type Position =
 
 export type TransitionType = 'bounce' | 'zoom' | 'slide'
 
+export interface ContentObject {
+  title: string
+  description?: string
+}
+
+export interface DisplayContentObject {
+  text: string
+  description?: string
+}
+
 export type ToastContent =
   | string
-  | {
-      title: string
-      description?: string
-    }
+  | ContentObject
+  | Component
 
 export interface ToastObject {
   toastVNode: VNode

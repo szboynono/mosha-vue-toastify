@@ -21,6 +21,7 @@
             {{ description }}
           </div>
         </div>
+        <slot></slot>
       </div>
       <div
         v-if="showCloseButton"
