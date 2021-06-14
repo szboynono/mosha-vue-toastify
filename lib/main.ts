@@ -1,8 +1,9 @@
 import { App } from '@vue/runtime-core'
-import { createToast } from './components/createToast'
+import { createToast } from './createToast'
 import './index.scss'
 
-export * from './components/createToast'
+export { createToast } from './createToast'
+export * from './types'
 
 export default {
   // eslint-disable-next-line

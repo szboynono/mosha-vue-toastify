@@ -77,6 +77,10 @@ export default defineComponent({
       type: String as PropType<ToastType>,
       default: 'default'
     },
+    onClose: {
+      type: Function as PropType<() => void>,
+      default: () => null
+    },
     onCloseHandler: {
       type: Function as PropType<() => void>,
       required: true

@@ -1,7 +1,7 @@
 import { createVNode, Component, render } from 'vue'
-import { DEFAULT_OPTIONS, TOAST_GAP } from '../config'
-import { Position, ToastObject, ToastOptions, ToastContent, ContentObject, DisplayContentObject } from '../types'
-import Toast from './MToast.vue'
+import { DEFAULT_OPTIONS, TOAST_GAP } from './config'
+import { Position, ToastObject, ToastOptions, ToastContent, ContentObject, DisplayContentObject } from './types'
+import Toast from './components/MToast.vue'
 
 const toasts: Record<Position, ToastObject[]> = {
   'top-left': [],
@@ -29,8 +29,6 @@ export const createToast = (
     return;
   }
   const initializedContent = initializeContent(content)
-
-
   setupVNode(initializedOptions, initializedContent)
 }
 
@@ -58,7 +56,6 @@ export const setupVNode = (
       () => [createVNode(content)]
     )
   }
-
   render(toastVNode, container)
 
 
@@ -161,7 +158,6 @@ export const close = (id: number, position: Position): void => {
 
   if (index === -1) return
   const { container, toastVNode } = toastArr[index] as ToastObject
-
   if (!toastVNode.el) return
   const height = toastVNode.el.offsetHeight
 
