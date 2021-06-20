@@ -45,7 +45,9 @@ $ yarn add mosha-vue-toastify
 ```ts
 <script lang='ts'>
 import { defineComponent } from 'vue'
+// 导入库
 import { createToast } from 'mosha-vue-toastify';
+// 导入提醒框样式
 import 'mosha-vue-toastify/dist/style.css'
 
 export default defineComponent({
