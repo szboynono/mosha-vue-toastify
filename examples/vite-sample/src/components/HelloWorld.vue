@@ -13,7 +13,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 import '../../../../lib/index.scss'
-import { createToast } from '../../../../lib/main';
+import { createToast, withProps } from '../../../../lib/main';
 import Test from "./Test.vue";
 
 export default defineComponent({
@@ -42,7 +42,7 @@ export default defineComponent({
     }
 
     const tl = () => {
-        createToast(Test, {
+        createToast(withProps(Test, { title: 'title'}), {
           transition: 'slide',
           position: 'top-left',
           type: 'info',

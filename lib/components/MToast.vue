@@ -21,6 +21,8 @@
             {{ description }}
           </div>
         </div>
+      </div>
+      <div>
         <slot></slot>
       </div>
       <div

@@ -3,6 +3,7 @@ import { createToast } from './createToast'
 import './index.scss'
 
 export { createToast } from './createToast'
+export { withProps } from './util'
 export * from './types'
 
 export default {
