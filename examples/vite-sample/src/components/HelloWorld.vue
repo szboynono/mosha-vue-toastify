@@ -13,51 +13,92 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 import '../../../../lib/index.scss'
-import { createToast, withProps } from '../../../../lib/main';
-import Test from "./Test.vue";
+import { createToast, withProps } from '../../../../lib/main'
+import Test from './Test.vue'
 
 export default defineComponent({
   name: 'HelloWorld',
   components: {
-    Test,
+    Test
   },
-  setup () {
+  setup() {
     const all = () => {
-      createToast('This is default!', {position: 'top-center', timeout: 12000})
+      createToast('This is default!', {
+        position: 'top-center',
+        timeout: 12000
+      })
       setTimeout(() => {
-        createToast('This is success!', {type: 'success', position: 'top-center', showIcon: true, timeout: 15000})
+        createToast('This is success!', {
+          type: 'success',
+          position: 'top-center',
+          showIcon: true,
+          timeout: 15000
+        })
         setTimeout(() => {
-          createToast('This is warning!', {type: 'warning', position: 'top-center', showIcon: true, timeout: 10000})
+          createToast('This is warning!', {
+            type: 'warning',
+            position: 'top-center',
+            showIcon: true,
+            timeout: 10000
+          })
           setTimeout(() => {
-            createToast({title: 'This is danger!', description: 'some description'}, {type: 'danger', showIcon: true, position: 'top-center', timeout: 8000})
+            createToast(
+              { title: 'This is danger!', description: 'some description' },
+              {
+                type: 'danger',
+                showIcon: true,
+                position: 'top-center',
+                timeout: 8000
+              }
+            )
             setTimeout(() => {
-              createToast({title: 'Background color', description: 'choose a bg color'}, {type: 'danger', showIcon: true, position: 'top-center', timeout: 8000, toastBackgroundColor: "black"})
-            }, 1)
+              createToast(
+                { title: 'Background color', description: 'choose a bg color' },
+                {
+                  type: 'danger',
+                  showIcon: true,
+                  position: 'top-center',
+                  timeout: 8000,
+                  toastBackgroundColor: 'black'
+                }
+              )
+            }, 1),
+              setTimeout(() => {
+                createToast(
+                  withProps(Test, { title: 'Custom Component!'}),
+                  {
+                    position: 'top-center',
+                    timeout: 8000,
+                  }
+                )
+              }, 1)
           }, 1)
         }, 1)
       }, 1)
     }
     const tr = () => {
-        createToast('content here')
+      createToast('content here')
     }
 
     const tl = () => {
-        createToast(withProps(Test, { title: 'title'}), {
-          transition: 'slide',
-          position: 'top-left',
-          type: 'info',
-          showIcon: true,
-          swipeClose: true,
-          hideProgressBar: false,
-          timeout: -1,
-          onClose: () => {
-            console.log('log')
-          }
-        })
+      createToast(withProps(Test, { title: 'title' }), {
+        transition: 'slide',
+        position: 'top-left',
+        type: 'info',
+        showIcon: true,
+        swipeClose: true,
+        hideProgressBar: false,
+        timeout: -1,
+        onClose: () => {
+          console.log('log')
+        }
+      })
     }
 
     const br = () => {
-        createToast({title: 'yoyo', description: 'some thing good <br/> good thing'}, {
+      createToast(
+        { title: 'yoyo', description: 'some thing good <br/> good thing' },
+        {
           transition: 'bounce',
           position: 'bottom-right',
           type: 'warning',
@@ -65,42 +106,43 @@ export default defineComponent({
           onClose: () => {
             console.log('log')
           }
-        })
+        }
+      )
     }
 
     const bl = () => {
-        createToast('asdsadf', {
-          position: 'bottom-left',
-          transition: 'slide',
-          timeout: 15000,
-          type: 'danger',
-          onClose: () => {
-            console.log('log')
-          }
-        })
+      createToast('asdsadf', {
+        position: 'bottom-left',
+        transition: 'slide',
+        timeout: 15000,
+        type: 'danger',
+        onClose: () => {
+          console.log('log')
+        }
+      })
     }
 
     const tc = () => {
-        createToast('Please see this notice right here!', {
-          position: 'top-center',
-          transition: 'slide',
-          timeout: -1,
-          type: 'success',
-          onClose: () => {
-            console.log('log')
-          }
-        })
+      createToast('Please see this notice right here!', {
+        position: 'top-center',
+        transition: 'slide',
+        timeout: -1,
+        type: 'success',
+        onClose: () => {
+          console.log('log')
+        }
+      })
     }
 
     const bc = () => {
-        createToast('asdfff', {
-          position: 'bottom-center',
-          transition: 'zoom',
-          timeout: 3000,
-          onClose: () => {
-            console.log('log')
-          }
-        })
+      createToast('asdfff', {
+        position: 'bottom-center',
+        transition: 'zoom',
+        timeout: 3000,
+        onClose: () => {
+          console.log('log')
+        }
+      })
     }
     return { tr, tl, br, bl, tc, bc, all }
   }

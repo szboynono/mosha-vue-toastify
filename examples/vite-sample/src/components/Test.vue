@@ -1,6 +1,6 @@
 <template>
 <h2>{{ title }}</h2>
-<a href="#">some link</a>
+Well, I can put a link here I guess <a href="#">some link</a>
 </template>
 
 <script lang="ts">
