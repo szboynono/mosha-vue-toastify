@@ -1,6 +1,6 @@
-import { createVNode, Component, render } from 'vue'
+import { createVNode, Component, render, VNode } from 'vue'
 import { DEFAULT_OPTIONS, TOAST_GAP } from './config'
-import { Position, ToastObject, ToastOptions, ToastContent, ContentObject, DisplayContentObject } from './types'
+import { Position, ToastObject, ToastOptions, ToastContent, ContentObject, DisplayContentObject, ToastContentType } from './types'
 import Toast from './components/MToast.vue'
 
 const toasts: Record<Position, ToastObject[]> = {
@@ -23,18 +23,23 @@ export const createToast = (
     ? initializeOptions(options)
     : DEFAULT_OPTIONS
 
+  if ((content as any).__v_isVNode) {
+    setupVNode(ToastContentType.VNODE, initializedOptions, content as Component)
+    return;
+  }
   // eslint-disable-next-line no-prototype-builtins
   if (content.hasOwnProperty('render')) {
-    setupVNode(initializedOptions, content as Component)
+    setupVNode(ToastContentType.COMPONENT, initializedOptions, content as Component)
     return;
   }
   const initializedContent = initializeContent(content)
-  setupVNode(initializedOptions, initializedContent)
+  setupVNode(ToastContentType.TITLE_DESCRIPTION, initializedOptions, initializedContent)
 }
 
 export const setupVNode = (
+  contentType: ToastContentType,
   options: ToastOptions,
-  content: DisplayContentObject | Component
+  content: DisplayContentObject | Component | VNode
 ): void => {
   const verticalOffset = moveToastsOnAdd(options, toasts, TOAST_GAP)
   const id = toastId++
@@ -43,8 +48,14 @@ export const setupVNode = (
   document.body.appendChild(container)
 
   let toastVNode = undefined;
-  // eslint-disable-next-line no-prototype-builtins
-  if (!content.hasOwnProperty('render')) {
+
+  if (contentType === ToastContentType.VNODE) {
+    toastVNode = createVNode(
+      Toast,
+      setupVNodeProps(options, id, verticalOffset, close),
+      () => [content]
+    )
+  } else if (contentType === ToastContentType.TITLE_DESCRIPTION) {
     toastVNode = createVNode(
       Toast,
       setupVNodeProps(options, id, verticalOffset, close, content as DisplayContentObject),
@@ -56,6 +67,7 @@ export const setupVNode = (
       () => [createVNode(content)]
     )
   }
+
   render(toastVNode, container)
 
 

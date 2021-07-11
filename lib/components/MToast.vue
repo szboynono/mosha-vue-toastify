@@ -10,17 +10,26 @@
       @touchstart="onTouchStart"
       @mousedown="onMouseDown"
     >
+      <!-- eslint-disable vue/no-v-html -->
       <div class="mosha__toast__content-wrapper">
         <MIcon v-if="showIcon" :type="type" />
         <div class="mosha__toast__content">
           <div class="mosha__toast__content__text">{{ text }}</div>
           <div
-            v-if="description.length > 0"
+            v-if="description.length > 0 && isDescriptionHtml"
+            class="mosha__toast__content__description"
+            v-html="description"
+          ></div>
+          <div
+            v-if="description.length > 0 && !isDescriptionHtml"
             class="mosha__toast__content__description"
           >
             {{ description }}
           </div>
         </div>
+      </div>
+      <!--eslint-enable-->
+      <div v-if="isSlotPassed" class="mosha__toast__slot-wrapper">
         <slot></slot>
       </div>
       <div
@@ -45,7 +54,8 @@ import {
   ref,
   watchEffect,
   CSSProperties,
-  Ref
+  Ref,
+  computed
 } from 'vue'
 import { Position, ToastType, TransitionType } from '../types'
 import useTimer from '../hooks/useTimer'
@@ -122,7 +132,7 @@ export default defineComponent({
       default: 'bounce'
     }
   },
-  setup(props) {
+  setup(props, ctx) {
     const style = ref<CSSProperties>()
 
     const { swipedDiff, startSwipeHandler, swipeStyle, cleanUpMove } = useSwipe(
@@ -140,6 +150,12 @@ export default defineComponent({
     const { start, stop, progress } = useTimer(() => {
       props.onCloseHandler()
     }, props.timeout)
+
+    const isSlotPassed = computed(() => ctx.slots.default)
+
+    const isDescriptionHtml = computed(() =>
+      /<\/?[a-z][\s\S]*>/i.test(props.description)
+    )
 
     const startTimer = () => {
       if (props.timeout > 0) {
@@ -188,7 +204,9 @@ export default defineComponent({
       onTouchStart,
       onMouseLeave,
       onMouseDown,
-      swipeStyle
+      swipeStyle,
+      isSlotPassed,
+      isDescriptionHtml
     }
   }
 })

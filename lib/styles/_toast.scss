@@ -66,6 +66,10 @@
     }
   }
 
+  &__slot-wrapper {
+    width: 100%
+  }
+
   &__close-icon::before {
     font-size: 20px;
     cursor: pointer;

@@ -27,6 +27,7 @@ export type ToastContent =
   | string
   | ContentObject
   | Component
+  | VNode
 
 export interface ToastObject {
   toastVNode: VNode
@@ -45,4 +46,8 @@ export interface ToastOptions {
   toastBackgroundColor?: string
   swipeClose?: boolean
   onClose?: () => void
+} 
+
+export enum ToastContentType {
+  TITLE_ONLY, TITLE_DESCRIPTION, COMPONENT, VNODE
 }
