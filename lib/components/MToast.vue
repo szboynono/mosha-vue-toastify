@@ -22,7 +22,7 @@
           </div>
         </div>
       </div>
-      <div style="width: 100%">
+      <div v-if="isSlotPassed" style="width: 100%">
         <slot></slot>
       </div>
       <div
@@ -47,7 +47,8 @@ import {
   ref,
   watchEffect,
   CSSProperties,
-  Ref
+  Ref,
+  computed
 } from 'vue'
 import { Position, ToastType, TransitionType } from '../types'
 import useTimer from '../hooks/useTimer'
@@ -124,7 +125,7 @@ export default defineComponent({
       default: 'bounce'
     }
   },
-  setup(props) {
+  setup(props, ctx) {
     const style = ref<CSSProperties>()
 
     const { swipedDiff, startSwipeHandler, swipeStyle, cleanUpMove } = useSwipe(
@@ -142,6 +143,10 @@ export default defineComponent({
     const { start, stop, progress } = useTimer(() => {
       props.onCloseHandler()
     }, props.timeout)
+
+    const isSlotPassed = computed(() => {
+      return ctx.slots.default;
+    })
 
     const startTimer = () => {
       if (props.timeout > 0) {
@@ -190,7 +195,8 @@ export default defineComponent({
       onTouchStart,
       onMouseLeave,
       onMouseDown,
-      swipeStyle
+      swipeStyle,
+      isSlotPassed
     }
   }
 })
