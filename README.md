@@ -65,11 +65,15 @@ export default defineComponent({
 ## Configuration
 
 The `createToast` function accepts 2 arguments:
+
 - **First argument**: 
-  - It can be just a string or a object like this: `{ title: 'some title', description: 'some good description'}`
-  - It can also accept a Vue 3 component if you need more customization, e.g.
+  - It can be just a string or a object like this: `{ title: 'some title', description: 'some good description'}`. By the way, description now accepts html, for more customization, we recommand trying out the custom component approach
+  - It can also accept a Vue 3 component or a VNode if you need more customization, e.g.
   ```ts
+    // without props
+    import { createToast } from 'mosha-vue-toastify';
     import CustomizedContent from "./CustomizedContent.vue";
+    import 'mosha-vue-toastify/dist/style.css';
 
     export default defineComponent({
       setup () {
@@ -79,7 +83,23 @@ The `createToast` function accepts 2 arguments:
         return { toast }
       }
     })
-  ```  
+  ```
+  ```ts
+    // with props
+    import { createToast, withProps } from 'mosha-vue-toastify';
+    import CustomizedContent from "./CustomizedContent.vue";
+    import 'mosha-vue-toastify/dist/style.css';
+
+    export default defineComponent({
+      setup () {
+        const toast = () => {
+            createToast(CustomizedContent, { yourFavProp: 'bruh' })
+        }
+        return { toast }
+      }
+    })
+  ```
+
 - **Second argument**: the second argument is an options object.
 
 
