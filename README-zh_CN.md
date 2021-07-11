@@ -67,10 +67,13 @@ export default defineComponent({
 
 `createToast` 方法接受两个参数:
 - **第一个参数**: 
-  - 可以是一个字符串也可以是一个像这样的对象 `{ title: 'some title', description: 'some good description'}`
-  - 也可使是一个Vue组件, 比如：
+  - 可以是一个字符串也可以是一个像这样的对象 `{ title: 'some title', description: 'some good description'}`, `description` 可以是字符串或者是HTML
+  - 也可使是一个Vue组件或是一个VNode, 比如：
   ```ts
+    // without props
+    import { createToast } from 'mosha-vue-toastify';
     import CustomizedContent from "./CustomizedContent.vue";
+    import 'mosha-vue-toastify/dist/style.css';
 
     export default defineComponent({
       setup () {
@@ -80,7 +83,22 @@ export default defineComponent({
         return { toast }
       }
     })
-  ```  
+  ```
+  ```ts
+    // with props
+    import { createToast, withProps } from 'mosha-vue-toastify';
+    import CustomizedContent from "./CustomizedContent.vue";
+    import 'mosha-vue-toastify/dist/style.css';
+
+    export default defineComponent({
+      setup () {
+        const toast = () => {
+            createToast(CustomizedContent, { yourFavProp: 'bruh' })
+        }
+        return { toast }
+      }
+    })
+  ```
 - **第二个参数**: 第二个参数是options，可以自定义提醒框。
 
 
