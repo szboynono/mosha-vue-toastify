@@ -1,6 +1,6 @@
 {
   "name": "mosha-vue-toastify",
-  "version": "1.0.13",
+  "version": "1.0.14",
   "license": "MIT",
   "description": "A light weight and fun Vue 3 toast or notification or snack bar or however you wanna call it library.",
   "files": [
