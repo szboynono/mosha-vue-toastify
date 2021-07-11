@@ -16,10 +16,16 @@
         <div class="mosha__toast__content">
           <div class="mosha__toast__content__text">{{ text }}</div>
           <div
-            v-if="description.length > 0"
+            v-if="description.length > 0 && isDescriptionHtml"
             class="mosha__toast__content__description"
             v-html="description"
           ></div>
+          <div
+            v-if="description.length > 0 && !isDescriptionHtml"
+            class="mosha__toast__content__description"
+          >
+            {{ description }}
+          </div>
         </div>
       </div>
       <!--eslint-enable-->
@@ -145,9 +151,11 @@ export default defineComponent({
       props.onCloseHandler()
     }, props.timeout)
 
-    const isSlotPassed = computed(() => {
-      return ctx.slots.default
-    })
+    const isSlotPassed = computed(() => ctx.slots.default)
+
+    const isDescriptionHtml = computed(() =>
+      /<\/?[a-z][\s\S]*>/i.test(props.description)
+    )
 
     const startTimer = () => {
       if (props.timeout > 0) {
@@ -197,7 +205,8 @@ export default defineComponent({
       onMouseLeave,
       onMouseDown,
       swipeStyle,
-      isSlotPassed
+      isSlotPassed,
+      isDescriptionHtml
     }
   }
 })
