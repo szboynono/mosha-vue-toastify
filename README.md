@@ -93,7 +93,7 @@ The `createToast` function accepts 2 arguments:
     export default defineComponent({
       setup () {
         const toast = () => {
-            createToast(CustomizedContent, { yourFavProp: 'bruh' })
+            createToast(withProps(CustomizedContent, { yourFavProp: 'bruh' }))
         }
         return { toast }
       }
