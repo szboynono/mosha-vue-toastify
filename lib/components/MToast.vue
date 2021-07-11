@@ -10,6 +10,7 @@
       @touchstart="onTouchStart"
       @mousedown="onMouseDown"
     >
+      <!-- eslint-disable vue/no-v-html -->
       <div class="mosha__toast__content-wrapper">
         <MIcon v-if="showIcon" :type="type" />
         <div class="mosha__toast__content">
@@ -17,12 +18,12 @@
           <div
             v-if="description.length > 0"
             class="mosha__toast__content__description"
-          >
-            {{ description }}
-          </div>
+            v-html="description"
+          ></div>
         </div>
       </div>
-      <div v-if="isSlotPassed" style="width: 100%">
+      <!--eslint-enable-->
+      <div v-if="isSlotPassed" class="mosha__toast__slot-wrapper">
         <slot></slot>
       </div>
       <div
@@ -145,7 +146,7 @@ export default defineComponent({
     }, props.timeout)
 
     const isSlotPassed = computed(() => {
-      return ctx.slots.default;
+      return ctx.slots.default
     })
 
     const startTimer = () => {

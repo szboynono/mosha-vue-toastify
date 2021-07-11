@@ -57,7 +57,7 @@ export default defineComponent({
     }
 
     const br = () => {
-        createToast('yoasihco', {
+        createToast({title: 'yoyo', description: 'some thing good good thing'}, {
           transition: 'bounce',
           position: 'bottom-right',
           type: 'warning',
