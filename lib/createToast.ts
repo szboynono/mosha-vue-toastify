@@ -14,6 +14,13 @@ const toasts: Record<Position, ToastObject[]> = {
 
 let toastId = 0
 
+/**
+ * Creates a toast based on content and options
+ * 
+ * @param content can be a content object with title and description or a Vue component or just plain text.
+ * @param options options for the toast, please refer to the README for more details
+ * @returns an object contains the close function that can be used to dismiss the toast
+ */
 export const createToast = (
   content: ToastContent,
   options?: ToastOptions
@@ -199,4 +206,20 @@ export const close = (id: number, position: Position): void => {
     render(null, container)
     document.body.removeChild(container)
   }, 1000)
+}
+
+/**
+ * Clear all the toasts
+ */
+export const clearToasts = (): void => {
+  Object.entries(toasts).forEach(([key, val]) => {
+    if (val.length > 0) {
+      const ids = val.map(toast => {
+        return (toast.toastVNode.props as any).id
+      })
+      ids.forEach(id => {
+        close(id, key as Position)
+      })
+    }
+  })
 }

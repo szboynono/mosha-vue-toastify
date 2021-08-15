@@ -2,7 +2,7 @@ import { App } from '@vue/runtime-core'
 import { createToast } from './createToast'
 import './index.scss'
 
-export { createToast } from './createToast'
+export { createToast, clearToasts } from './createToast'
 export { withProps } from './util'
 export * from './types'
 
