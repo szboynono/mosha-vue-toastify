@@ -104,13 +104,19 @@
       >
         Show toast!
       </button>
+      <button
+        @click="clearAll"
+        class="w-full antialiased text-lg h-12 mt-5 bg-indigo-500 text-white px-2 py-1 rounded hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:ring-opacity-50"
+      >
+        Clear All
+      </button>
     </div>
   </div>
 </template>
 
 <script lang="ts">
 import { computed, defineComponent, ref, watchEffect } from "vue";
-import { createToast } from "../../../../lib/main";
+import { clearToasts, createToast } from "../../../../lib/main";
 import "../../../../lib/index.scss";
 import InputGroup from "./InputGroup.vue";
 import RadioGroup from "./RadioGroup.vue";
@@ -250,6 +256,11 @@ export default defineComponent({
       output += "</div>";
       return output;
     });
+
+    const clearAll = () => {
+      clearToasts()
+    }
+
     return {
       text,
       description,
@@ -267,6 +278,7 @@ export default defineComponent({
       showIcon,
       swipeClose,
       toastBackgroundColor,
+      clearAll
     };
   },
 });
