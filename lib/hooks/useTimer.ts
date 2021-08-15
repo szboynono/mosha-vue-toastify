@@ -28,7 +28,7 @@ const useTimer = (
     intervalId.value = setInterval(() => {
       progress.value--
       // have to -2 because of the transition time
-    }, delay / 100 - 2)
+    }, (delay / 100) - 5)
     timerId.value = setTimeout(callback, remainingTime.value)
   }
 

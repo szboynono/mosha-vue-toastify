@@ -5,7 +5,7 @@
       class="mosha__toast"
       :style="[style, swipeStyle]"
       :class="toastBackgroundColor ? null : type"
-      @mouseenter="stopTimer"
+      @mouseenter="onMouseEnter"
       @mouseleave="onMouseLeave"
       @touchstart="onTouchStart"
       @mousedown="onMouseDown"
@@ -61,6 +61,7 @@ import { Position, ToastType, TransitionType } from '../types'
 import useTimer from '../hooks/useTimer'
 import useTransitionType from '../hooks/useTransitionType'
 import useCustomStyle from '../hooks/useCustomStyle'
+import useScreenSize from '../hooks/useScreenSize'
 import useSwipe from '../hooks/useSwipe'
 import MIcon from './MIcon.vue'
 
@@ -130,10 +131,12 @@ export default defineComponent({
     transition: {
       type: String as PropType<TransitionType>,
       default: 'bounce'
-    }
+    },
   },
   setup(props, ctx) {
     const style = ref<CSSProperties>()
+
+    const { width } = useScreenSize()
 
     const { swipedDiff, startSwipeHandler, swipeStyle, cleanUpMove } = useSwipe(
       props.position,
@@ -163,8 +166,8 @@ export default defineComponent({
       }
     }
 
-    const stopTimer = () => {
-      if (props.timeout > 0) {
+    const onMouseEnter = () => {
+      if (props.timeout > 0 && width.value > 425) {
         stop()
       }
     }
@@ -199,14 +202,14 @@ export default defineComponent({
       style,
       transitionType,
       startTimer,
-      stopTimer,
       progress,
       onTouchStart,
       onMouseLeave,
       onMouseDown,
       swipeStyle,
       isSlotPassed,
-      isDescriptionHtml
+      isDescriptionHtml,
+      onMouseEnter,
     }
   }
 })
