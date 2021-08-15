@@ -62,7 +62,7 @@ export default defineComponent({
 </script>
 ```
 
-## 自定义
+## 具体用法
 
 
 `createToast` 方法接受两个参数:
@@ -101,21 +101,55 @@ export default defineComponent({
   ```
 - **第二个参数**: 第二个参数是options，可以自定义提醒框。
 
+  | name        | type           | default  | description |
+  | ------------- |:-------------:| -----:| -----:|
+  | type      | 'info', 'danger', 'warning', 'success', 'default' | 'default' | 给与不同的样式 |
+  | timeout      | number      |   5000 | 自定义多少ms后关闭
+  | position      | 'top-left', 'top-right', 'bottom-left', 'bottom-right', 'top-center', 'bottom-center' |   'top-right' | 自定义提醒框位置 |
+  | showCloseButton | boolean      |    true | 显示关闭按钮 |
+  | showIcon | boolean      |    false | 显示图标 |
+  | transition | 'bounce', 'zoom', 'slide' | 'bounce' | 自定义动画 |
+  | hideProgressBar | boolean      |    false | 关闭进度条 |
+  | swipeClose | boolean      |    true | 是否允许滑动关闭 |
+  | toastBackgroundColor | string      | default color | 自定义背景颜色 |
+  | onClose | function      | N/A | 这个方法会在提醒框消失时调用 |
 
-Options:
+- **以编程的方式关闭提醒框**
+  `createToast`函数会返回一个对象，对象中包含一个叫`close`的函数。调用`close`函数会关闭所属提醒框，请看下面例子。
+  ```ts
+      import { createToast } from 'mosha-vue-toastify';
+      import CustomizedContent from "./CustomizedContent.vue";
+      import 'mosha-vue-toastify/dist/style.css';
 
-| name        | type           | default  | description |
-| ------------- |:-------------:| -----:| -----:|
-| type      | 'info', 'danger', 'warning', 'success', 'default' | 'default' | 给与不同的样式 |
-| timeout      | number      |   5000 | 自定义多少ms后关闭
-| position      | 'top-left', 'top-right', 'bottom-left', 'bottom-right', 'top-center', 'bottom-center' |   'top-right' | 自定义提醒框位置 |
-| showCloseButton | boolean      |    true | 显示关闭按钮 |
-| showIcon | boolean      |    false | 显示图标 |
-| transition | 'bounce', 'zoom', 'slide' | 'bounce' | 自定义动画 |
-| hideProgressBar | boolean      |    false | 关闭进度条 |
-| swipeClose | boolean      |    true | 是否允许滑动关闭 |
-| toastBackgroundColor | string      | default color | 自定义背景颜色 |
-| onClose | function      | N/A | 这个方法会在提醒框消失时调用 |
+      export default defineComponent({
+        setup () {
+          const toast = () => {
+              // 调用close能直接关闭提醒框
+              const { close } = createToast(CustomizedContent)
+              // close()
+          }
+
+          return { toast }
+        }
+      })
+  ```
+  调用`clearToasts`函数会关闭页面上所有的提醒框。
+  ```ts
+      import { createToast, clearToasts } from 'mosha-vue-toastify';
+      import CustomizedContent from "./CustomizedContent.vue";
+      import 'mosha-vue-toastify/dist/style.css';
+
+      export default defineComponent({
+        setup () {
+          const clear = () => {
+            // 关闭所以提醒框
+            clearToasts()
+          }
+
+          return { clear }
+        }
+      })
+  ```
 
 ## 支持一下吧
 

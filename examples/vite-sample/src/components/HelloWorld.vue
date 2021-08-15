@@ -7,13 +7,14 @@
     <button @click="bl">bottom-left</button>
     <button @click="tc">top-center</button>
     <button @click="bc">bottom-center</button>
+    <button @click="clear">clear toasts</button>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue'
 import '../../../../lib/index.scss'
-import { createToast, withProps } from '../../../../lib/main'
+import { clearToasts, createToast, withProps } from '../../../../lib/main'
 import Test from './Test.vue'
 
 export default defineComponent({
@@ -64,20 +65,24 @@ export default defineComponent({
               )
             }, 1),
               setTimeout(() => {
-                createToast(
-                  withProps(Test, { title: 'Custom Component!'}),
-                  {
-                    position: 'top-center',
-                    timeout: 8000,
-                  }
-                )
+                createToast(withProps(Test, { title: 'Custom Component!' }), {
+                  position: 'top-center',
+                  timeout: 8000
+                })
               }, 1)
           }, 1)
         }, 1)
       }, 1)
     }
     const tr = () => {
-      createToast('content here')
+      const { close } = createToast('content here', {
+        onClose: () => {
+          console.log('log')
+        }
+      })
+      setTimeout(() => {
+        close()
+      }, 500)
     }
 
     const tl = () => {
@@ -144,7 +149,11 @@ export default defineComponent({
         }
       })
     }
-    return { tr, tl, br, bl, tc, bc, all }
+
+    const clear = () => {
+      clearToasts()
+    }
+    return { tr, tl, br, bl, tc, bc, all, clear }
   }
 })
 </script>
