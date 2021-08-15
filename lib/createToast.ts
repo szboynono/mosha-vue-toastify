@@ -17,30 +17,40 @@ let toastId = 0
 export const createToast = (
   content: ToastContent,
   options?: ToastOptions
-): void => {
-  if (!content) return
+): {
+  close: () => void
+} => {
+  if (!content) return { close: () => console.warn('no toast available.') }
   const initializedOptions = options
     ? initializeOptions(options)
     : DEFAULT_OPTIONS
 
   if ((content as any).__v_isVNode) {
-    setupVNode(ToastContentType.VNODE, initializedOptions, content as Component)
-    return;
+    const closeFn = setupVNode(ToastContentType.VNODE, initializedOptions, content as Component)
+    return {
+      close: closeFn
+    }
   }
   // eslint-disable-next-line no-prototype-builtins
   if (content.hasOwnProperty('render')) {
-    setupVNode(ToastContentType.COMPONENT, initializedOptions, content as Component)
-    return;
+    const closeFn = setupVNode(ToastContentType.COMPONENT, initializedOptions, content as Component)
+    return {
+      close: closeFn
+    }
   }
   const initializedContent = initializeContent(content)
-  setupVNode(ToastContentType.TITLE_DESCRIPTION, initializedOptions, initializedContent)
+  const closeFn = setupVNode(ToastContentType.TITLE_DESCRIPTION, initializedOptions, initializedContent)
+
+  return {
+    close: closeFn
+  }
 }
 
 export const setupVNode = (
   contentType: ToastContentType,
   options: ToastOptions,
   content: DisplayContentObject | Component | VNode
-): void => {
+): () => void => {
   const verticalOffset = moveToastsOnAdd(options, toasts, TOAST_GAP)
   const id = toastId++
 
@@ -71,12 +81,13 @@ export const setupVNode = (
   render(toastVNode, container)
 
 
-  if (!options.position) return
-  toasts[options.position].push({ toastVNode, container })
+  toasts[options.position as Position].push({ toastVNode, container })
 
   if (toastVNode.component) {
     toastVNode.component.props.visible = true
   }
+
+  return () => close(id, options.position as Position);
 }
 
 // eslint-disable-next-line

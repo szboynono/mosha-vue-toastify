@@ -77,7 +77,10 @@ export default defineComponent({
       }, 1)
     }
     const tr = () => {
-      createToast('content here')
+      const { close } = createToast('content here')
+      setTimeout(() => {
+        close()
+      }, 500)
     }
 
     const tl = () => {
