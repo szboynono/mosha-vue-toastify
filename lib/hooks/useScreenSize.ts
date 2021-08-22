@@ -9,7 +9,7 @@ const useScreenSize = (): {
 
 
   const resizeHandler = (e: Event) => {
-    if (e !== null) {
+    if (e !== null && e.currentTarget !== null) {
       width.value = (e.currentTarget as Window).innerWidth
       height.value = (e.currentTarget as Window).innerHeight
     }
