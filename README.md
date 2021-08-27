@@ -105,7 +105,7 @@ The `createToast` function accepts 2 arguments:
     | name        | type           | default  | description |
     | ------------- |:-------------:| -----:| -----:|
     | type      | 'info', 'danger', 'warning', 'success', 'default' | 'default' | Give the toast different styles and icons. |
-    | timeout      | number      |   5000 | How many ms you want the toggle to close itself?
+    | timeout      | number      |   5000 | How many ms you want the toggle to close itself? Note: passing -1 to the timeout will keep the modal from closing.
     | position      | 'top-left', 'top-right', 'bottom-left', 'bottom-right', 'top-center', 'bottom-center' |   'top-right' | Where do you want the toast to appear? |
     | showCloseButton | boolean      |    true | Do you wanna show the close button ? |
     | showIcon | boolean      |    false | Do you wanna show the icon ? |

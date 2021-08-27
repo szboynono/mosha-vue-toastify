@@ -104,7 +104,7 @@ export default defineComponent({
   | name        | type           | default  | description |
   | ------------- |:-------------:| -----:| -----:|
   | type      | 'info', 'danger', 'warning', 'success', 'default' | 'default' | 给与不同的样式 |
-  | timeout      | number      |   5000 | 自定义多少ms后关闭
+  | timeout      | number      |   5000 | 自定义多少ms后关闭. 注：设定为-1会让提醒框忽略timeout
   | position      | 'top-left', 'top-right', 'bottom-left', 'bottom-right', 'top-center', 'bottom-center' |   'top-right' | 自定义提醒框位置 |
   | showCloseButton | boolean      |    true | 显示关闭按钮 |
   | showIcon | boolean      |    false | 显示图标 |
