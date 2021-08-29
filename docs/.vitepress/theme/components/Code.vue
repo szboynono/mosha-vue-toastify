@@ -251,7 +251,7 @@ export default defineComponent({
 
         output += `<div>${key}: <span class="text-indigo-500">${
           key === "timeout" ? "" : "'"
-        }${value}${key === "timeout" ? "" : "'"}</span></div>`;
+        }${value}${key === "timeout" ? "" : "'"}</span>,</div>`;
       });
       output += "</div>";
       return output;
