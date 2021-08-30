@@ -28,6 +28,7 @@ describe('useCustomStyle', () => {
       marginLeft: 'auto'
     });
   })
+  
 
   test('should return the correct style for top-center', () => {
     const hook = useCustomStyle('top-center', 100, 'red')
