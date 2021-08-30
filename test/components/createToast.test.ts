@@ -105,38 +105,38 @@ test('moveToastsOnAdd should throw error if no position', () => {
   expect(() => testFile.moveToastsOnAdd({} as any, {} as any, 2)).toThrow('no position')
 })
 
-describe('moveToastsOnClose', () => {
+// describe('moveToastsOnClose', () => {
 
-  test('should move on close', () => {
-    let mockComponent = {
-      props: {
-        offset: 0
-      }
-    }
-    testFile.moveToastsOnClose(0, [{toastVNode: {
-      el: {
-        style: {
-          'top': '100'
-        }
-      },
-      component: mockComponent
-    },}] as any, 'top-right', 10)
-    expect(mockComponent).toEqual({ props: { offset: 78 } })
-  })
+//   test('should move on close', () => {
+//     let mockComponent = {
+//       props: {
+//         offset: 0
+//       }
+//     }
+//     testFile.moveToastsOnClose(0, [{toastVNode: {
+//       el: {
+//         style: {
+//           'top': '100'
+//         }
+//       },
+//       component: mockComponent
+//     },}] as any, 'top-right', 10)
+//     expect(mockComponent).toEqual({ props: { offset: 78 } })
+//   })
 
-  test('should return if no toastVNode el', () => {
-    const result = testFile.moveToastsOnClose(0, [{toastVNode: {}}] as any, 'top-right', 10)
-    expect(result).toBeUndefined();
-  })
+//   test('should return if no toastVNode el', () => {
+//     const result = testFile.moveToastsOnClose(0, [{toastVNode: {}}] as any, 'top-right', 10)
+//     expect(result).toBeUndefined();
+//   })
 
-  test('should return if no toastVNode component', () => {
-    const result = testFile.moveToastsOnClose(0, [{toastVNode: {
-      el: {
-        style: {
-          'top': '100'
-        }
-      },
-    },}] as any, 'top-right', 10)
-    expect(result).toBeUndefined();
-  })
-})
+//   test('should return if no toastVNode component', () => {
+//     const result = testFile.moveToastsOnClose(0, [{toastVNode: {
+//       el: {
+//         style: {
+//           'top': '100'
+//         }
+//       },
+//     },}] as any, 'top-right', 10)
+//     expect(result).toBeUndefined();
+//   })
+// })
