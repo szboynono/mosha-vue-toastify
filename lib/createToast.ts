@@ -201,10 +201,10 @@ export const close = (id: number, position: Position): void => {
     ; (toastVNode.component.props as any).onClose()
   }
 
-  // setTimeout(() => {
-  //   render(null, container)
-  //   document.body.removeChild(container)
-  // }, 1000)
+  setTimeout(() => {
+    render(null, container)
+    document.body.removeChild(container)
+  }, 1000)
 }
 
 /**
