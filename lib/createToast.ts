@@ -34,10 +34,16 @@ export const createToast = (
 
   if ((content as any).__v_isVNode) {
     setupVNode(id, ToastContentType.VNODE, initializedOptions, content as Component)
+    return {
+      close: () => close(id, initializedOptions.position as Position)
+    }
   }
   // eslint-disable-next-line no-prototype-builtins
   if (content.hasOwnProperty('render')) {
     setupVNode(id, ToastContentType.COMPONENT, initializedOptions, content as Component)
+    return {
+      close: () => close(id, initializedOptions.position as Position)
+    }
   }
   const initializedContent = initializeContent(content)
   setupVNode(id, ToastContentType.TITLE_DESCRIPTION, initializedOptions, initializedContent)
