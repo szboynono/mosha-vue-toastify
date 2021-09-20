@@ -7,7 +7,7 @@
       :class="toastBackgroundColor ? null : type"
       @mouseenter="onMouseEnter"
       @mouseleave="onMouseLeave"
-      @touchstart="onTouchStart"
+      @touchstart.passive="onTouchStart"
       @mousedown="onMouseDown"
     >
       <!-- eslint-disable vue/no-v-html -->

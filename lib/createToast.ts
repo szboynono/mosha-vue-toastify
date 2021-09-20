@@ -24,76 +24,78 @@ let toastId = 0
 export const createToast = (
   content: ToastContent,
   options?: ToastOptions
-): {
-  close: () => void
-} => {
+): { close: () => void } => {
+  const id = toastId++;
+  
   const initializedOptions = options
     ? initializeOptions(options)
     : DEFAULT_OPTIONS
+  
 
   if ((content as any).__v_isVNode) {
-    const closeFn = setupVNode(ToastContentType.VNODE, initializedOptions, content as Component)
+    setupVNode(id, ToastContentType.VNODE, initializedOptions, content as Component)
     return {
-      close: closeFn
+      close: () => close(id, initializedOptions.position as Position)
     }
   }
   // eslint-disable-next-line no-prototype-builtins
   if (content.hasOwnProperty('render')) {
-    const closeFn = setupVNode(ToastContentType.COMPONENT, initializedOptions, content as Component)
+    setupVNode(id, ToastContentType.COMPONENT, initializedOptions, content as Component)
     return {
-      close: closeFn
+      close: () => close(id, initializedOptions.position as Position)
     }
   }
   const initializedContent = initializeContent(content)
-  const closeFn = setupVNode(ToastContentType.TITLE_DESCRIPTION, initializedOptions, initializedContent)
+  setupVNode(id, ToastContentType.TITLE_DESCRIPTION, initializedOptions, initializedContent)
 
   return {
-    close: closeFn
+    close: () => close(id, initializedOptions.position as Position)
   }
 }
 
+
 export const setupVNode = (
+  id: number,
   contentType: ToastContentType,
   options: ToastOptions,
   content: DisplayContentObject | Component | VNode
-): () => void => {
-  const verticalOffset = moveToastsOnAdd(options, toasts, TOAST_GAP)
-  const id = toastId++
-
-  const container = document.createElement('div')
-  document.body.appendChild(container)
-
-  let toastVNode = undefined;
-
-  if (contentType === ToastContentType.VNODE) {
-    toastVNode = createVNode(
-      Toast,
-      setupVNodeProps(options, id, verticalOffset, close),
-      () => [content]
-    )
-  } else if (contentType === ToastContentType.TITLE_DESCRIPTION) {
-    toastVNode = createVNode(
-      Toast,
-      setupVNodeProps(options, id, verticalOffset, close, content as DisplayContentObject),
-    )
-  } else {
-    toastVNode = createVNode(
-      Toast,
-      setupVNodeProps(options, id, verticalOffset, close),
-      () => [createVNode(content)]
-    )
-  }
-
-  render(toastVNode, container)
-
-
-  toasts[options.position as Position].push({ toastVNode, container })
-
-  if (toastVNode.component) {
-    toastVNode.component.props.visible = true
-  }
-
-  return () => close(id, options.position as Position);
+): void => {
+    setTimeout(() => {
+      const verticalOffset = moveToastsOnAdd(options, toasts, TOAST_GAP)
+    
+      const container = document.createElement('div')
+      document.body.appendChild(container)
+    
+      let toastVNode = undefined;
+    
+      if (contentType === ToastContentType.VNODE) {
+        toastVNode = createVNode(
+          Toast,
+          setupVNodeProps(options, id, verticalOffset, close),
+          () => [content]
+        )
+      } else if (contentType === ToastContentType.TITLE_DESCRIPTION) {
+        toastVNode = createVNode(
+          Toast,
+          setupVNodeProps(options, id, verticalOffset, close, content as DisplayContentObject),
+        )
+      } else {
+        toastVNode = createVNode(
+          Toast,
+          setupVNodeProps(options, id, verticalOffset, close),
+          () => [createVNode(content)]
+        )
+      }
+      
+      render(toastVNode, container)
+    
+      toasts[options.position as Position].push({ toastVNode, container })
+    
+      if (toastVNode.component) {
+        toastVNode.component.props.visible = true
+      }
+      
+    }, 1);
 }
 
 // eslint-disable-next-line
@@ -151,6 +153,7 @@ export const moveToastsOnAdd = (options: ToastOptions, toasts: Record<Position, 
   let verticalOffset = toastGap
 
   if (!options.position) throw new Error('no position')
+
   toasts[options.position].forEach(({ toastVNode }) => {
     const offsetHeight = (toastVNode.el as HTMLElement).offsetHeight + toastGap
     verticalOffset += offsetHeight || 0
