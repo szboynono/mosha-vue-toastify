@@ -27,7 +27,6 @@ export const createToast = (
 ): {
   close: () => void
 } => {
-  if (!content) return { close: () => console.warn('no toast available.') }
   const initializedOptions = options
     ? initializeOptions(options)
     : DEFAULT_OPTIONS
@@ -159,7 +158,7 @@ export const moveToastsOnAdd = (options: ToastOptions, toasts: Record<Position, 
   return verticalOffset
 }
 
-const moveToastsOnClose = (
+export const moveToastsOnClose = (
   index: number,
   toastArr: ToastObject[],
   position: Position,
