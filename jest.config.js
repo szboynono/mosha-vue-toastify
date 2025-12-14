@@ -1,4 +1,5 @@
 module.exports = {
+  testEnvironment: 'jsdom',
   moduleFileExtensions: [
     'js',
     'ts',
@@ -7,7 +8,7 @@ module.exports = {
   ],
   transform: {
     '^.+\\.ts$': 'ts-jest',
-    '^.+\\.vue$': 'vue-jest'
+    '^.+\\.vue$': '@vue/vue3-jest'
   },
   collectCoverage: true,
   collectCoverageFrom: [

@@ -3,7 +3,13 @@
 # abort on errors
 set -e
 
-# build
+echo 'Installing dependencies...'
+npm install
+
+echo 'Building library...'
+npm run build
+
+echo 'Building documentation...'
 npm run docs:build
 
 # navigate into the build output directory
@@ -14,7 +20,7 @@ cd docs/.vitepress/dist
 
 git init
 git add -A
-git commit -m 'deploy'
+git commit -m 'deploy: upgrade to Vue 3.5.25 and update dependencies'
 
 # if you are deploying to https://<USERNAME>.github.io
 # git push -f git@github.com:<USERNAME>/<USERNAME>.github.io.git master
