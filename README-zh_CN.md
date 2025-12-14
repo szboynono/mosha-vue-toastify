@@ -4,6 +4,8 @@
 
 轻量好看好用的Vue3通知提醒组件
 
+**Vue 版本支持**: 本库支持 Vue 3.0+，并已针对 Vue 3.5.x 进行测试。为了获得最佳体验，我们推荐使用 Vue 3.5 或更高版本。
+
 [English](./README.md) | 简体中文
 
 ![alt text](./gif/demo.gif "Logo Title Text 1")
@@ -24,6 +26,8 @@
 
 ## 安装
 
+**要求**: Vue 3.0.0 或更高版本（推荐 Vue 3.5.x）
+
 NPM:
 
 ```bash
@@ -35,6 +39,8 @@ Yarn:
 ```bash
 $ yarn add mosha-vue-toastify
 ```
+
+**注意**: 请确保您的项目中已安装 Vue 3。本库向后兼容 Vue 3.0+，但在使用 Vue 3.5+ 时可以充分利用新特性。
 
 ## 精华
 ```html

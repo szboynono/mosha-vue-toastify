@@ -1,5 +1,7 @@
 # Installation
 
+**Requirements**: Vue 3.0.0 or higher (Vue 3.5.x recommended)
+
 With NPM:
 
 ```bash
@@ -11,6 +13,8 @@ With Yarn:
 ```bash
 $ yarn add mosha-vue-toastify
 ```
+
+**Note**: Make sure you have Vue 3 installed in your project. The library is backward compatible with Vue 3.0+ but takes advantage of newer features when using Vue 3.5+.
 
 ## Just import and use it (Recommended)
 

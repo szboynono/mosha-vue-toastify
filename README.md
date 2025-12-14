@@ -4,6 +4,8 @@
 
 A lightweight and fun Vue 3 toast or notification or snack bar or however you wanna call it library.
 
+**Vue Version Support**: This library supports Vue 3.0+ and is tested with Vue 3.5.x. For the best experience, we recommend using Vue 3.5 or higher.
+
 English | [简体中文](./README-zh_CN.md)
 
 ![alt text](./gif/demo.gif "Logo Title Text 1")
@@ -24,6 +26,8 @@ Try it out in the [playground](https://szboynono.github.io/mosha-vue-toastify/) 
 
 ## Installation
 
+**Requirements**: Vue 3.0.0 or higher (Vue 3.5.x recommended)
+
 With NPM:
 
 ```bash
@@ -35,6 +39,8 @@ With Yarn:
 ```bash
 $ yarn add mosha-vue-toastify
 ```
+
+**Note**: Make sure you have Vue 3 installed in your project. The library is backward compatible with Vue 3.0+ but takes advantage of newer features when using Vue 3.5+.
 
 ## The gist
 ```html
